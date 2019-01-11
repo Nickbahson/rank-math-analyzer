@@ -1,9 +1,15 @@
+const { resolve } = require( 'path' )
 const HtmlWebPackPlugin = require( 'html-webpack-plugin' )
 const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' )
+const LodashPlugin = require( 'lodash-webpack-plugin' )
 
 module.exports = {
 	entry: {
 		app: './src/index.js'
+	},
+	output: {
+		path: resolve( __dirname, './dist' ),
+		filename: '[name].js'
 	},
 	devServer: {
 		contentBase: './dist',
@@ -16,13 +22,18 @@ module.exports = {
 				exclude: /(node_modules|bower_components)/,
 				use: {
 					loader: 'babel-loader',
+					options: {
+						plugins: [ 'lodash' ],
+						presets: [ '@babel/preset-env' ]
+					}
 				}
 			},
 			{
 				test: /\.html$/,
+				exclude: /(node_modules|bower_components)/,
 				use: [
 					{
-						loader: "html-loader",
+						loader: 'html-loader',
 						options: { minimize: true }
 					}
 				]
@@ -34,8 +45,15 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebPackPlugin({
-			template: "./src/index.html",
-			filename: "./index.html"
+			template: resolve( __dirname, './public/index.html' ),
+			filename: resolve( __dirname, './dist/index.html' )
+		}),
+
+		new LodashPlugin({
+			collections: true,
+			shorthands: true,
+			currying: true,
+			placeholders: true
 		}),
 
 		// Adding our UglifyJS plugin
