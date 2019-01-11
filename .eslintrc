@@ -1,0 +1,15 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": "wordpress",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"rules": {
+		"vars-on-top": 0,
+		"semi": [1, "never"]
+	}
+}
