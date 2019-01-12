@@ -1,5 +1,4 @@
 import { createHooks } from '@wordpress/hooks'
-import { sprintf, _n } from '@wordpress/i18n';
 
 ( function( $ ) {
 

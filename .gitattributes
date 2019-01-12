@@ -30,18 +30,3 @@ phpunit.xml export-ignore
 phpunit.xml.dist export-ignore
 README.md export-ignore
 webpack.config.js export-ignore
-
-# Export Ignore Folders
-assets/admin/scss export-ignore
-assets/admin/src export-ignore
-assets/front/scss export-ignore
-assets/vendor/bourbon export-ignore
-vendor/cmb2/cmb2/css/sass export-ignore
-bin export-ignore
-tests export-ignore
-
-# Export SCSS Files from Modules
-includes/modules/redirections/assets/redirections.scss export-ignore
-includes/modules/role-manager/assets/role-manager.scss export-ignore
-includes/modules/search-console/assets/search-console.scss export-ignore
-includes/modules/seo-analysis/assets/seo-analysis.scss export-ignore
