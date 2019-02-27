@@ -3,6 +3,8 @@
 		"browser": true,
 		"es6": true
 	},
+	"parser": "babel-eslint",
+	"plugins": [ "babel" ],
 	"extends": "wordpress",
 	"parserOptions": {
 		"ecmaVersion": 6,

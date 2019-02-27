@@ -20,7 +20,6 @@ class AnalysisResult {
 	 */
 	text = ''
 
-
 	/**
 	 * Check if a score is available.
 	 *
