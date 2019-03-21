@@ -1,4 +1,5 @@
 import { createHooks } from '@wordpress/hooks'
+import App from './App'
 
 ( function( $ ) {
 
@@ -7,10 +8,8 @@ import { createHooks } from '@wordpress/hooks'
 	window.rankMath = window.rankMath || {}
 	window.rankMath.hooks = createHooks()
 
-	function initializePostAnalysis() {
-		rankMath.hooks.doAction( 'rankMath.init' )
-	}
-
-	$( document ).ready( initializePostAnalysis )
+	$( document ).ready( function() {
+		window.rankMath.app = new App
+	})
 
 }( jQuery ) )
