@@ -106,7 +106,7 @@ class LengthContent extends Analysis {
 
 	getScores() {
 		return rankMath.hooks.applyFilters(
-			'rankMath/analysis/contentLength/scores',
+			'rankMath/analysis/contentLength/score',
 			{
 				recommended: 8,
 				belowRecommended: 5,
@@ -117,3 +117,5 @@ class LengthContent extends Analysis {
 		)
 	}
 }
+
+export default LengthContent
