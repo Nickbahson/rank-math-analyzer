@@ -1,7 +1,9 @@
+import Sentiment from 'sentiment'
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import sentimentWords from './config/sentimentWords'
 
-class TitleHasNumber extends Analysis {
+class TitleSentiment extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,10 +15,11 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const sentiment      = new Sentiment
+		const sentimentScore = sentiment.analyze( paper.getLower( 'title' ), sentimentWords ).score
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		analysisResult.setScore( this.calculateScore( sentimentScore ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -30,18 +33,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return rankMath.isUserRegistered && paper.hasTitle() && 'en' === paper.getLocale()
 	}
 
 	/**
-	 * Calculates the score based on the url length.
+	 * Calculates the score based on the sentiment score.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} sentimentScore Sentiment score.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( sentimentScore ) {
+		return 0 !== sentimentScore ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
 	}
 
 	/**
@@ -54,9 +57,12 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Your title has a positive or a negative sentiment.', 'rank-math-analyzer' ) :
+			i18n.sprintf(
+				i18n.__( 'Your title doesn\'t contain a %1$s word.', 'rank-math-analyzer' ),
+				'<a href="' + rankMath.assessor.sentimentKbLink + '" target="_blank">positive or a negative sentiment</a>'
+			)
 	}
 }
 
-export default TitleHasNumber
+export default TitleSentiment
