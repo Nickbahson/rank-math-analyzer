@@ -1,7 +1,7 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
-class TitleHasNumber extends Analysis {
+class LinksNotAllExternals extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,11 +13,22 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const linkStatistics = researcher.get( 'getLinkStats' )
+		const statistics     = linkStatistics( paper.getText() )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		if ( null === statistics.anchors ) {
+			analysisResult.setText( il8n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
+			return analysisResult
+		}
+
+		analysisResult.setScore( this.calculateScore( 0 < statistics.externalDofollow ) )
+		analysisResult.setText(
+			i18n.sprintf(
+				this.translateScore( analysisResult, il8n ),
+				statistics.externalTotal
+			)
+		)
 
 		return analysisResult
 	}
@@ -30,18 +41,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasText()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasExternalDofollow Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasExternalDofollow ) {
+		return hasExternalDofollow ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksNotAllExternals/score', 2 ) : null
 	}
 
 	/**
@@ -54,9 +65,9 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'At least one external link with DoFollow found in your content.', 'rank-math-analyzer' ) :
+			i18n.__( 'We found %1$s outbound links in your content and all of them are nofollow.', 'rank-math-analyzer' )
 	}
 }
 
-export default TitleHasNumber
+export default LinksNotAllExternals
