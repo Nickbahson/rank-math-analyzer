@@ -13,8 +13,8 @@ class LengthContent extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const wordCount       = researcher.get( 'wordCount' )
+		const analysisResult = new AnalysisResult
+		let wordCount        = researcher.get( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
 		if ( false === wordCount || 0 === wordCount.length ) {

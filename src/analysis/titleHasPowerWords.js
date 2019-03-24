@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { includes } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class TitleHasPowerWords extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,11 +14,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult   = new AnalysisResult
+		const title            = paper.getLower( 'title' )
+		const powerWordsInText = rankMath.assessor.powerWords.filter( word => includes( title, word ) )
+		const hasPowerWords    = 0 < powerWordsInText.length
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		analysisResult.setScore( this.calculateScore( hasPowerWords ) )
+		analysisResult.setText(
+			i18n.sprintf(
+				this.translateScore( analysisResult, il8n ),
+				powerWordsInText.length
+			)
+		)
 
 		return analysisResult
 	}
@@ -30,33 +38,36 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return rankMath.isUserRegistered && 'en' === paper.getLocale()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasPowerWords Title has power words or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasPowerWords ) {
+		return hasPowerWords ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
 	}
 
 	/**
 	 * Translates the score to a message the user can understand.
 	 *
-	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
+	 * @param {AnalysisResult}  analysisResult AnalysisResult with the score and the formatted text.
 	 * @param {Jed}            i18n           The object used for translations.
 	 *
 	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Your title contains %1$s power word(s). Booyah!', 'rank-math-analyzer' ) :
+			i18n.sprintf(
+				i18n.__( 'Your title doesn\'t contain a %1$s. Add at least one.', 'rank-math-analyzer' ),
+				'<a href="https://sumo.com/stories/power-words" target="_blank">power word</a>'
+			)
 	}
 }
 
-export default TitleHasNumber
+export default TitleHasPowerWords

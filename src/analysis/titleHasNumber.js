@@ -13,8 +13,8 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const hasNumber      = /\d+/.test( paper.getTitle() )
 
 		analysisResult.setScore( this.calculateScore( hasNumber ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
