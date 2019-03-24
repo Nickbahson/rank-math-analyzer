@@ -1,7 +1,7 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
-class LinksNotAllExternals extends Analysis {
+class LinksHasExternals extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -18,11 +18,11 @@ class LinksNotAllExternals extends Analysis {
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
-			analysisResult.setText( il8n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
+			analysisResult.setText( il8n.__( 'Link out to external resources.', 'rank-math-analyzer' ) )
 			return analysisResult
 		}
 
-		analysisResult.setScore( this.calculateScore( 0 < statistics.externalDofollow ) )
+		analysisResult.setScore( this.calculateScore( 0 < statistics.externalTotal ) )
 		analysisResult.setText(
 			i18n.sprintf(
 				this.translateScore( analysisResult, il8n ),
@@ -52,7 +52,7 @@ class LinksNotAllExternals extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksNotAllExternals/score', 2 ) : null
+		return hasExternalDofollow ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasExternals/score', 4 ) : null
 	}
 
 	/**
@@ -65,9 +65,9 @@ class LinksNotAllExternals extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'At least one external link with DoFollow found in your content.', 'rank-math-analyzer' ) :
-			i18n.__( 'We found %1$s outbound links in your content and all of them are nofollow.', 'rank-math-analyzer' )
+			i18n.__( 'Great! You are linking to external resources.', 'rank-math-analyzer' ) :
+			i18n.__( 'No outbound links were found. Link out to external resources.', 'rank-math-analyzer' )
 	}
 }
 
-export default LinksNotAllExternals
+export default LinksHasExternals

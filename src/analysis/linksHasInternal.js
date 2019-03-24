@@ -18,7 +18,7 @@ class LinksHasInternal extends Analysis {
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
-			analysisResult.setText( il8n.__( 'Link out to external resources.', 'rank-math-analyzer' ) )
+			analysisResult.setText( il8n.__( 'Add internal links in your content.', 'rank-math-analyzer' ) )
 			return analysisResult
 		}
 
@@ -52,7 +52,7 @@ class LinksHasInternal extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasInternal ) {
-		return hasInternal ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 4 ) : null
+		return hasInternal ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
 	}
 
 	/**
@@ -65,8 +65,8 @@ class LinksHasInternal extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Great! You are linking to external resources.', 'rank-math-analyzer' ) :
-			i18n.__( 'No outbound links were found. Link out to external resources.', 'rank-math-analyzer' )
+			i18n.__( 'You are linking to other resources on your website which is great.', 'rank-math-analyzer' ) :
+			i18n.__( 'We couldn\'t find any internal links in your content.', 'rank-math-analyzer' )
 	}
 }
 
