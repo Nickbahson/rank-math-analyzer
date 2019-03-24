@@ -22,11 +22,11 @@ class LinksHasInternal extends Analysis {
 			return analysisResult
 		}
 
-		analysisResult.setScore( this.calculateScore( 0 < statistics.externalDofollow ) )
+		analysisResult.setScore( this.calculateScore( 0 < statistics.internalTotal ) )
 		analysisResult.setText(
 			i18n.sprintf(
 				this.translateScore( analysisResult, il8n ),
-				statistics.externalTotal
+				statistics.internalTotal
 			)
 		)
 
@@ -47,12 +47,12 @@ class LinksHasInternal extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasExternalDofollow Title has number or not.
+	 * @param {Boolean} hasInternal Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 4 ) : null
+	calculateScore( hasInternal ) {
+		return hasInternal ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 4 ) : null
 	}
 
 	/**
