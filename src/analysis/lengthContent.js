@@ -1,5 +1,6 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { inRange } from 'lodash'
 
 class LengthContent extends Analysis {
 
@@ -51,26 +52,26 @@ class LengthContent extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( wordCount ) {
-		scores    = this.getScores()
-		boundries = this.getBoundries()
+		scores     = this.getScores()
+		boundaries = this.getBoundaries()
 
-		if ( boundries.recommended <= wordCount ) {
+		if ( boundaries.recommended <= wordCount ) {
 			return scores.recommended
 		}
 
-		if ( inRange( wordCount, boundries.belowRecommended, boundries.recommended ) ) {
+		if ( inRange( wordCount, boundaries.belowRecommended, boundaries.recommended ) ) {
 			return scores.belowRecommended
 		}
 
-		if ( inRange( wordCount, boundries.medium, boundries.belowRecommended ) ) {
+		if ( inRange( wordCount, boundaries.medium, boundaries.belowRecommended ) ) {
 			return scores.medium
 		}
 
-		if ( inRange( wordCount, boundries.belowMedium, boundries.medium ) ) {
+		if ( inRange( wordCount, boundaries.belowMedium, boundaries.medium ) ) {
 			return scores.belowMedium
 		}
 
-		if ( inRange( wordCount, boundries.low, boundries.belowMedium ) ) {
+		if ( inRange( wordCount, boundaries.low, boundaries.belowMedium ) ) {
 			return scores.low
 		}
 
@@ -91,9 +92,9 @@ class LengthContent extends Analysis {
 			i18n.__( 'Your content is %1$s words long. Consider using at least 600 words.', 'rank-math-analyzer' )
 	}
 
-	getBoundries() {
+	getBoundaries() {
 		return rankMath.hooks.applyFilters(
-			'rankMath/analysis/contentLength/boundries',
+			'rankMath/analysis/contentLength/boundaries',
 			{
 				recommended: 2500,
 				belowRecommended: 2000,

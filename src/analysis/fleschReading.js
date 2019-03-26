@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { inRange } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class FleschReading extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -14,10 +15,18 @@ class TitleHasNumber extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const fleschReading   = researcher.getResearch( 'fleschReading' )
+		const fleschScore     = fleschReading.calculate( paper.getText() ).ease
+		const calculatedScore = this.calculateScore( fleschScore )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		analysisResult.setScore( calculatedScore.score )
+		analysisResult.setText(
+			il8n.sprintf(
+				il8n.__( 'Your Flesch Readability score is %1$s and is regarded as %2$s', 'rank-math-analyzer' ),
+				fleschScore,
+				calculatedScore.note
+			)
+		)
 
 		return analysisResult
 	}
@@ -30,7 +39,7 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasText()
 	}
 
 	/**
@@ -41,22 +50,65 @@ class TitleHasNumber extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+		scores    = this.getScores()
+		boundaries = this.getBoundaries()
+
+		if ( boundaries.veryEasy < score ) {
+			return { score: scores.veryEasy, note: 'very easy' }
+		}
+
+		if ( inRange( score, boundaries.easy, 91 ) ) {
+			return { score: scores.easy, note: 'easy' }
+		}
+
+		if ( inRange( score, boundaries.fairlyEasy, boundaries.easy ) ) {
+			return { score: scores.fairlyEasy, note: 'fairly easy' }
+		}
+
+		if ( inRange( score, boundaries.okay, boundaries.fairlyEasy ) ) {
+			return { score: scores.okay, note: 'okay' }
+		}
+
+		if ( inRange( score, boundaries.fairlyDifficult, boundaries.okay ) ) {
+			return { score: scores.fairlyDifficult, note: 'fairly difficult' }
+		}
+
+		if ( inRange( score, boundaries.difficult, boundaries.fairlyDifficult ) ) {
+			return { score: scores.difficult, note: 'difficult' }
+		}
+
+		return { score: scores.veryDifficult, note: 'very difficult' }
 	}
 
-	/**
-	 * Translates the score to a message the user can understand.
-	 *
-	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
-	 *
-	 * @return {string} The translated string.
-	 */
-	translateScore( analysisResult, i18n ) {
-		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+	getBoundaries() {
+		return rankMath.hooks.applyFilters(
+			'rankMath/analysis/fleschReading/boundaries',
+			{
+				veryEasy: 90,
+				easy: 80,
+				fairlyEasy: 70,
+				okay: 60,
+				fairlyDifficult: 50,
+				difficult: 30,
+				veryDifficult: 0
+			}
+		)
+	}
+
+	getScores() {
+		return rankMath.hooks.applyFilters(
+			'rankMath/analysis/fleschReading/score',
+			{
+				veryEasy: 6,
+				easy: 5,
+				fairlyEasy: 5,
+				okay: 4,
+				fairlyDifficult: 3,
+				difficult: 2,
+				veryDifficult: 1
+			}
+		)
 	}
 }
 
-export default TitleHasNumber
+export default FleschReading
