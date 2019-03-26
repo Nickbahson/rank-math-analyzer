@@ -13,7 +13,7 @@ class ContentHasAssets extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
+		const analysisResult = new AnalysisResult
 
 		// Has no content.
 		if ( ! paper.hasText() ) {

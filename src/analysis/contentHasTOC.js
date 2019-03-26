@@ -1,7 +1,7 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
-class TitleHasNumber extends Analysis {
+class ContentHasTOC extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,10 +13,10 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const hasTOCPlugin   = rankMath.assessor.hasTOCPlugin
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		analysisResult.setScore( this.calculateScore( hasTOCPlugin ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -36,12 +36,12 @@ class TitleHasNumber extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasTOCPlugin Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasTOCPlugin ) {
+		return hasTOCPlugin ? rankMath.hooks.applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
 	}
 
 	/**
@@ -54,9 +54,15 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.sprintf(
+				i18n.__( 'You seem to be using a %1$s to break-down your text.', 'rank-math-analyzer' ),
+				'<a href="' + rankMath.assessor.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
+			) :
+			i18n.sprintf(
+				i18n.__( 'You don\'t seem to be using a %1$s.', 'rank-math-analyzer' ),
+				'<a href="' + rankMath.assessor.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
+			)
 	}
 }
 
-export default TitleHasNumber
+export default ContentHasTOC
