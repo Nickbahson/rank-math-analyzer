@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { includes } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class KeywordInSubheadings extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -14,9 +15,10 @@ class TitleHasNumber extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const subheadingRegex = new RegExp( '<h[2-6][^>]*>.*' + paper.getLower( 'keyword' ) + '.*</h[2-6]>', 'gi' )
+		const hasKeyword      = null !== paper.getTextLower().match( regex ) ? true : false
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		analysisResult.setScore( this.calculateScore( hasKeyword ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -30,18 +32,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasKeyword() && paper.hasText()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasKeyword Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasKeyword ) {
+		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInSubheadings/score', 3 ) : null
 	}
 
 	/**
@@ -54,9 +56,9 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword found in the subheading(s).', 'rank-math-analyzer' ) :
+			i18n.__( 'Focus Keyword not found in subheading(s) like H2, H3, H4, etc..', 'rank-math-analyzer' )
 	}
 }
 
-export default TitleHasNumber
+export default KeywordInSubheadings
