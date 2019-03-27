@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { includes } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class KeywordIn10Percent extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,10 +14,21 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		let getWords         = researcher.get( 'getWords' )
+		let words            = getWords( paper.getTextLower() )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		if ( false === words || 0 === words.length ) {
+			return null
+		}
+
+		if ( 400 < words.length ) {
+			words = words.slice( 0, Math.floor( words.length * 0.1 ) )
+		}
+		words = words.join( ' ' )
+
+		const hasKeyword = includes( words, paper.getLower( 'keyword' ) )
+		analysisResult.setScore( this.calculateScore( hasKeyword ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -30,18 +42,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasKeyword() && paper.hasText()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasKeyword Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasKeyword ) {
+		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordIn10Percent/score', 3 ) : null
 	}
 
 	/**
@@ -54,9 +66,9 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword appears in the first 10% of the content.', 'rank-math-analyzer' ) :
+			i18n.__( 'Focus Keyword doesn\'t appear at the beginning of your content.', 'rank-math-analyzer' )
 	}
 }
 
-export default TitleHasNumber
+export default KeywordIn10Percent
