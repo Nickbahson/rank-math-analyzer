@@ -1,7 +1,10 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import $ from 'jquery'
 
-class TitleHasNumber extends Analysis {
+class KeywordNotUsed extends Analysis {
+
+	keywordsChecked = {}
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,11 +16,37 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const keyword        = paper.getLower( 'keyword' ).trim()
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		if ( 'undefined' !== typeof this.keywordsChecked[ keyword ]) {
+			analysisResult.setText( this.translateScore( this.keywordsChecked[ keyword ], il8n ) )
+			return analysisResult
+		}
+
+		this.keywordsChecked[ keyword ] = true
+		$.ajax({
+			url: rankMath.ajaxurl,
+			type: 'GET',
+			data: {
+				keyword: keyword,
+				action: 'rank_math_is_keyword_new',
+				security: rankMath.security,
+				objectID: rankMath.objectID,
+				objectType: rankMath.objectType
+			}
+		}).done( ( data ) => {
+			this.keywordsChecked[ keyword ] = data.isNew
+			analysisResult.setText( this.translateScore( data.isNew, il8n ) )
+			let li = $( '.seo-check-KeywordNotUsed' )
+
+			li.removeClass( 'test-ok test-fail test-empty test-looking' )
+			li.addClass( 'test-' + result.status )
+			li.find( 'span:eq(0)' ).html( result.message )
+			this.changeKeywordInLink( keyword )
+		})
+
+		analysisResult.setText( il8n.__( 'We are searching in database.', 'rank-math-analyzer' ) )
 
 		return analysisResult
 	}
@@ -30,33 +59,35 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
-	}
-
-	/**
-	 * Calculates the score based on the url length.
-	 *
-	 * @param {Boolean} hasNumber Title has number or not.
-	 *
-	 * @return {Integer} The calculated score.
-	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+		return paper.hasKeyword()
 	}
 
 	/**
 	 * Translates the score to a message the user can understand.
 	 *
-	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
+	 * @param {Boolean} isNewKeyword Is the selected keyword new or not.
+	 * @param {Jed}     i18n         The object used for translations.
 	 *
 	 * @return {string} The translated string.
 	 */
-	translateScore( analysisResult, i18n ) {
-		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+	translateScore( isNewKeyword, i18n ) {
+		return isNewKeyword ?
+			i18n.__( 'You haven\'t used this Focus Keyword before.', 'rank-math-analyzer' ) :
+			i18n.sprintf(
+				i18n.__( 'You have %1$s this Focus Keyword.', 'rank-math-analyzer' ),
+				'<a target="_blank" class="focus-keyword-link" href="' + rankMath.assessor.focusKeywordLink + '">' + i18n.__( 'already used', 'rank-math-analyzer' ) + '</a>'
+			)
+	}
+
+	changeKeywordInLink( keyword ) {
+		let fkLinkElement = $( '.focus-keyword-link' )
+		if ( fkLinkElement.length ) {
+			fkLinkElement.attr( 'href', fkLinkElement.attr( 'href' )
+				.replace( '%focus_keyword%', keyword )
+				.replace( '%post_type%', rankMath.objectType )
+				.replace( '%yaxonomy%', rankMath.objectType ) )
+		}
 	}
 }
 
-export default TitleHasNumber
+export default KeywordNotUsed
