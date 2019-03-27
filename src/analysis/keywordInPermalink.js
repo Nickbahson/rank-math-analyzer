@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { includes } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class KeywordInPermalink extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,10 +14,13 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const hasKeyword     = includes(
+			paper.getLower( 'permalink' ).replace( /[-_]/ig, '-' ),
+			paper.get( 'keywordPermalink' )
+		)
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		analysisResult.setScore( this.calculateScore( hasKeyword ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -30,18 +34,18 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasKeyword() && paper.hasPermalink()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasKeyword Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasKeyword ) {
+		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 4 ) : null
 	}
 
 	/**
@@ -59,4 +63,4 @@ class TitleHasNumber extends Analysis {
 	}
 }
 
-export default TitleHasNumber
+export default KeywordInPermalink

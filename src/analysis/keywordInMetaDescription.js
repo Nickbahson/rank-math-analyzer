@@ -31,7 +31,7 @@ class KeywordInMetaDescription extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasDescription()
+		return paper.hasKeyword() && paper.hasDescription()
 	}
 
 	/**
