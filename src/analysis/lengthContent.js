@@ -52,8 +52,8 @@ class LengthContent extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( wordCount ) {
-		scores     = this.getScores()
-		boundaries = this.getBoundaries()
+		const scores     = this.getScores()
+		const boundaries = this.getBoundaries()
 
 		if ( boundaries.recommended <= wordCount ) {
 			return scores.recommended

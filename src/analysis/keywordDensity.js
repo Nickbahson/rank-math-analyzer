@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { inRange } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class KeywordDensity extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,11 +14,28 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const stripTags      = researcher.get( 'stripTags' )
+		let wordCount        = researcher.get( 'wordCount' )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		wordCount = wordCount( paper.getTextLower() )
+		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination() ) {
+			return null
+		}
+
+		// Keyword Density & Focus Keyword occurrences
+		const regex          = new RegExp( paper.getKeywordCombination().join( '|' ), 'gi' )
+		const count          = ( stripTags( paper.getText() ).match( regex ) || []).length
+		const keywordDensity = ( ( count / words.length ) * 100 ).toFixed( 2 )
+
+		analysisResult.setScore( this.calculateScore( keywordDensity ) )
+		analysisResult.setText(
+			il8n.sprintf(
+				i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' ),
+				keywordDensity,
+				count
+			)
+		)
 
 		return analysisResult
 	}
@@ -30,33 +48,45 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasText()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} keywordDensity Title has number or not.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( keywordDensity ) {
+		const scores = this.getScores()
+
+		if ( 0.5 > keywordDensity || 2.5 < keywordDensity ) {
+			return scores.fail
+		}
+
+		if ( inRange( keywordDensity, 0.5, 0.75 ) ) {
+			return scores.fair
+		}
+
+		if ( inRange( keywordDensity, 0.76, 1.0 ) ) {
+			return scores.good
+		}
+
+		return scores.best
 	}
 
-	/**
-	 * Translates the score to a message the user can understand.
-	 *
-	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
-	 *
-	 * @return {string} The translated string.
-	 */
-	translateScore( analysisResult, i18n ) {
-		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+	getScores() {
+		return rankMath.hooks.applyFilters(
+			'rankMath/analysis/keywordDensity/score',
+			{
+				fail: 0,
+				fair: 2,
+				good: 3,
+				best: 6
+			}
+		)
 	}
 }
 
-export default TitleHasNumber
+export default KeywordDensity

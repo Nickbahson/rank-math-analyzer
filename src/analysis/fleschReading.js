@@ -50,8 +50,8 @@ class FleschReading extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		scores    = this.getScores()
-		boundaries = this.getBoundaries()
+		const scores     = this.getScores()
+		const boundaries = this.getBoundaries()
 
 		if ( boundaries.veryEasy < score ) {
 			return { score: scores.veryEasy, note: 'very easy' }

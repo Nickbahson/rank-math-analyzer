@@ -37,12 +37,26 @@ class Paper {
 		this.text = this.setText( text )
 	}
 
-	get( attribute ) {
-		return has( this.args, attribute ) ? this.args[attribute] : ''
+	/**
+	 * Get argument value.
+	 *
+	 * @param {String} id Argument id to get value.
+	 *
+	 * @return {Mixed} Return value.
+	 */
+	get( id ) {
+		return has( this.args, id ) ? this.args[id] : ''
 	}
 
-	getLower( attribute ) {
-		return this.get( attribute + 'Lower' )
+	/**
+	 * Get argument value in lower-case.
+	 *
+	 * @param {String} id Argument id to get value.
+	 *
+	 * @return {Mixed} Return value.
+	 */
+	getLower( id ) {
+		return this.get( id + 'Lower' )
 	}
 
 	/**
@@ -69,21 +83,11 @@ class Paper {
 	 * @param {String} keyword [description]
 	 */
 	setKeyword( keyword ) {
-		this.args.keyword             = keyword
-		this.args.keywordLower        = keyword.toLowerCase()
-		// this.args.keywordPlurals      = false
-		// this.args.keywordPermalink    = false
-		// this.args.keywordCombinations = false
-		//
-		// if ( '' !== keyword ) {
-		// 	this.keywordPlurals   = new Map()
-		// 	this.keywordPermalink = slugify( removePunctuation( this.keywordLower.split( '.' ).join( '' ).replace( /[-_]/ig, '-' ) ) )
-		// 	getWords( this.keywordLower ).forEach( function( word ) {
-		// 		this.keywordPlurals.set( word, pluralize.get( word ) )
-		// 	}, this )
-		// 	this.keywordCombinations = combinations( this.keywordPlurals )
-		// 	this.keywordCombinations.push( this.keywordLower )
-		// }
+		this.args.keyword        = keyword
+		this.args.keywordLower   = keyword.toLowerCase()
+		this.keywordPlurals      = false
+		this.keywordPermalink    = false
+		this.keywordCombinations = false
 	}
 
 	/**
@@ -270,6 +274,56 @@ class Paper {
 	 */
 	getLocale() {
 		return this.args.locale
+	}
+
+	/**
+	 * Get keyword combinations.
+	 *
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 *
+	 * @return {Boolean|Array}
+	 */
+	getKeywordCombination( researcher ) {
+
+		// Early Bail!!
+		if ( ! this.hasKeyword() ) {
+			return false
+		}
+
+		if ( false === this.keywordCombinations ) {
+			this.generateCombinations( researcher )
+		}
+
+		return this.keywordCombinations
+	}
+
+	/**
+	 * Generate keyword combinations.
+	 *
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 */
+	generateCombinations( researcher ) {
+		const keywordLower = this.getLower( 'keyword' )
+
+		// Researches.
+		const slugify           = researcher.getResearch( 'slugify' )
+		const getWords          = researcher.getResearch( 'getWords' )
+		const pluralize         = researcher.getResearch( 'pluralize' )
+		const combinations      = researcher.getResearch( 'combinations' )
+		const removePunctuation = researcher.getResearch( 'removePunctuation' )
+
+		// Plurals.
+		this.keywordPlurals   = new Map()
+		getWords( keywordLower ).forEach( function( word ) {
+			this.keywordPlurals.set( word, pluralize.get( word ) )
+		}, this )
+
+		// Permalink.
+		this.keywordPermalink = slugify( removePunctuation( keywordLower.split( '.' ).join( '' ).replace( /[-_]/ig, '-' ) ) )
+
+		// Combinations.
+		this.keywordCombinations = combinations( this.keywordPlurals )
+		this.keywordCombinations.push( keywordLower )
 	}
 }
 
