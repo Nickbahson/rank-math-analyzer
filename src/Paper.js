@@ -32,6 +32,7 @@ class Paper {
 			description: '',
 			url: '',
 			permalink: '',
+			thumbnailAlt: '',
 			locale: 'en_US'
 		})
 		this.text = this.setText( text )
@@ -274,6 +275,34 @@ class Paper {
 	 */
 	getLocale() {
 		return this.args.locale
+	}
+
+	/**
+	 * Check whether a thumbnailAlt is available
+	 *
+	 * @return {Boolean} Returns true if the Paper has a thumbnailAlt.
+	 */
+	hasThumbnailAltText() {
+		return '' !== this.args.thumbnailAlt
+	}
+
+	/**
+	 * Return the thumbnailAlt, or an empty string of no thumbnailAlt is available.
+	 *
+	 * @return {String} Returns the thumbnailAlt.
+	 */
+	getThumbnailAltText() {
+		return this.args.thumbnailAlt
+	}
+
+	/**
+	 * Set the thumbnailAlt.
+	 *
+	 * @param {String} thumbnailAlt The thumbnailAlt.
+	 */
+	setThumbnailAltText( thumbnailAlt ) {
+		this.args.thumbnailAlt      = thumbnailAlt
+		this.args.thumbnailAltLower = thumbnailAlt.toLowerCase()
 	}
 
 	/**
