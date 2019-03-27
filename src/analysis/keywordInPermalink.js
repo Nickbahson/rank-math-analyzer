@@ -45,7 +45,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 4 ) : null
+		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
 	}
 
 	/**
@@ -58,8 +58,8 @@ class KeywordInPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword used in the URL.', 'rank-math-analyzer' ) :
+			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math-analyzer' )
 	}
 }
 

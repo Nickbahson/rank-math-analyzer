@@ -1,7 +1,8 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import { includes } from 'lodash'
 
-class TitleHasNumber extends Analysis {
+class KeywordInTitle extends Analysis {
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,10 +14,10 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, il8n ) {
-		const analysisResult  = new AnalysisResult
-		const hasNumber       = /\d+/.test( paper.getTitle() )
+		const analysisResult = new AnalysisResult
+		const hasKeyword     = includes( paper.getLower( 'title' ), paper.getLower( 'keyword' ) )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
+		analysisResult.setScore( this.calculateScore( hasKeyword ) )
 		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
 
 		return analysisResult
@@ -30,18 +31,20 @@ class TitleHasNumber extends Analysis {
 	 * @return {boolean} True when there is text.
 	 */
 	isApplicable( paper ) {
-		return paper.hasTitle()
+		return paper.hasKeyword() && paper.hasTitle()
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Boolean} hasKeyword Title has number or not.
+	 * @param {Paper}   paper      The paper to use for the assessment.
 	 *
 	 * @return {Integer} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+	calculateScore( hasKeyword, paper ) {
+		const score = 'en' === paper.getLocale().substring( 0, 2 ) ? 30 : 32
+		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInTitle/score', score ) : null
 	}
 
 	/**
@@ -54,9 +57,9 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'Hurray! You\'re using Focus Keyword in the SEO Title.', 'rank-math-analyzer' ) :
+			i18n.__( 'Focus Keyword does not appear in the SEO title.', 'rank-math-analyzer' )
 	}
 }
 
-export default TitleHasNumber
+export default KeywordInTitle
