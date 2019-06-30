@@ -5,7 +5,8 @@ const LodashPlugin = require( 'lodash-webpack-plugin' )
 
 module.exports = {
 	entry: {
-		app: './src/index.js'
+		app: './src/index.js',
+		analyzer: './src/library.js'
 	},
 	output: {
 		path: resolve( __dirname, './dist' ),
