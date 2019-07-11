@@ -14,7 +14,7 @@ class LinksHasInternal extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult = new AnalysisResult
-		const linkStatistics = researcher.get( 'getLinkStats' )
+		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
@@ -52,7 +52,7 @@ class LinksHasInternal extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasInternal ) {
-		return hasInternal ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
+		return hasInternal ? wp.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
 	}
 
 	/**

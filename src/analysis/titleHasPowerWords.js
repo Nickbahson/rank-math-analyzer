@@ -49,7 +49,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasPowerWords ) {
-		return hasPowerWords ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
+		return hasPowerWords ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
 	}
 
 	/**

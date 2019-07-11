@@ -81,7 +81,7 @@ class FleschReading extends Analysis {
 	}
 
 	getBoundaries() {
-		return rankMath.hooks.applyFilters(
+		return wp.hooks.applyFilters(
 			'rankMath/analysis/fleschReading/boundaries',
 			{
 				veryEasy: 90,
@@ -96,7 +96,7 @@ class FleschReading extends Analysis {
 	}
 
 	getScores() {
-		return rankMath.hooks.applyFilters(
+		return wp.hooks.applyFilters(
 			'rankMath/analysis/fleschReading/score',
 			{
 				veryEasy: 6,

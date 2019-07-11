@@ -41,7 +41,7 @@ class TitleHasNumber extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+		return hasNumber ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
 	}
 
 	/**

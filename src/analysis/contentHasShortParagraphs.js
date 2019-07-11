@@ -14,7 +14,7 @@ class ContentHasShortParagraphs extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult   = new AnalysisResult
-		const getParagraphs    = researcher.get( 'getParagraphs' )
+		const getParagraphs    = researcher.getResearch( 'getParagraphs' )
 		const paragraphs       = getParagraphs( paper.getText() )
 		const hasBigParagraphs = paragraphs.some( ( paragraph ) => {
 			return 120 < paragraph.wordCount
@@ -45,7 +45,7 @@ class ContentHasShortParagraphs extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasBigParagraphs ) {
-		return hasBigParagraphs ? null : rankMath.hooks.applyFilters( 'rankMath/analysis/contentHasShortParagraphs/score', 3 )
+		return hasBigParagraphs ? null : wp.hooks.applyFilters( 'rankMath/analysis/contentHasShortParagraphs/score', 3 )
 	}
 
 	/**

@@ -1,4 +1,5 @@
 import { defaults, has } from 'lodash'
+import normalizeQuotes from './helpers/normalizeQuotes'
 
 class Paper {
 
@@ -25,13 +26,13 @@ class Paper {
 
 		args = args || {}
 		this.args = defaults( args, {
+			title: '',
 			keyword: '',
 			synonyms: '',
-			title: '',
 			titleWidth: 0,
-			description: '',
 			url: '',
 			permalink: '',
+			description: '',
 			thumbnailAlt: '',
 			locale: 'en_US'
 		})
@@ -115,8 +116,8 @@ class Paper {
 	 * @param {String} title The title
 	 */
 	setTitle( title ) {
-		this.args.title      = title
-		this.args.titleLower = title.toLowerCase()
+		this.args.title      = normalizeQuotes( title )
+		this.args.titleLower = this.args.title.toLowerCase()
 	}
 
 	/**
@@ -189,8 +190,8 @@ class Paper {
 	 * @param {String} description The description.
 	 */
 	setDescription( description ) {
-		this.args.description      = description
-		this.args.descriptionLower = description.toLowerCase()
+		this.args.description      = normalizeQuotes( description )
+		this.args.descriptionLower = this.args.description.toLowerCase()
 	}
 
 	/**
@@ -238,6 +239,7 @@ class Paper {
 			.replace( /<style[^>]*>.*?<\/style>/gi, '' )
 			.replace( /&\S+?;/g, '&' )
 			.replace( /<!--[\s\S]*?(?:-->)/g, '' )
+		this.text      = normalizeQuotes( this.text )
 		this.textLower = this.text.toLowerCase()
 	}
 

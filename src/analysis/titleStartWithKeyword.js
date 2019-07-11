@@ -44,7 +44,7 @@ class TitleStartWithKeyword extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( startWithKeyword ) {
-		return startWithKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleStartWithKeyword/score', 3 ) : null
+		return startWithKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/titleStartWithKeyword/score', 3 ) : null
 	}
 
 	/**

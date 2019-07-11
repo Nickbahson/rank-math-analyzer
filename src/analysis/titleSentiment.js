@@ -1,7 +1,7 @@
 import Sentiment from 'sentiment'
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
-import sentimentWords from './config/sentimentWords'
+import sentimentWords from '../config/sentimentWords'
 
 class TitleSentiment extends Analysis {
 
@@ -44,7 +44,7 @@ class TitleSentiment extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( sentimentScore ) {
-		return 0 !== sentimentScore ? rankMath.hooks.applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
+		return 0 !== sentimentScore ? wp.hooks.applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
 	}
 
 	/**

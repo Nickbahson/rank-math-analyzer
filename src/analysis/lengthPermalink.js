@@ -46,7 +46,7 @@ class LengthPermalink extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( permalink ) {
-		return 75 < permalink.length ? null : rankMath.hooks.applyFilters( 'rankMath/analysis/permalinkLength/score', 4 )
+		return 75 < permalink.length ? null : wp.hooks.applyFilters( 'rankMath/analysis/permalinkLength/score', 4 )
 	}
 
 	/**

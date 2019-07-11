@@ -78,7 +78,7 @@ class ContentHasAssets extends Analysis {
 			score += 2
 		}
 
-		return Math.min( rankMath.hooks.applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
+		return Math.min( wp.hooks.applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
 	}
 
 	/**

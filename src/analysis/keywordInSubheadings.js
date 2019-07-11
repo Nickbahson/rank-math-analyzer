@@ -43,7 +43,7 @@ class KeywordInSubheadings extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInSubheadings/score', 3 ) : null
+		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInSubheadings/score', 3 ) : null
 	}
 
 	/**

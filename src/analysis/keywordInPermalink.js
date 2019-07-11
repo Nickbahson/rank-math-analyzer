@@ -45,7 +45,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
+		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
 	}
 
 	/**

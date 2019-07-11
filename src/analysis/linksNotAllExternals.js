@@ -14,7 +14,7 @@ class LinksNotAllExternals extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult = new AnalysisResult
-		const linkStatistics = researcher.get( 'getLinkStats' )
+		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
@@ -52,7 +52,7 @@ class LinksNotAllExternals extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? rankMath.hooks.applyFilters( 'rankMath/analysis/linksNotAllExternals/score', 2 ) : null
+		return hasExternalDofollow ? wp.hooks.applyFilters( 'rankMath/analysis/linksNotAllExternals/score', 2 ) : null
 	}
 
 	/**

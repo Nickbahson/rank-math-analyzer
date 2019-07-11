@@ -41,7 +41,7 @@ class ContentHasTOC extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasTOCPlugin ) {
-		return hasTOCPlugin ? rankMath.hooks.applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
+		return hasTOCPlugin ? wp.hooks.applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
 	}
 
 	/**

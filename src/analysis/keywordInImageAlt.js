@@ -60,7 +60,7 @@ class KeywordInImageAlt extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInImageAlt/score', 2 ) : null
+		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInImageAlt/score', 2 ) : null
 	}
 
 	/**

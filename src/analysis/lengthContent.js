@@ -15,7 +15,7 @@ class LengthContent extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult = new AnalysisResult
-		let wordCount        = researcher.get( 'wordCount' )
+		let wordCount        = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
 		if ( false === wordCount || 0 === wordCount.length ) {
@@ -93,7 +93,7 @@ class LengthContent extends Analysis {
 	}
 
 	getBoundaries() {
-		return rankMath.hooks.applyFilters(
+		return wp.hooks.applyFilters(
 			'rankMath/analysis/contentLength/boundaries',
 			{
 				recommended: 2500,
@@ -106,7 +106,7 @@ class LengthContent extends Analysis {
 	}
 
 	getScores() {
-		return rankMath.hooks.applyFilters(
+		return wp.hooks.applyFilters(
 			'rankMath/analysis/contentLength/score',
 			{
 				recommended: 8,

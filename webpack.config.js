@@ -1,11 +1,9 @@
 const { resolve } = require( 'path' )
-const HtmlWebPackPlugin = require( 'html-webpack-plugin' )
 const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' )
 const LodashPlugin = require( 'lodash-webpack-plugin' )
 
 module.exports = {
 	entry: {
-		app: './src/index.js',
 		analyzer: './src/library.js'
 	},
 	output: {
@@ -41,11 +39,6 @@ module.exports = {
 		jquery: 'jQuery'
 	},
 	plugins: [
-		new HtmlWebPackPlugin({
-			template: resolve( __dirname, './public/index.html' ),
-			filename: resolve( __dirname, './dist/index.html' )
-		}),
-
 		new LodashPlugin({
 			collections: true,
 			shorthands: true,
@@ -58,7 +51,6 @@ module.exports = {
 			uglifyOptions: {
 				mangle: true,
 				compress: {
-					warnings: false, // Suppress uglification warnings
 					pure_getters: true,
 					unsafe: true,
 					unsafe_comps: true,

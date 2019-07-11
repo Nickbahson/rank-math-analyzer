@@ -15,7 +15,7 @@ class KeywordIn10Percent extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult = new AnalysisResult
-		let getWords         = researcher.get( 'getWords' )
+		let getWords         = researcher.getResearch( 'getWords' )
 		let words            = getWords( paper.getTextLower() )
 
 		if ( false === words || 0 === words.length ) {
@@ -53,7 +53,7 @@ class KeywordIn10Percent extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordIn10Percent/score', 3 ) : null
+		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordIn10Percent/score', 3 ) : null
 	}
 
 	/**

@@ -44,7 +44,7 @@ class KeywordInTitle extends Analysis {
 	 */
 	calculateScore( hasKeyword, paper ) {
 		const score = 'en' === paper.getLocale().substring( 0, 2 ) ? 30 : 32
-		return hasKeyword ? rankMath.hooks.applyFilters( 'rankMath/analysis/keywordInTitle/score', score ) : null
+		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInTitle/score', score ) : null
 	}
 
 	/**

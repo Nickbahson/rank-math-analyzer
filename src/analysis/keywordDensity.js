@@ -15,8 +15,8 @@ class KeywordDensity extends Analysis {
 	 */
 	getResult( paper, researcher, il8n ) {
 		const analysisResult = new AnalysisResult
-		const stripTags      = researcher.get( 'stripTags' )
-		let wordCount        = researcher.get( 'wordCount' )
+		const stripTags      = researcher.getResearch( 'stripTags' )
+		let wordCount        = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
 		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination() ) {
@@ -77,7 +77,7 @@ class KeywordDensity extends Analysis {
 	}
 
 	getScores() {
-		return rankMath.hooks.applyFilters(
+		return wp.hooks.applyFilters(
 			'rankMath/analysis/keywordDensity/score',
 			{
 				fail: 0,
