@@ -36,7 +36,8 @@ module.exports = {
 		]
 	},
 	externals: {
-		jquery: 'jQuery'
+		jquery: 'jQuery',
+		'@wordpress/wordcount': 'wp.wordcount'
 	},
 	plugins: [
 		new LodashPlugin({

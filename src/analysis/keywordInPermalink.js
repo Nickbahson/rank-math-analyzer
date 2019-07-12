@@ -54,7 +54,7 @@ class KeywordInPermalink extends Analysis {
 	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
 	 * @param {Jed}            i18n           The object used for translations.
 	 *
-	 * @return {string} The translated string.
+	 * @return {String} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?

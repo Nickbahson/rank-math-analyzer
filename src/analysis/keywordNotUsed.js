@@ -68,7 +68,7 @@ class KeywordNotUsed extends Analysis {
 	 * @param {Boolean} isNewKeyword Is the selected keyword new or not.
 	 * @param {Jed}     i18n         The object used for translations.
 	 *
-	 * @return {string} The translated string.
+	 * @return {String} The translated string.
 	 */
 	translateScore( isNewKeyword, i18n ) {
 		return isNewKeyword ?
