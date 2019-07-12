@@ -4,12 +4,12 @@ import {
 	isUndefined
 } from 'lodash'
 
-// import combinations from './researches/combinations'
-// import fleschReading from './researches/fleschReading'
-// import getLinkStats from './researches/getLinkStats'
+import combinations from './researches/combinations'
+import fleschReading from './researches/fleschReading'
+import getLinkStats from './researches/getLinkStats'
 import getParagraphs from './researches/getParagraphs'
 import getWords from './researches/getWords'
-// import pluralize from './researches/pluralize'
+import Pluralize from './researches/pluralize'
 import removePunctuation from './researches/removePunctuation'
 import slugify from './researches/slugify'
 import stripTags from './researches/stripTags'
@@ -26,7 +26,16 @@ class Researcher {
 	constructor( paper ) {
 		this.setPaper( paper )
 		this.researches = {
-			slugify
+			combinations,
+			fleschReading,
+			getLinkStats,
+			getParagraphs,
+			getWords,
+			pluralize: new Pluralize,
+			removePunctuation,
+			slugify,
+			stripTags,
+			wordCount
 		}
 	}
 
