@@ -1,4 +1,4 @@
-import { defaults, has } from 'lodash'
+import { defaults, has, isUndefined } from 'lodash'
 import normalizeQuotes from './helpers/normalizeQuotes'
 
 class Paper {
@@ -36,7 +36,7 @@ class Paper {
 			thumbnailAlt: '',
 			locale: 'en_US'
 		})
-		this.text = this.setText( text )
+		this.setText( isUndefined( text ) ? '' : text )
 	}
 
 	/**
@@ -259,6 +259,15 @@ class Paper {
 	 */
 	getUrl() {
 		return this.args.url
+	}
+
+	/**
+	 * Set the url.
+	 *
+	 * @param {String} url The url.
+	 */
+	setUrl( url ) {
+		this.args.url = url
 	}
 
 	/**
