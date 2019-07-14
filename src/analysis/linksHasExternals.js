@@ -8,24 +8,24 @@ class LinksHasExternals extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult = new AnalysisResult
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
-			analysisResult.setText( il8n.__( 'Link out to external resources.', 'rank-math-analyzer' ) )
+			analysisResult.setText( i18n.__( 'Link out to external resources.', 'rank-math-analyzer' ) )
 			return analysisResult
 		}
 
 		analysisResult.setScore( this.calculateScore( 0 < statistics.externalTotal ) )
 		analysisResult.setText(
 			i18n.sprintf(
-				this.translateScore( analysisResult, il8n ),
+				this.translateScore( analysisResult, i18n ),
 				statistics.externalTotal
 			)
 		)

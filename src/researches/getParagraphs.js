@@ -1,4 +1,4 @@
-import filter from 'lodash/filter'
+import { filter } from 'lodash'
 import wordCount from './wordCount'
 import matchParagraphs from '../helpers/matchParagraphs'
 

@@ -1,5 +1,5 @@
 import urlMethods from 'url'
-import includes from 'lodash/includes'
+import { includes } from 'lodash'
 
 const urlFromAnchorRegex = /href=(["'])([^"']+)\1/i
 

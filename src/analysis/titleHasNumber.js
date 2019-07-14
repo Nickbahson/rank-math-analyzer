@@ -8,16 +8,16 @@ class TitleHasNumber extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult = new AnalysisResult
 		const hasNumber      = /\d+/.test( paper.getTitle() )
 
 		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}

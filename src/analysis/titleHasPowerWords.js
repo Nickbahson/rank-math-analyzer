@@ -9,11 +9,11 @@ class TitleHasPowerWords extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult   = new AnalysisResult
 		const title            = paper.getLower( 'title' )
 		const powerWordsInText = rankMath.assessor.powerWords.filter( word => includes( title, word ) )
@@ -22,7 +22,7 @@ class TitleHasPowerWords extends Analysis {
 		analysisResult.setScore( this.calculateScore( hasPowerWords ) )
 		analysisResult.setText(
 			i18n.sprintf(
-				this.translateScore( analysisResult, il8n ),
+				this.translateScore( analysisResult, i18n ),
 				powerWordsInText.length
 			)
 		)

@@ -1,4 +1,4 @@
-import count from '@wordpress/wordcount'
+import { count } from '@wordpress/wordcount'
 
 /**
  * Calculates the wordcount of a certain text.
@@ -7,4 +7,7 @@ import count from '@wordpress/wordcount'
  *
  * @returns {int} The word count of the given text.
  */
-export default text => count( text, 'words' )
+
+export default ( text ) => {
+		return count( text, 'words' )
+}

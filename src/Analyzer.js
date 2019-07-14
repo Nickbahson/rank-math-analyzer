@@ -57,6 +57,7 @@ class Analyzer {
 		this.results = map( analyses, ( analysis ) => {
 			return analysis.getResult( paper, this.researcher, this.i18n )
 		})
+		console.log( this.results )
 	}
 
 	/**
@@ -124,6 +125,8 @@ class Analyzer {
 
 		if ( has( this.options, 'analyses' ) && ! isUndefined( this.options.analyses ) ) {
 			this.analyses = pick( this.defaultAnalyses, this.options.analyses )
+		} else {
+			this.analyses = this.defaultAnalyses
 		}
 	}
 

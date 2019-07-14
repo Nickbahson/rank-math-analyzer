@@ -9,28 +9,28 @@ class KeywordDensity extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult = new AnalysisResult
 		const stripTags      = researcher.getResearch( 'stripTags' )
 		let wordCount        = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
-		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination() ) {
+		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination( researcher ) ) {
 			return null
 		}
 
 		// Keyword Density & Focus Keyword occurrences
-		const regex          = new RegExp( paper.getKeywordCombination().join( '|' ), 'gi' )
+		const regex          = new RegExp( paper.getKeywordCombination( researcher ).join( '|' ), 'gi' )
 		const count          = ( stripTags( paper.getText() ).match( regex ) || []).length
 		const keywordDensity = ( ( count / words.length ) * 100 ).toFixed( 2 )
 
 		analysisResult.setScore( this.calculateScore( keywordDensity ) )
 		analysisResult.setText(
-			il8n.sprintf(
+			i18n.sprintf(
 				i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' ),
 				keywordDensity,
 				count

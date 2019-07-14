@@ -9,20 +9,20 @@ class FleschReading extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult  = new AnalysisResult
 		const fleschReading   = researcher.getResearch( 'fleschReading' )
-		const fleschScore     = fleschReading.calculate( paper.getText() ).ease
+		const fleschScore     = fleschReading( paper.getText() ).ease
 		const calculatedScore = this.calculateScore( fleschScore )
 
 		analysisResult.setScore( calculatedScore.score )
 		analysisResult.setText(
-			il8n.sprintf(
-				il8n.__( 'Your Flesch Readability score is %1$s and is regarded as %2$s', 'rank-math-analyzer' ),
+			i18n.sprintf(
+				i18n.__( 'Your Flesch Readability score is %1$s and is regarded as %2$s', 'rank-math-analyzer' ),
 				fleschScore,
 				calculatedScore.note
 			)
@@ -45,11 +45,11 @@ class FleschReading extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasNumber Title has number or not.
+	 * @param {Integer} score Ease score.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {Object} The calculated score.
 	 */
-	calculateScore( hasNumber ) {
+	calculateScore( score ) {
 		const scores     = this.getScores()
 		const boundaries = this.getBoundaries()
 

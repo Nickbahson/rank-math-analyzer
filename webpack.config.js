@@ -1,6 +1,6 @@
 const { resolve } = require( 'path' )
+const HtmlWebPackPlugin = require( 'html-webpack-plugin' )
 const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' )
-const LodashPlugin = require( 'lodash-webpack-plugin' )
 
 module.exports = {
 	entry: {
@@ -37,15 +37,15 @@ module.exports = {
 	},
 	externals: {
 		jquery: 'jQuery',
+		lodash: 'window.lodash',
 		'@wordpress/autop': 'window.wp.autop',
 		'@wordpress/wordcount': 'window.wp.wordcount'
 	},
 	plugins: [
-		new LodashPlugin({
-			collections: true,
-			shorthands: true,
-			currying: true,
-			placeholders: true
+		new HtmlWebPackPlugin({
+			inject: false,
+			template: resolve( __dirname, './public/index.html' ),
+			filename: resolve( __dirname, './dist/index.html' )
 		}),
 
 		// Adding our UglifyJS plugin

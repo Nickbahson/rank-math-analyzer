@@ -9,11 +9,11 @@ class KeywordInImageAlt extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult = new AnalysisResult
 		let keyword          = paper.getLower( 'keyword' )
 
@@ -24,7 +24,7 @@ class KeywordInImageAlt extends Analysis {
 		let regex = new RegExp( '<img[^>]*alt=[\'"][^\'"]*' + keyword.replace( / /g, '.*' ) + '[^\'"]*[\'"]', 'gi' )
 		if ( null !== paper.getTextLower().match( regex ) || keyword === paper.getLower( 'thumbnailAlt' ) ) {
 			analysisResult.setScore( this.calculateScore( true ) )
-			analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+			analysisResult.setText( this.translateScore( analysisResult, i18n ) )
 
 			return analysisResult
 		}
@@ -35,7 +35,7 @@ class KeywordInImageAlt extends Analysis {
 
 		if ( hasGallery ) {
 			analysisResult.setScore( this.calculateScore( true ) )
-			analysisResult.setText( il8n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math-analyzer' ) )
+			analysisResult.setText( i18n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math-analyzer' ) )
 		}
 
 		return analysisResult

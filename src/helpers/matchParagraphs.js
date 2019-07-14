@@ -1,4 +1,4 @@
-import map from 'lodash/map'
+import { map } from 'lodash'
 import { autop } from '@wordpress/autop'
 import stripHTML from '../researches/stripTags'
 import stripShortcodes from './stripShortcodes'

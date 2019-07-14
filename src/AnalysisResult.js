@@ -5,20 +5,11 @@ import { isUndefined, isNumber } from 'lodash'
  */
 class AnalysisResult {
 
-	/**
-	 * Has score.
-	 */
-	hasScore = false
-
-	/**
-	 * Total score for analysis.
-	 */
-	score = 0
-
-	/**
-	 * Text.
-	 */
-	text = ''
+	constructor() {
+		this.has = false
+		this.score = 0
+		this.text = ''
+	}
 
 	/**
 	 * Check if a score is available.
@@ -26,7 +17,7 @@ class AnalysisResult {
 	 * @return {Boolean}
 	 */
 	hasScore() {
-		return this.hasScore
+		return this.has
 	}
 
 	/**
@@ -46,7 +37,7 @@ class AnalysisResult {
 	setScore( score ) {
 		if ( isNumber( score ) ) {
 			this.score = score
-			this.hasScore = true
+			this.has = true
 		}
 	}
 

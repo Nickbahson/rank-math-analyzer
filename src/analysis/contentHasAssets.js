@@ -8,11 +8,11 @@ class ContentHasAssets extends Analysis {
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
 	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     il8n       The i18n-object used for parsing translations.
+	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
-	getResult( paper, researcher, il8n ) {
+	getResult( paper, researcher, i18n ) {
 		const analysisResult = new AnalysisResult
 
 		// Has no content.
@@ -21,9 +21,9 @@ class ContentHasAssets extends Analysis {
 			// But has thumbnail.
 			if ( paper.hasThumbnail() ) {
 				analysisResult.setScore( 1 )
-				analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+				analysisResult.setText( this.translateScore( analysisResult, i18n ) )
 			} else {
-				analysisResult.setText( il8n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math-analyzer' ) )
+				analysisResult.setText( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math-analyzer' ) )
 			}
 
 			return analysisResult
@@ -31,11 +31,11 @@ class ContentHasAssets extends Analysis {
 
 		analysisResult.setScore(
 			this.calculateScore(
-				this.getImages().length,
-				this.getVideos().length
+				this.getImages( paper ).length,
+				this.getVideos( paper ).length
 			)
 		)
-		analysisResult.setText( this.translateScore( analysisResult, il8n ) )
+		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}
