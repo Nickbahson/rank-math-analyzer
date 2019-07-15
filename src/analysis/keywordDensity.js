@@ -20,7 +20,7 @@ class KeywordDensity extends Analysis {
 
 		wordCount = wordCount( paper.getTextLower() )
 		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination( researcher ) ) {
-			return null
+			return analysisResult
 		}
 
 		// Keyword Density & Focus Keyword occurrences

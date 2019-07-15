@@ -1,5 +1,5 @@
 import Researcher from './Researcher'
-import { filter, has, isUndefined, map, pick } from 'lodash'
+import { has, isUndefined, mapValues, pick } from 'lodash'
 
 // Analyses
 import ContentHasAssets from './analysis/contentHasAssets'
@@ -49,15 +49,7 @@ class Analyzer {
 	  */
 	analyze( paper ) {
 		this.researcher.setPaper( paper )
-
-		let analyses = filter( this.analyses, ( analysis ) => {
-			return analysis.isApplicable( paper, this.researcher )
-		})
-
-		this.results = map( analyses, ( analysis ) => {
-			return analysis.getResult( paper, this.researcher, this.i18n )
-		})
-		console.log( this.results )
+		this.results = mapValues( this.analyses, analysis => analysis.getResult( paper, this.researcher, this.i18n ) )
 	}
 
 	/**
@@ -69,14 +61,10 @@ class Analyzer {
 	analyzeSome( analyses, paper ) {
 		this.researcher.setPaper( paper )
 
-		analyses = pick( this.defaultAnalyses, analyses )
-		analyses = filter( this.analyses, ( analysis ) => {
-			return analysis.isApplicable( paper, this.researcher )
-		})
-
-		return map( analyses, ( analysis ) => {
-			return analysis.getResult( paper, this.researcher, this.i18n )
-		})
+		return mapValues(
+			pick( this.defaultAnalyses, analyses ),
+			analysis => analysis.getResult( paper, this.researcher, this.i18n )
+		)
 	}
 
 	/**
@@ -123,10 +111,9 @@ class Analyzer {
 			titleStartWithKeyword: new TitleStartWithKeyword
 		}
 
+		this.analyses = this.defaultAnalyses
 		if ( has( this.options, 'analyses' ) && ! isUndefined( this.options.analyses ) ) {
 			this.analyses = pick( this.defaultAnalyses, this.options.analyses )
-		} else {
-			this.analyses = this.defaultAnalyses
 		}
 	}
 

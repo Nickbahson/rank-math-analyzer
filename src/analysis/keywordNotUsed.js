@@ -41,8 +41,8 @@ class KeywordNotUsed extends Analysis {
 			let li = $( '.seo-check-KeywordNotUsed' )
 
 			li.removeClass( 'test-ok test-fail test-empty test-looking' )
-			li.addClass( 'test-' + result.status )
-			li.find( 'span:eq(0)' ).html( result.message )
+			// li.addClass( 'test-' + result.status )
+			// li.find( 'span:eq(0)' ).html( result.message )
 			this.changeKeywordInLink( keyword )
 		})
 
