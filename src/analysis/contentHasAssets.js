@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class ContentHasAssets extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Content with images and/or video feels more inviting to users. It also helps supplement your textual content.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,29 +24,29 @@ class ContentHasAssets extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 
 		// Has no content.
 		if ( ! paper.hasText() ) {
 
 			// But has thumbnail.
 			if ( paper.hasThumbnail() ) {
-				analysisResult.setScore( 1 )
-				analysisResult.setText( this.translateScore( analysisResult, i18n ) )
-			} else {
-				analysisResult.setText( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math-analyzer' ) )
+				analysisResult
+					.setScore( 1 )
+					.setText( this.translateScore( analysisResult, i18n ) )
 			}
 
 			return analysisResult
 		}
 
-		analysisResult.setScore(
-			this.calculateScore(
-				this.getImages( paper ).length,
-				this.getVideos( paper ).length
+		analysisResult
+			.setScore(
+				this.calculateScore(
+					this.getImages( paper ).length,
+					this.getVideos( paper ).length
+				)
 			)
-		)
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}

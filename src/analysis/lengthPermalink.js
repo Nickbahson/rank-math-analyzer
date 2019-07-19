@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class LengthPermalink extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'URL unavailable. Add a short URL.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Permalink should be at most 75 characters long.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,16 +24,17 @@ class LengthPermalink extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult  = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const permalinkLength = paper.getUrl().length
 
-		analysisResult.setScore( this.calculateScore( permalinkLength ) )
-		analysisResult.setText(
-			i18n.sprintf(
-				this.translateScore( analysisResult, i18n ),
-				permalinkLength
+		analysisResult
+			.setScore( this.calculateScore( permalinkLength ) )
+			.setText(
+				i18n.sprintf(
+					this.translateScore( analysisResult, i18n ),
+					permalinkLength
+				)
 			)
-		)
 
 		return analysisResult
 	}

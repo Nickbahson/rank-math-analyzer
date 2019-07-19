@@ -5,6 +5,17 @@ import { inRange } from 'lodash'
 class FleschReading extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add some content to calculate Flesch Readability score.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Try to make shorter sentences, using less difficult words to improve readability.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -14,7 +25,7 @@ class FleschReading extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult  = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const fleschReading   = researcher.getResearch( 'fleschReading' )
 		const fleschScore     = fleschReading( paper.getText() ).ease
 		const calculatedScore = this.calculateScore( fleschScore )

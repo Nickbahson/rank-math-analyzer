@@ -7,6 +7,16 @@ class KeywordNotUsed extends Analysis {
 	keywordsChecked = {}
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Set a Focus Keyword for this content.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -16,7 +26,7 @@ class KeywordNotUsed extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const keyword        = paper.getLower( 'keyword' ).trim()
 
 		if ( 'undefined' !== typeof this.keywordsChecked[ keyword ]) {

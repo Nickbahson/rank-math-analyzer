@@ -6,6 +6,17 @@ import sentimentWords from '../config/sentimentWords'
 class TitleSentiment extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Titles with positive or negative sentiment work best for higher CTR.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Headlines with a strong emotional sentiment (positive or negative) tend to receive more clicks.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -15,12 +26,13 @@ class TitleSentiment extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const sentiment      = new Sentiment
 		const sentimentScore = sentiment.analyze( paper.getLower( 'title' ), sentimentWords ).score
 
-		analysisResult.setScore( this.calculateScore( sentimentScore ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( sentimentScore ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}
@@ -56,11 +68,18 @@ class TitleSentiment extends Analysis {
 	 * @return {String} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
+		if ( false === rankMath.isUserRegistered ) {
+			return i18n.sprintf(
+				i18n.__( 'Please connect your %s to calculate the Sentiments of the content.', 'rank-math-analyzer' ),
+				'<a href="' + rankMath.assessor.registrationUrl + '" target="_blank">Rank Math account</a>'
+			)
+		}
+
 		return analysisResult.hasScore() ?
 			i18n.__( 'Your title has a positive or a negative sentiment.', 'rank-math-analyzer' ) :
 			i18n.sprintf(
 				i18n.__( 'Your title doesn\'t contain a %1$s word.', 'rank-math-analyzer' ),
-				'<a href="' + rankMath.assessor.sentimentKbLink + '" target="_blank">positive or a negative sentiment</a>'
+				'<a href="' + rankMath.assessor.registrationUrl + '" target="_blank">positive or a negative sentiment</a>'
 			)
 	}
 }

@@ -48,7 +48,9 @@
 <!-- /wp:paragraph -->` )
 		this.paper.setKeyword( 'shakeeb' )
 
-		this.analyzer.analyze( this.paper )
+		this.analyzer.analyze( this.paper ).then( function( results ) {
+			console.log( results )
+		})
 
 	</script>
 </body>

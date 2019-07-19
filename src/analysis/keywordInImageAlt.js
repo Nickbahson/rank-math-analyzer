@@ -5,6 +5,17 @@ import { includes } from 'lodash'
 class KeywordInImageAlt extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add an image with your Focus Keyword as alt text.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'It is recommended to add the focus keyword in the alt attribute of one or more images.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -14,7 +25,7 @@ class KeywordInImageAlt extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		let keyword          = paper.getLower( 'keyword' )
 
 		// Remove duplicate words from keyword.
@@ -23,8 +34,9 @@ class KeywordInImageAlt extends Analysis {
 
 		let regex = new RegExp( '<img[^>]*alt=[\'"][^\'"]*' + keyword.replace( / /g, '.*' ) + '[^\'"]*[\'"]', 'gi' )
 		if ( null !== paper.getTextLower().match( regex ) || keyword === paper.getLower( 'thumbnailAlt' ) ) {
-			analysisResult.setScore( this.calculateScore( true ) )
-			analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+			analysisResult
+				.setScore( this.calculateScore( true ) )
+				.setText( this.translateScore( analysisResult, i18n ) )
 
 			return analysisResult
 		}
@@ -34,8 +46,9 @@ class KeywordInImageAlt extends Analysis {
 		const hasGallery = null !== paper.getTextLower().match( regex )
 
 		if ( hasGallery ) {
-			analysisResult.setScore( this.calculateScore( true ) )
-			analysisResult.setText( i18n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math-analyzer' ) )
+			analysisResult
+				.setScore( this.calculateScore( true ) )
+				.setText( i18n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math-analyzer' ) )
 		}
 
 		return analysisResult

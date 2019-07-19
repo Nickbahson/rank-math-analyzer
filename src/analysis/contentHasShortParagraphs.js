@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class ContentHasShortParagraphs extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add short and concise paragraphs for better readability and UX.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Short paragraphs are easier to read and more pleasing to the eye. Long paragraphs scare the visitor, and they might result to SERPs looking for better readable content.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,15 +24,16 @@ class ContentHasShortParagraphs extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult   = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const getParagraphs    = researcher.getResearch( 'getParagraphs' )
 		const paragraphs       = getParagraphs( paper.getText() )
 		const hasBigParagraphs = paragraphs.some( ( paragraph ) => {
 			return 120 < paragraph.wordCount
 		})
 
-		analysisResult.setScore( this.calculateScore( hasBigParagraphs ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( hasBigParagraphs ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}

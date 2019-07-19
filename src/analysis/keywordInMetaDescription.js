@@ -5,6 +5,17 @@ import { includes } from 'lodash'
 class KeywordInMetaDescription extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add Focus Keyword to your SEO Meta Description.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO description too.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -14,11 +25,12 @@ class KeywordInMetaDescription extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const hasKeyword     = includes( paper.getLower( 'description' ), paper.getLower( 'keyword' ) )
 
-		analysisResult.setScore( this.calculateScore( hasKeyword ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( hasKeyword ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}

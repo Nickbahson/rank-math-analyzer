@@ -1,8 +1,25 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 import { inRange } from 'lodash'
+import links from '../config/links'
 
 class LengthContent extends Analysis {
+
+	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty(
+				i18n.sprintf(
+					i18n.__( 'Content should be %1$s long.', 'rank-math-analyzer' ),
+					'<a href="' + links.contentLength + '" target="_blank">600-2500 words</a>'
+				)
+			)
+			.setTooltip( i18n.__( 'Minimum recommended content length should be 600 words.', 'rank-math-analyzer' ) )
+	}
 
 	/**
 	 * Executes the assessment and return its result
@@ -14,7 +31,7 @@ class LengthContent extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		let wordCount        = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
@@ -22,13 +39,14 @@ class LengthContent extends Analysis {
 			return null
 		}
 
-		analysisResult.setScore( this.calculateScore( wordCount.length ) )
-		analysisResult.setText(
-			i18n.sprintf(
-				this.translateScore( analysisResult, i18n ),
-				wordCount.length
+		analysisResult
+			.setScore( this.calculateScore( wordCount.length ) )
+			.setText(
+				i18n.sprintf(
+					this.translateScore( analysisResult, i18n ),
+					wordCount.length
+				)
 			)
-		)
 
 		return analysisResult
 	}

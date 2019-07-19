@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class TitleHasNumber extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add a number to your title to improve CTR.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Headlines with numbers are 36% more likely to generate clicks, according to research by Conductor.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,11 +24,12 @@ class TitleHasNumber extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const hasNumber      = /\d+/.test( paper.getTitle() )
 
-		analysisResult.setScore( this.calculateScore( hasNumber ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( hasNumber ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}
@@ -41,7 +53,7 @@ class TitleHasNumber extends Analysis {
 	 * @return {Integer} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 4 ) : null
+		return hasNumber ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 1 ) : null
 	}
 
 	/**

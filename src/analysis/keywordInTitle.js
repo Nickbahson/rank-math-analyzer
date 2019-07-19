@@ -5,6 +5,17 @@ import { includes } from 'lodash'
 class KeywordInTitle extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add Focus Keyword to the SEO title.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO post title too.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -14,11 +25,12 @@ class KeywordInTitle extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
-		const hasKeyword     = includes( paper.getLower( 'title' ), paper.getLower( 'keyword' ) )
+		const analysisResult = this.newResult( i18n )
+		const containKeyword = includes( paper.getLower( 'title' ), paper.getLower( 'keyword' ) )
 
-		analysisResult.setScore( this.calculateScore( hasKeyword, paper ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( containKeyword, paper ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}

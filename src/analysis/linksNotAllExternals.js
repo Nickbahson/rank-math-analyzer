@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class LinksNotAllExternals extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'PageRank Sculpting no longer works. Your posts should have a mix of nofollow and DoFollow links.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,7 +24,7 @@ class LinksNotAllExternals extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics     = linkStatistics( paper.getText() )
 
@@ -22,13 +33,14 @@ class LinksNotAllExternals extends Analysis {
 			return analysisResult
 		}
 
-		analysisResult.setScore( this.calculateScore( 0 < statistics.externalDofollow ) )
-		analysisResult.setText(
-			i18n.sprintf(
-				this.translateScore( analysisResult, i18n ),
-				statistics.externalTotal
+		analysisResult
+			.setScore( this.calculateScore( 0 < statistics.externalDofollow ) )
+			.setText(
+				i18n.sprintf(
+					this.translateScore( analysisResult, i18n ),
+					statistics.externalTotal
+				)
 			)
-		)
 
 		return analysisResult
 	}

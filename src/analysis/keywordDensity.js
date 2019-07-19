@@ -5,6 +5,17 @@ import { inRange } from 'lodash'
 class KeywordDensity extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Keyword Density is 0. Aim for around 1% Keyword Density.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'There is no ideal keyword density percentage, but it should not be too high. The most important thing is to keep the copy natural.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -14,7 +25,7 @@ class KeywordDensity extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const stripTags      = researcher.getResearch( 'stripTags' )
 		let wordCount        = researcher.getResearch( 'wordCount' )
 
@@ -28,14 +39,15 @@ class KeywordDensity extends Analysis {
 		const count          = ( stripTags( paper.getText() ).match( regex ) || []).length
 		const keywordDensity = ( ( count / words.length ) * 100 ).toFixed( 2 )
 
-		analysisResult.setScore( this.calculateScore( keywordDensity ) )
-		analysisResult.setText(
-			i18n.sprintf(
-				i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' ),
-				keywordDensity,
-				count
+		analysisResult
+			.setScore( this.calculateScore( keywordDensity ) )
+			.setText(
+				i18n.sprintf(
+					i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' ),
+					keywordDensity,
+					count
+				)
 			)
-		)
 
 		return analysisResult
 	}

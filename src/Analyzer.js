@@ -48,8 +48,15 @@ class Analyzer {
 	  * @param {Paper} paper The paper to run analyses on.
 	  */
 	analyze( paper ) {
-		this.researcher.setPaper( paper )
-		this.results = mapValues( this.analyses, analysis => analysis.getResult( paper, this.researcher, this.i18n ) )
+		return new Promise( ( resolve, reject ) => {
+			this.researcher.setPaper( paper )
+			this.results = mapValues( this.analyses, analysis => {
+				return analysis.isApplicable( paper, this.researcher ) ?
+					analysis.getResult( paper, this.researcher, this.i18n ) :
+					analysis.newResult( this.i18n )
+			})
+			resolve( this.results )
+		})
 	}
 
 	/**
@@ -115,15 +122,6 @@ class Analyzer {
 		if ( has( this.options, 'analyses' ) && ! isUndefined( this.options.analyses ) ) {
 			this.analyses = pick( this.defaultAnalyses, this.options.analyses )
 		}
-	}
-
-	/**
-	 * Get results.
-	 *
-	 * @return {Array}
-	 */
-	getResults() {
-		return this.results
 	}
 }
 

@@ -4,6 +4,17 @@ import AnalysisResult from '../AnalysisResult'
 class LinksHasInternal extends Analysis {
 
 	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Add internal links in your content.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Internal links decrease your bounce rate and improve SEO.', 'rank-math-analyzer' ) )
+	}
+
+	/**
 	 * Executes the assessment and return its result
 	 *
 	 * @param  {Paper}      paper      The paper to run this assessment on.
@@ -13,22 +24,22 @@ class LinksHasInternal extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics     = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
-			analysisResult.setText( i18n.__( 'Add internal links in your content.', 'rank-math-analyzer' ) )
 			return analysisResult
 		}
 
-		analysisResult.setScore( this.calculateScore( 0 < statistics.internalTotal ) )
-		analysisResult.setText(
-			i18n.sprintf(
-				this.translateScore( analysisResult, i18n ),
-				statistics.internalTotal
+		analysisResult
+			.setScore( this.calculateScore( 0 < statistics.internalTotal ) )
+			.setText(
+				i18n.sprintf(
+					this.translateScore( analysisResult, i18n ),
+					statistics.internalTotal
+				)
 			)
-		)
 
 		return analysisResult
 	}

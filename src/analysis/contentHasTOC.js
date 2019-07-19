@@ -1,7 +1,19 @@
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
+import links from '../config/links'
 
 class ContentHasTOC extends Analysis {
+
+	/**
+	 * Create new analysis result instance.
+	 *
+	 * @return {AnalysisResult} New instance.
+	 */
+	newResult( i18n ) {
+		return new AnalysisResult()
+			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math-analyzer' ) )
+	}
 
 	/**
 	 * Executes the assessment and return its result
@@ -13,11 +25,12 @@ class ContentHasTOC extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = new AnalysisResult
+		const analysisResult = this.newResult( i18n )
 		const hasTOCPlugin   = rankMath.assessor.hasTOCPlugin
 
-		analysisResult.setScore( this.calculateScore( hasTOCPlugin ) )
-		analysisResult.setText( this.translateScore( analysisResult, i18n ) )
+		analysisResult
+			.setScore( this.calculateScore( hasTOCPlugin ) )
+			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
 	}
@@ -56,11 +69,11 @@ class ContentHasTOC extends Analysis {
 		return analysisResult.hasScore() ?
 			i18n.sprintf(
 				i18n.__( 'You seem to be using a %1$s to break-down your text.', 'rank-math-analyzer' ),
-				'<a href="' + rankMath.assessor.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
+				'<a href="' + links.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
 			) :
 			i18n.sprintf(
 				i18n.__( 'You don\'t seem to be using a %1$s.', 'rank-math-analyzer' ),
-				'<a href="' + rankMath.assessor.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
+				'<a href="' + links.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
 			)
 	}
 }

@@ -9,6 +9,10 @@ class AnalysisResult {
 		this.has = false
 		this.score = 0
 		this.text = ''
+		this.empty = ''
+		this.tooltip = ''
+
+		return this
 	}
 
 	/**
@@ -37,8 +41,10 @@ class AnalysisResult {
 	setScore( score ) {
 		if ( isNumber( score ) ) {
 			this.score = score
-			this.has = true
+			this.has = 0 < score
 		}
+
+		return this
 	}
 
 	/**
@@ -56,7 +62,7 @@ class AnalysisResult {
 	 * @return {String}
 	 */
 	getText() {
-		return this.text
+		return this.hasText() ? this.text : this.empty
 	}
 
 	/**
@@ -65,11 +71,46 @@ class AnalysisResult {
 	 * @param {String} text The text to be used for the text property
 	 */
 	setText( text ) {
-		if ( isUndefined( text ) ) {
-			text = ''
-		}
+		this.text = isUndefined( text ) ? '' : text
+		return this
+	}
 
-		this.text = text
+	/**
+	 * Set the empty for the analysis.
+	 *
+	 * @param {String} empty The empty to be used for the empty property
+	 */
+	setEmpty( empty ) {
+		this.empty = isUndefined( empty ) ? '' : empty
+		return this
+	}
+
+	/**
+	 * Check if a tooltip is available.
+	 *
+	 * @return {Boolean} Whether or not a tooltip is available.
+	 */
+	hasTooltip() {
+		return '' !== this.tooltip
+	}
+
+	/**
+	 * Get the available tooltip.
+	 *
+	 * @return {String}
+	 */
+	getTooltip() {
+		return this.tooltip
+	}
+
+	/**
+	 * Set the tooltip for the analysis.
+	 *
+	 * @param {String} tooltip The tooltip to be used for the tooltip property
+	 */
+	setTooltip( tooltip ) {
+		this.tooltip = isUndefined( tooltip ) ? '' : tooltip
+		return this
 	}
 }
 
