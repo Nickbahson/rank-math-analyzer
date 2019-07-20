@@ -67,11 +67,11 @@ class Paper {
 	 * @return {Boolean} Returns true if the Paper has a keyword.
 	 */
 	hasKeyword() {
-		return '' !== this.args.keywords
+		return '' !== this.args.keyword
 	}
 
 	/**
-	 * Return the associated keywords or an empty string if no keyword is available.
+	 * Return the associated keyword or an empty string if no keyword is available.
 	 *
 	 * @return {Boolean} Returns Keywords
 	 */
@@ -327,7 +327,7 @@ class Paper {
 
 		// Early Bail!!
 		if ( ! this.hasKeyword() ) {
-			return false
+			return []
 		}
 
 		if ( false === this.keywordCombinations ) {
