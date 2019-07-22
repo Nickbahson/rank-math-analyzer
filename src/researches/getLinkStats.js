@@ -21,8 +21,8 @@ export default ( text ) => {
 	}
 
 	anchors.forEach( ( anchor ) => {
-		let linkType = urlHelper.getLinkType( anchor, rankMath.parentDomain )
-		let linkFollow = urlHelper.checkNofollow( anchor, linkType )
+		let linkType = getLinkType( anchor, rankMath.parentDomain )
+		let linkFollow = checkNofollow( anchor, linkType )
 
 		linkCount[ linkType + 'Total' ]++
 		linkCount[ linkType + linkFollow ]++
