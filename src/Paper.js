@@ -11,16 +11,17 @@ class Paper {
 	/**
 	 * The constructor.
 	 *
-	 * @param {String} text               The text to use in the analysis.
-	 * @param {Object} args               The object containing all arguments.
-	 * @param {Object} [args.keyword]     The main keyword.
-	 * @param {Object} [args.synonyms]    The main keyword's synonyms.
-	 * @param {Object} [args.title]       The SEO title.
-	 * @param {Object} [args.titleWidth]  The width of the title in pixels.
-	 * @param {Object} [args.description] The SEO description.
-	 * @param {Object} [args.url]         The base url + slug.
-	 * @param {Object} [args.permalink]   The slug.
-	 * @param {Object} [args.locale]      The locale.
+	 * @param {String} text                The text to use in the analysis.
+	 * @param {Object} args                The object containing all arguments.
+	 * @param {Object} [args.title]        The SEO title.
+	 * @param {Object} [args.keyword]      The main keyword.
+	 * @param {Object} [args.titleWidth]   The width of the title in pixels.
+	 * @param {Object} [args.url]          The base url + slug.
+	 * @param {Object} [args.permalink]    The slug.
+	 * @param {Object} [args.description]  The SEO description.
+	 * @param {Object} [args.locale]       The locale.
+	 * @param {Object} [args.thumbnail]    The thumbnail.
+	 * @param {Object} [args.thumbnailAlt] The thumbnail alt text.
 	 */
 	constructor( text, args ) {
 
@@ -28,11 +29,11 @@ class Paper {
 		this.args = defaults( args, {
 			title: '',
 			keyword: '',
-			synonyms: '',
 			titleWidth: 0,
 			url: '',
 			permalink: '',
 			description: '',
+			thumbnail: '',
 			thumbnailAlt: '',
 			locale: 'en_US'
 		})
@@ -286,6 +287,33 @@ class Paper {
 	 */
 	getLocale() {
 		return this.args.locale
+	}
+
+	/**
+	 * Check whether a thumbnail is available
+	 *
+	 * @return {Boolean} Returns true if the Paper has a thumbnail.
+	 */
+	hasThumbnail() {
+		return '' !== this.args.thumbnail
+	}
+
+	/**
+	 * Return the thumbnail, or an empty string of no thumbnail is available.
+	 *
+	 * @return {String} Returns the thumbnail.
+	 */
+	getThumbnail() {
+		return this.args.thumbnail
+	}
+
+	/**
+	 * Set the thumbnail.
+	 *
+	 * @param {String} thumbnail The thumbnail.
+	 */
+	setThumbnail( thumbnail ) {
+		this.args.thumbnail = thumbnail
 	}
 
 	/**
