@@ -66,12 +66,16 @@ class Analyzer {
 	  * @param {Paper} paper    The paper to run analyses on.
 	  */
 	analyzeSome( analyses, paper ) {
-		this.researcher.setPaper( paper )
 
-		return mapValues(
-			pick( this.defaultAnalyses, analyses ),
-			analysis => analysis.getResult( paper, this.researcher, this.i18n )
-		)
+		return new Promise( ( resolve, reject ) => {
+			this.researcher.setPaper( paper )
+			this.results = mapValues( pick( this.defaultAnalyses, analyses ), analysis => {
+				return analysis.isApplicable( paper, this.researcher ) ?
+					analysis.getResult( paper, this.researcher, this.i18n ) :
+					analysis.newResult( this.i18n )
+			})
+			resolve( this.results )
+		})
 	}
 
 	/**
