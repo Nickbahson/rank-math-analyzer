@@ -1,6 +1,14 @@
+/**
+ * External dependencies
+ */
+
 import { filter } from 'lodash'
-import wordCount from './wordCount'
-import matchParagraphs from '../helpers/matchParagraphs'
+
+/**
+ * Internal dependencies
+ */
+import wordCount from '@researches/wordCount'
+import matchParagraphs from '@helpers/matchParagraphs'
 
 /**
  * Gets all paragraphs and their word counts from the text.

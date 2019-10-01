@@ -1,5 +1,8 @@
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
 
 class LengthPermalink extends Analysis {
 	/**

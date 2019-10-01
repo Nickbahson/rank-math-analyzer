@@ -1,7 +1,18 @@
+/**
+ * External dependencies
+ */
 import { map } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { autop } from '@wordpress/autop'
-import stripHTML from '../researches/stripTags'
-import stripShortcodes from './stripShortcodes'
+
+/**
+ * Internal dependencies
+ */
+import stripHTML from '@researches/stripTags'
+import stripShortcodes from '@helpers/stripShortcodes'
 
 /**
  * Matches the paragraphs in <p>-tags and returns the text in them.

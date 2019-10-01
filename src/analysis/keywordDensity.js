@@ -1,6 +1,13 @@
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
+/**
+ * External dependencies
+ */
 import { inRange } from 'lodash'
+
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
 
 class KeywordDensity extends Analysis {
 	/**

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { uniq, includes, isUndefined } from 'lodash'
 
 export default ( plurals ) => {

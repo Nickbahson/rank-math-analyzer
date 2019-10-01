@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
 import Sentiment from 'sentiment'
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
-import sentimentWords from '../config/sentimentWords'
+
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
+import sentimentWords from '@config/sentimentWords'
 
 class TitleSentiment extends Analysis {
 	/**

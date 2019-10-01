@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import { uncountablesPlurals, pluralizationRules, irregularPluralsRules } from '@config/pluralize'
 
 /**

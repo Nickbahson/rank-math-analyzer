@@ -1,11 +1,18 @@
+/**
+ * External dependencies
+ */
 import { flow, filter } from 'lodash'
-import stripTags from '../researches/stripTags'
-import stripHTMLComments from './stripHTMLComments'
-import stripShortcodes from './stripShortcodes'
-import stripSpaces from './stripSpaces'
-import stripHTMLEntities from './stripHTMLEntities'
-import stripConnectors from './stripConnectors'
 import English from 'parse-english'
+
+/**
+ * Internal dependencies
+ */
+import stripTags from '@researches/stripTags'
+import stripHTMLComments from '@helpers/stripHTMLComments'
+import stripShortcodes from '@helpers/stripShortcodes'
+import stripSpaces from '@helpers/stripSpaces'
+import stripHTMLEntities from '@helpers/stripHTMLEntities'
+import stripConnectors from '@helpers/stripConnectors'
 
 /**
  * Count Sentences

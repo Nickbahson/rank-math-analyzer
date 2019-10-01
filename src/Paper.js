@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
 import { defaults, has, isUndefined } from 'lodash'
-import normalizeQuotes from './helpers/normalizeQuotes'
+
+/**
+ * Internal dependencies
+ */
+import normalizeQuotes from '@helpers/normalizeQuotes'
 
 class Paper {
 	/**

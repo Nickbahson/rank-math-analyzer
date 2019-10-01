@@ -1,29 +1,34 @@
-import Researcher from './Researcher'
+/**
+ * External dependencies
+ */
 import { has, isUndefined, mapValues, pick } from 'lodash'
 
-// Analyses
-import ContentHasAssets from './analysis/contentHasAssets'
-import ContentHasShortParagraphs from './analysis/contentHasShortParagraphs'
-import ContentHasTOC from './analysis/contentHasTOC'
-import FleschReading from './analysis/fleschReading'
-import KeywordDensity from './analysis/keywordDensity'
-import KeywordIn10Percent from './analysis/keywordIn10Percent'
-import KeywordInContent from './analysis/keywordInContent'
-import KeywordInImageAlt from './analysis/keywordInImageAlt'
-import KeywordInMetaDescription from './analysis/keywordInMetaDescription'
-import KeywordInPermalink from './analysis/keywordInPermalink'
-import KeywordInSubheadings from './analysis/keywordInSubheadings'
-import KeywordInTitle from './analysis/keywordInTitle'
-import KeywordNotUsed from './analysis/keywordNotUsed'
-import LengthContent from './analysis/lengthContent'
-import LengthPermalink from './analysis/lengthPermalink'
-import LinksHasExternals from './analysis/linksHasExternals'
-import LinksHasInternal from './analysis/linksHasInternal'
-import LinksNotAllExternals from './analysis/linksNotAllExternals'
-import TitleHasNumber from './analysis/titleHasNumber'
-import TitleHasPowerWords from './analysis/titleHasPowerWords'
-import TitleSentiment from './analysis/titleSentiment'
-import TitleStartWithKeyword from './analysis/titleStartWithKeyword'
+/**
+ * Internal dependencies
+ */
+import Researcher from '@root/Researcher'
+import ContentHasAssets from '@analysis/contentHasAssets'
+import ContentHasShortParagraphs from '@analysis/contentHasShortParagraphs'
+import ContentHasTOC from '@analysis/contentHasTOC'
+import FleschReading from '@analysis/fleschReading'
+import KeywordDensity from '@analysis/keywordDensity'
+import KeywordIn10Percent from '@analysis/keywordIn10Percent'
+import KeywordInContent from '@analysis/keywordInContent'
+import KeywordInImageAlt from '@analysis/keywordInImageAlt'
+import KeywordInMetaDescription from '@analysis/keywordInMetaDescription'
+import KeywordInPermalink from '@analysis/keywordInPermalink'
+import KeywordInSubheadings from '@analysis/keywordInSubheadings'
+import KeywordInTitle from '@analysis/keywordInTitle'
+import KeywordNotUsed from '@analysis/keywordNotUsed'
+import LengthContent from '@analysis/lengthContent'
+import LengthPermalink from '@analysis/lengthPermalink'
+import LinksHasExternals from '@analysis/linksHasExternals'
+import LinksHasInternal from '@analysis/linksHasInternal'
+import LinksNotAllExternals from '@analysis/linksNotAllExternals'
+import TitleHasNumber from '@analysis/titleHasNumber'
+import TitleHasPowerWords from '@analysis/titleHasPowerWords'
+import TitleSentiment from '@analysis/titleSentiment'
+import TitleStartWithKeyword from '@analysis/titleStartWithKeyword'
 
 /**
  * Creates the Analyzer.

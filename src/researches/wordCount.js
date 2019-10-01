@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { count } from '@wordpress/wordcount'
 
 /**

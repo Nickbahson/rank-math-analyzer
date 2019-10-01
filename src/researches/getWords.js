@@ -1,13 +1,19 @@
+/**
+ * External dependencies
+ */
 import { filter, flow, map } from 'lodash'
 
-import stripTags from './stripTags'
-import stripHTMLComments from '../helpers/stripHTMLComments'
-import stripShortcodes from '../helpers/stripShortcodes'
-import stripSpaces from '../helpers/stripSpaces'
-import stripHTMLEntities from '../helpers/stripHTMLEntities'
-import stripConnectors from '../helpers/stripConnectors'
-import stripRemovables from '../helpers/stripRemovables'
-import removePunctuation from './removePunctuation'
+/**
+ * Internal dependencies
+ */
+import stripTags from '@researches/stripTags'
+import stripSpaces from '@helpers/stripSpaces'
+import stripShortcodes from '@helpers/stripShortcodes'
+import stripConnectors from '@helpers/stripConnectors'
+import stripRemovables from '@helpers/stripRemovables'
+import stripHTMLComments from '@helpers/stripHTMLComments'
+import stripHTMLEntities from '@helpers/stripHTMLEntities'
+import removePunctuation from '@researches/removePunctuation'
 
 /**
  * Returns an array with words used in the text.

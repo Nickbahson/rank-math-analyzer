@@ -1,8 +1,11 @@
-import Analysis from './Analysis'
-import AnalysisResult from './AnalysisResult'
-import Analyzer from './Analyzer'
-import Paper from './Paper'
-import Researcher from './Researcher'
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
+import Analyzer from '@root/Analyzer'
+import Paper from '@root/Paper'
+import Researcher from '@root/Researcher'
 
 window.rankMathAnalyzer = {
 	Analysis,

@@ -10,6 +10,7 @@ const externals = {
 }
 
 const alias = {
+	'@root': resolve( __dirname, './src' ),
 	'@analysis': resolve( __dirname, './src/analysis' ),
 	'@config': resolve( __dirname, './src/config' ),
 	'@helpers': resolve( __dirname, './src/helpers' ),

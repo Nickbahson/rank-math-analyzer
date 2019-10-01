@@ -1,7 +1,10 @@
-import getWords from './getWords'
-import countSentences from '../helpers/countSentences'
-import countSyllables from '../helpers/countSyllables'
-import stripNumbers from '../helpers/stripNumbers'
+/**
+ * Internal dependencies
+ */
+import getWords from '@researches/getWords'
+import countSentences from '@helpers/countSentences'
+import countSyllables from '@helpers/countSyllables'
+import stripNumbers from '@helpers/stripNumbers'
 
 function fleschEase( sentences, words, syllables ) {
 	return 206.835 - ( 1.015 * ( words / sentences ) ) - ( 84.6 * ( syllables / words ) )

@@ -1,6 +1,9 @@
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
-import links from '../config/links'
+/**
+ * Internal dependencies
+ */
+import links from '@config/links'
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
 
 class ContentHasTOC extends Analysis {
 	/**

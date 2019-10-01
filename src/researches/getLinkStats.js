@@ -1,4 +1,7 @@
-import { getLinkType, checkNofollow } from '../helpers/url.js'
+/**
+ * Internal dependencies
+ */
+import { getLinkType, checkNofollow } from '@helpers/url.js'
 
 export default ( text ) => {
 	const anchors = text.match( /<a(?:[^>]+)?>/gi ),

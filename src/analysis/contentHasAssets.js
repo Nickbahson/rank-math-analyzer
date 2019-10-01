@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
 import { has } from 'lodash'
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
+
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
 
 class ContentHasAssets extends Analysis {
 	/**

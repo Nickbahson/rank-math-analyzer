@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import urlMethods from 'url'
 import { includes } from 'lodash'
 

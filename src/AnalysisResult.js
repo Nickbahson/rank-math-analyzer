@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { isUndefined, isNumber } from 'lodash'
 
 /**

@@ -1,15 +1,21 @@
+/**
+ * External dependencies
+ */
 import { has, isEmpty, isUndefined } from 'lodash'
 
-import combinations from './researches/combinations'
-import fleschReading from './researches/fleschReading'
-import getLinkStats from './researches/getLinkStats'
-import getParagraphs from './researches/getParagraphs'
-import getWords from './researches/getWords'
-import Pluralize from './researches/pluralize'
-import removePunctuation from './researches/removePunctuation'
-import slugify from './researches/slugify'
-import stripTags from './researches/stripTags'
-import wordCount from './researches/wordCount'
+/**
+ * Internal dependencies
+ */
+import slugify from '@researches/slugify'
+import getWords from '@researches/getWords'
+import Pluralize from '@researches/pluralize'
+import stripTags from '@researches/stripTags'
+import wordCount from '@researches/wordCount'
+import combinations from '@researches/combinations'
+import getLinkStats from '@researches/getLinkStats'
+import fleschReading from '@researches/fleschReading'
+import getParagraphs from '@researches/getParagraphs'
+import removePunctuation from '@researches/removePunctuation'
 
 /**
  * Researcher class

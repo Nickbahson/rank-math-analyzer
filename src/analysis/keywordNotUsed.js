@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
 import $ from 'jquery'
-import Analysis from '../Analysis'
-import AnalysisResult from '../AnalysisResult'
+
+/**
+ * Internal dependencies
+ */
+import Analysis from '@root/Analysis'
+import AnalysisResult from '@root/AnalysisResult'
 
 class KeywordNotUsed extends Analysis {
 	/**

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { map, sum } from 'lodash'
 
 /**
