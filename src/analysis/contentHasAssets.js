@@ -1,3 +1,4 @@
+import { has } from 'lodash'
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
@@ -63,7 +64,7 @@ class ContentHasAssets extends Analysis {
 	}
 
 	/**
-	 * Calculates the score based on the url length.
+	 * Calculates the score.
 	 *
 	 * @param {number} images Total number of images.
 	 * @param {number} videos Total number of videos.
@@ -73,23 +74,52 @@ class ContentHasAssets extends Analysis {
 	calculateScore( images, videos ) {
 		let score = 0
 
-		if ( 1 === images ) {
-			score += 1
-		} else if ( 2 === images ) {
-			score += 2
-		} else if ( 3 === images ) {
-			score += 4
-		} else if ( 3 < images ) {
-			score += 6
-		}
-
-		if ( 1 === videos ) {
-			score += 1
-		} else if ( 1 < videos ) {
-			score += 2
-		}
+		score += this.calculateImagesScore( images )
+		score += this.calculateVideosScore( videos )
 
 		return Math.min( wp.hooks.applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
+	}
+
+	/**
+	 * Calculates the images score.
+	 *
+	 * @param {number} images Total number of images.
+	 *
+	 * @return {number} The calculated score.
+	 */
+	calculateImagesScore( images ) {
+		const scorehash = {
+			0: 0,
+			1: 1,
+			2: 2,
+			3: 4,
+		}
+
+		if ( has( scorehash, images ) ) {
+			return scorehash[ images ]
+		}
+
+		return 6
+	}
+
+	/**
+	 * Calculates the videos score.
+	 *
+	 * @param {number} videos Total number of videos.
+	 *
+	 * @return {number} The calculated score.
+	 */
+	calculateVideosScore( videos ) {
+		const scorehash = {
+			0: 0,
+			1: 1,
+		}
+
+		if ( has( scorehash, videos ) ) {
+			return scorehash[ videos ]
+		}
+
+		return 2
 	}
 
 	/**
