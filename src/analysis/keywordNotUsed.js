@@ -1,13 +1,19 @@
+import $ from 'jquery'
 import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
-import $ from 'jquery'
 
 class KeywordNotUsed extends Analysis {
-
+	/**
+	 * Hold checked keywords status
+	 *
+	 * @type {Object}
+	 */
 	keywordsChecked = {}
 
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -19,42 +25,42 @@ class KeywordNotUsed extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const keyword        = paper.getLower( 'keyword' ).trim()
+		const keyword = paper.getLower( 'keyword' ).trim()
 
-		if ( 'undefined' !== typeof this.keywordsChecked[ keyword ]) {
+		if ( 'undefined' !== typeof this.keywordsChecked[ keyword ] ) {
 			analysisResult.setText( this.translateScore( this.keywordsChecked[ keyword ], i18n ) )
 			return analysisResult
 		}
 
 		this.keywordsChecked[ keyword ] = true
-		$.ajax({
-			url: rankMath.ajaxurl,
-			type: 'GET',
-			data: {
-				keyword: keyword,
-				action: 'rank_math_is_keyword_new',
-				security: rankMath.security,
-				objectID: rankMath.objectID,
-				objectType: rankMath.objectType
+		$.ajax(
+			{
+				url: rankMath.ajaxurl,
+				type: 'GET',
+				data: {
+					keyword,
+					action: 'rank_math_is_keyword_new',
+					security: rankMath.security,
+					objectID: rankMath.objectID,
+					objectType: rankMath.objectType,
+				},
 			}
-		}).done( ( data ) => {
+		).done( ( data ) => {
 			this.keywordsChecked[ keyword ] = data.isNew
 			analysisResult.setText( this.translateScore( data.isNew, i18n ) )
-			let li = $( '.seo-check-KeywordNotUsed' )
+			const li = $( '.seo-check-KeywordNotUsed' )
 
 			li.removeClass( 'test-ok test-fail test-empty test-looking' )
-			// li.addClass( 'test-' + result.status )
-			// li.find( 'span:eq(0)' ).html( result.message )
 			this.changeKeywordInLink( keyword )
-		})
+		} )
 
 		analysisResult.setText( i18n.__( 'We are searching in database.', 'rank-math-analyzer' ) )
 
@@ -75,10 +81,10 @@ class KeywordNotUsed extends Analysis {
 	/**
 	 * Translates the score to a message the user can understand.
 	 *
-	 * @param {Boolean} isNewKeyword Is the selected keyword new or not.
-	 * @param {Jed}     i18n         The object used for translations.
+	 * @param {boolean} isNewKeyword Is the selected keyword new or not.
+	 * @param {Jed}     i18n         The i18n-object used for parsing translations.
 	 *
-	 * @return {String} The translated string.
+	 * @return {string} The translated string.
 	 */
 	translateScore( isNewKeyword, i18n ) {
 		return isNewKeyword ?
@@ -90,7 +96,7 @@ class KeywordNotUsed extends Analysis {
 	}
 
 	changeKeywordInLink( keyword ) {
-		let fkLinkElement = $( '.focus-keyword-link' )
+		const fkLinkElement = $( '.focus-keyword-link' )
 		if ( fkLinkElement.length ) {
 			fkLinkElement.attr( 'href', fkLinkElement.attr( 'href' )
 				.replace( '%focus_keyword%', keyword )

@@ -2,7 +2,6 @@ import { defaults, has, isUndefined } from 'lodash'
 import normalizeQuotes from './helpers/normalizeQuotes'
 
 class Paper {
-
 	/**
 	 * Arguments.
 	 */
@@ -11,7 +10,7 @@ class Paper {
 	/**
 	 * The constructor.
 	 *
-	 * @param {String} text                The text to use in the analysis.
+	 * @param {string} text                The text to use in the analysis.
 	 * @param {Object} args                The object containing all arguments.
 	 * @param {Object} [args.title]        The SEO title.
 	 * @param {Object} [args.keyword]      The main keyword.
@@ -24,7 +23,6 @@ class Paper {
 	 * @param {Object} [args.thumbnailAlt] The thumbnail alt text.
 	 */
 	constructor( text, args ) {
-
 		args = args || {}
 		this.args = defaults( args, {
 			title: '',
@@ -35,37 +33,37 @@ class Paper {
 			description: '',
 			thumbnail: '',
 			thumbnailAlt: '',
-			locale: 'en_US'
-		})
+			locale: 'en_US',
+		} )
 		this.setText( isUndefined( text ) ? '' : text )
 	}
 
 	/**
 	 * Get argument value.
 	 *
-	 * @param {String} id Argument id to get value.
+	 * @param {string} id Argument id to get value.
 	 *
-	 * @return {Mixed} Return value.
+	 * @return {string} Return value.
 	 */
 	get( id ) {
-		return has( this.args, id ) ? this.args[id] : ''
+		return has( this.args, id ) ? this.args[ id ] : ''
 	}
 
 	/**
 	 * Get argument value in lower-case.
 	 *
-	 * @param {String} id Argument id to get value.
+	 * @param {string} id Argument id to get value.
 	 *
-	 * @return {Mixed} Return value.
+	 * @return {string} Return value.
 	 */
 	getLower( id ) {
 		return this.get( id + 'Lower' )
 	}
 
 	/**
-	  * Check whether a keyword is available.
-	  *
-	 * @return {Boolean} Returns true if the Paper has a keyword.
+	 * Check whether a keyword is available.
+	 *
+	 * @return {boolean} Returns true if the Paper has a keyword.
 	 */
 	hasKeyword() {
 		return '' !== this.args.keyword
@@ -74,7 +72,7 @@ class Paper {
 	/**
 	 * Return the associated keyword or an empty string if no keyword is available.
 	 *
-	 * @return {Boolean} Returns Keywords
+	 * @return {boolean} Returns Keywords
 	 */
 	getKeyword() {
 		return this.args.keyword
@@ -83,20 +81,20 @@ class Paper {
 	/**
 	 * Set the keyword.
 	 *
-	 * @param {String} keyword [description]
+	 * @param {string} keyword [description]
 	 */
 	setKeyword( keyword ) {
-		this.args.keyword        = keyword
-		this.args.keywordLower   = keyword.toLowerCase()
-		this.keywordPlurals      = false
-		this.keywordPermalink    = false
+		this.args.keyword = keyword
+		this.args.keywordLower = keyword.toLowerCase()
+		this.keywordPlurals = false
+		this.keywordPermalink = false
 		this.keywordCombinations = false
 	}
 
 	/**
 	 * Check whether an title is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has a title.
+	 * @return {boolean} Returns true if the Paper has a title.
 	 */
 	hasTitle() {
 		return '' !== this.args.title
@@ -105,7 +103,7 @@ class Paper {
 	/**
 	 * Return the title, or an empty string of no title is available.
 	 *
-	 * @return {String} Returns the title
+	 * @return {string} Returns the title
 	 */
 	getTitle() {
 		return this.args.title
@@ -114,17 +112,17 @@ class Paper {
 	/**
 	 * Set the title.
 	 *
-	 * @param {String} title The title
+	 * @param {string} title The title
 	 */
 	setTitle( title ) {
-		this.args.title      = normalizeQuotes( title )
+		this.args.title = normalizeQuotes( title )
 		this.args.titleLower = this.args.title.toLowerCase()
 	}
 
 	/**
 	 * Check whether an title width in pixels is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has a title.
+	 * @return {boolean} Returns true if the Paper has a title.
 	 */
 	hasTitleWidth() {
 		return 0 !== this.args.titleWidth
@@ -133,7 +131,7 @@ class Paper {
 	/**
 	 * Return the title width in pixels, or an empty string of no title width in pixels is available.
 	 *
-	 * @return {String} Returns the title
+	 * @return {string} Returns the title
 	 */
 	getTitleWidth() {
 		return this.args.titleWidth
@@ -142,7 +140,7 @@ class Paper {
 	/**
 	 * Check whether a permalink is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has a permalink.
+	 * @return {boolean} Returns true if the Paper has a permalink.
 	 */
 	hasPermalink() {
 		return '' !== this.args.permalink
@@ -151,7 +149,7 @@ class Paper {
 	/**
 	 * Return the permalink, or an empty string of no permalink is available.
 	 *
-	 * @return {String} Returns the permalink.
+	 * @return {string} Returns the permalink.
 	 */
 	getPermalink() {
 		return this.args.permalink
@@ -160,17 +158,17 @@ class Paper {
 	/**
 	 * Set the permalink.
 	 *
-	 * @param {String} permalink The permalink.
+	 * @param {string} permalink The permalink.
 	 */
 	setPermalink( permalink ) {
-		this.args.permalink      = permalink
+		this.args.permalink = permalink
 		this.args.permalinkLower = permalink.toLowerCase()
 	}
 
 	/**
 	 * Check whether a description is available.
 	 *
-	 * @return {Boolean} Returns true if the paper has a description.
+	 * @return {boolean} Returns true if the paper has a description.
 	 */
 	hasDescription() {
 		return '' !== this.args.description
@@ -179,7 +177,7 @@ class Paper {
 	/**
 	 * Return the description or an empty string if no description is available.
 	 *
-	 * @return {String} Returns the description.
+	 * @return {string} Returns the description.
 	 */
 	getDescription() {
 		return this.args.description
@@ -188,17 +186,17 @@ class Paper {
 	/**
 	 * Set the description.
 	 *
-	 * @param {String} description The description.
+	 * @param {string} description The description.
 	 */
 	setDescription( description ) {
-		this.args.description      = normalizeQuotes( description )
+		this.args.description = normalizeQuotes( description )
 		this.args.descriptionLower = this.args.description.toLowerCase()
 	}
 
 	/**
 	 * Check whether the text is available.
 	 *
-	 * @return {Boolean} Returns true if the paper has a text.
+	 * @return {boolean} Returns true if the paper has a text.
 	 */
 	hasText() {
 		return '' !== this.text
@@ -207,7 +205,7 @@ class Paper {
 	/**
 	 * Return the associated text or am empty string if no text is available.
 	 *
-	 * @return {String} Returns text
+	 * @return {string} Returns text
 	 */
 	getText() {
 		return this.text
@@ -216,7 +214,7 @@ class Paper {
 	/**
 	 * Return the associated text or am empty string if no text is available.
 	 *
-	 * @return {String} Returns text
+	 * @return {string} Returns text
 	 */
 	getTextLower() {
 		return this.textLower
@@ -225,29 +223,29 @@ class Paper {
 	/**
 	 * Set the text.
 	 *
-	 * @param {String} text The text.
+	 * @param {string} text The text.
 	 */
 	setText( text ) {
-		this.text      = text || ''
+		this.text = text || ''
 		this.textLower = ''
 
 		if ( '' === text ) {
 			return
 		}
 
-		this.text      = text
+		this.text = text
 			.replace( /<script[^>]*>.*?<\/script>/gi, '' )
 			.replace( /<style[^>]*>.*?<\/style>/gi, '' )
 			.replace( /&\S+?;/g, '&' )
 			.replace( /<!--[\s\S]*?(?:-->)/g, '' )
-		this.text      = normalizeQuotes( this.text )
+		this.text = normalizeQuotes( this.text )
 		this.textLower = this.text.toLowerCase()
 	}
 
 	/**
 	 * Check whether an url is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has an Url.
+	 * @return {boolean} Returns true if the Paper has an Url.
 	 */
 	hasUrl() {
 		return '' !== this.args.url
@@ -256,7 +254,7 @@ class Paper {
 	/**
 	 * Return the url, or an empty string of no url is available.
 	 *
-	 * @return {String} Returns the url
+	 * @return {string} Returns the url
 	 */
 	getUrl() {
 		return this.args.url
@@ -265,7 +263,7 @@ class Paper {
 	/**
 	 * Set the url.
 	 *
-	 * @param {String} url The url.
+	 * @param {string} url The url.
 	 */
 	setUrl( url ) {
 		this.args.url = url
@@ -274,7 +272,7 @@ class Paper {
 	/**
 	 * Check whether a locale is available
 	 *
-	 * @return {Boolean} Returns true if the paper has a locale
+	 * @return {boolean} Returns true if the paper has a locale
 	 */
 	hasLocale() {
 		return '' !== this.args.locale
@@ -283,7 +281,7 @@ class Paper {
 	/**
 	 * Return the locale or an empty string if no locale is available
 	 *
-	 * @return {String} Returns the locale
+	 * @return {string} Returns the locale
 	 */
 	getLocale() {
 		return this.args.locale
@@ -292,7 +290,7 @@ class Paper {
 	/**
 	 * Check whether a thumbnail is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has a thumbnail.
+	 * @return {boolean} Returns true if the Paper has a thumbnail.
 	 */
 	hasThumbnail() {
 		return '' !== this.args.thumbnail
@@ -301,7 +299,7 @@ class Paper {
 	/**
 	 * Return the thumbnail, or an empty string of no thumbnail is available.
 	 *
-	 * @return {String} Returns the thumbnail.
+	 * @return {string} Returns the thumbnail.
 	 */
 	getThumbnail() {
 		return this.args.thumbnail
@@ -310,7 +308,7 @@ class Paper {
 	/**
 	 * Set the thumbnail.
 	 *
-	 * @param {String} thumbnail The thumbnail.
+	 * @param {string} thumbnail The thumbnail.
 	 */
 	setThumbnail( thumbnail ) {
 		this.args.thumbnail = thumbnail
@@ -319,7 +317,7 @@ class Paper {
 	/**
 	 * Check whether a thumbnailAlt is available
 	 *
-	 * @return {Boolean} Returns true if the Paper has a thumbnailAlt.
+	 * @return {boolean} Returns true if the Paper has a thumbnailAlt.
 	 */
 	hasThumbnailAltText() {
 		return '' !== this.args.thumbnailAlt
@@ -328,7 +326,7 @@ class Paper {
 	/**
 	 * Return the thumbnailAlt, or an empty string of no thumbnailAlt is available.
 	 *
-	 * @return {String} Returns the thumbnailAlt.
+	 * @return {string} Returns the thumbnailAlt.
 	 */
 	getThumbnailAltText() {
 		return this.args.thumbnailAlt
@@ -337,10 +335,10 @@ class Paper {
 	/**
 	 * Set the thumbnailAlt.
 	 *
-	 * @param {String} thumbnailAlt The thumbnailAlt.
+	 * @param {string} thumbnailAlt The thumbnailAlt.
 	 */
 	setThumbnailAltText( thumbnailAlt ) {
-		this.args.thumbnailAlt      = thumbnailAlt
+		this.args.thumbnailAlt = thumbnailAlt
 		this.args.thumbnailAltLower = thumbnailAlt.toLowerCase()
 	}
 
@@ -349,10 +347,9 @@ class Paper {
 	 *
 	 * @param {Researcher} researcher The researcher used for the assessment.
 	 *
-	 * @return {Boolean|Array}
+	 * @return {Array} Array of keyword combination.
 	 */
 	getKeywordCombination( researcher ) {
-
 		// Early Bail!!
 		if ( ! this.hasKeyword() ) {
 			return []
@@ -374,14 +371,14 @@ class Paper {
 		const keywordLower = this.getLower( 'keyword' )
 
 		// Researches.
-		const slugify           = researcher.getResearch( 'slugify' )
-		const getWords          = researcher.getResearch( 'getWords' )
-		const pluralize         = researcher.getResearch( 'pluralize' )
-		const combinations      = researcher.getResearch( 'combinations' )
+		const slugify = researcher.getResearch( 'slugify' )
+		const getWords = researcher.getResearch( 'getWords' )
+		const pluralize = researcher.getResearch( 'pluralize' )
+		const combinations = researcher.getResearch( 'combinations' )
 		const removePunctuation = researcher.getResearch( 'removePunctuation' )
 
 		// Plurals.
-		this.keywordPlurals   = new Map()
+		this.keywordPlurals = new Map()
 		getWords( keywordLower ).forEach( function( word ) {
 			this.keywordPlurals.set( word, pluralize.get( word ) )
 		}, this )

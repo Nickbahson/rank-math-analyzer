@@ -4,9 +4,10 @@ import AnalysisResult from '../AnalysisResult'
 import sentimentWords from '../config/sentimentWords'
 
 class TitleSentiment extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -19,15 +20,15 @@ class TitleSentiment extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const sentiment      = new Sentiment
+		const sentiment = new Sentiment
 		const sentimentScore = sentiment.analyze( paper.getLower( 'title' ), sentimentWords ).score
 
 		analysisResult
@@ -51,9 +52,9 @@ class TitleSentiment extends Analysis {
 	/**
 	 * Calculates the score based on the sentiment score.
 	 *
-	 * @param {Boolean} sentimentScore Sentiment score.
+	 * @param {boolean} sentimentScore Sentiment score.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {number} The calculated score.
 	 */
 	calculateScore( sentimentScore ) {
 		return 0 !== sentimentScore ? wp.hooks.applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
@@ -63,9 +64,9 @@ class TitleSentiment extends Analysis {
 	 * Translates the score to a message the user can understand.
 	 *
 	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
+	 * @param {Jed}            i18n           The i18n-object used for parsing translations.
 	 *
-	 * @return {String} The translated string.
+	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		if ( false === rankMath.isUserRegistered ) {

@@ -6,10 +6,10 @@ const punctuationRegexEnd = new RegExp( punctuationRegexString + '$' )
 /**
  * Replaces punctuation characters from the given text string.
  *
- * @param {String} text The text to remove the punctuation characters for.
+ * @param {string} text The text to remove the punctuation characters for.
  *
- * @returns {String} The sanitized text.
+ * @return {string} The sanitized text.
  */
-export default text => text
+export default ( text ) => text
 	.replace( punctuationRegexStart, '' )
 	.replace( punctuationRegexEnd, '' )

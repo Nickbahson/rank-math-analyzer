@@ -3,11 +3,9 @@ import { count } from '@wordpress/wordcount'
 /**
  * Calculates the wordcount of a certain text.
  *
- * @param {String} text The text to be counted.
+ * @param {string} text The text to be counted.
  *
- * @returns {int} The word count of the given text.
+ * @return {number} The word count of the given text.
  */
 
-export default ( text ) => {
-		return count( text, 'words' )
-}
+export default ( text ) => count( text, 'words' )

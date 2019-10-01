@@ -2,9 +2,10 @@ import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
 class ContentHasAssets extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -17,9 +18,9 @@ class ContentHasAssets extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
@@ -28,7 +29,6 @@ class ContentHasAssets extends Analysis {
 
 		// Has no content.
 		if ( ! paper.hasText() ) {
-
 			// But has thumbnail.
 			if ( paper.hasThumbnail() ) {
 				analysisResult
@@ -65,10 +65,10 @@ class ContentHasAssets extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Integer} images Total number of images.
-	 * @param {Integer} videos Total number of videos.
+	 * @param {number} images Total number of images.
+	 * @param {number} videos Total number of videos.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {number} The calculated score.
 	 */
 	calculateScore( images, videos ) {
 		let score = 0
@@ -96,9 +96,9 @@ class ContentHasAssets extends Analysis {
 	 * Translates the score to a message the user can understand.
 	 *
 	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
+	 * @param {Jed}            i18n           The i18n-object used for parsing translations.
 	 *
-	 * @return {String} The translated string.
+	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
@@ -114,7 +114,7 @@ class ContentHasAssets extends Analysis {
 	 * @return {Array} The matched set.
 	 */
 	getImages( paper ) {
-		let images  = this.match( paper, '<img(?:[^>]+)?>' ),
+		const images = this.match( paper, '<img(?:[^>]+)?>' ),
 			gallery = this.match( paper, '\\[gallery( [^\\]]+?)?\\]' )
 
 		return [].concat( images, gallery )
@@ -128,8 +128,8 @@ class ContentHasAssets extends Analysis {
 	 * @return {Array} The matched set.
 	 */
 	getVideos( paper ) {
-		let videos  = this.match( paper, '<iframe(?:[^>]+)?>' ),
-			embeds  = this.match( paper, '\\[video( [^\\]]+?)?\\]' ),
+		const videos = this.match( paper, '<iframe(?:[^>]+)?>' ),
+			embeds = this.match( paper, '\\[video( [^\\]]+?)?\\]' ),
 			embeds2 = this.match( paper, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ )
 
 		return [].concat( videos, embeds, embeds2 )
@@ -139,13 +139,13 @@ class ContentHasAssets extends Analysis {
 	 * Match the assets.
 	 *
 	 * @param {Paper}  paper       The paper to use for the assessment.
-	 * @param {String} regexString The regex to test the text against.
+	 * @param {string} regexString The regex to test the text against.
 	 *
 	 * @return {Array} The matched set.
 	 */
 	match( paper, regexString ) {
-		let regex = new RegExp( regexString, 'ig' )
-		let matches = paper.getText().match( regex )
+		const regex = new RegExp( regexString, 'ig' )
+		const matches = paper.getText().match( regex )
 
 		return null === matches ? [] : matches
 	}

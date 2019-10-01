@@ -4,11 +4,65 @@ import { includes } from 'lodash'
 const urlFromAnchorRegex = /href=(["'])([^"']+)\1/i
 
 /**
+ * Determines whether the link is a relative fragment URL.
+ *
+ * @param {string} url Link to check.
+ *
+ * @return {boolean} Whether link is relative or not.
+ */
+function isRelativeFragmentURL( url ) {
+	return '#' === url[ 0 ]
+}
+
+/**
+ * Returns the protocol of a URL.
+ *
+ * @param {string} url Link to extract from.
+ *
+ * @return {string} Protocol.
+ */
+function getProtocol( url ) {
+	return urlMethods.parse( url ).protocol
+}
+
+/**
+ * Retrieves the URL from an anchor tag.
+ *
+ * @param {string} anchorTag Anchor tag string.
+ *
+ * @return {string} Url.
+ */
+function getFromAnchorTag( anchorTag ) {
+	const urlMatch = urlFromAnchorRegex.exec( anchorTag )
+
+	return ( null === urlMatch ) ? '' : urlMatch[ 2 ]
+}
+
+/**
+ * Checks whether the protocol is either HTTP: or HTTPS:.
+ *
+ * @param {string} protocol Protol string to validate.
+ *
+ * @return {boolean} Has valid protocol or not.
+ */
+function isHttpScheme( protocol ) {
+	if ( ! protocol ) {
+		return false
+	}
+
+	return ( 'http:' === protocol || 'https:' === protocol )
+}
+
+/**
  * Check if external link exists in nofllow/excludeDomains
+ *
+ * @param {string} url Link to check.
+ *
+ * @return {boolean} Whether link is dofollow or not.
  */
 function couldBeDoFollow( url ) {
-	var isDoFollow = true,
-		parsedUrl  = urlMethods.parse( url, false, true )
+	let isDoFollow = true
+	const parsedUrl = urlMethods.parse( url, false, true )
 
 	// Check if domain is in nofollow list.
 	if ( rankMath.noFollowDomains.length ) {
@@ -16,7 +70,7 @@ function couldBeDoFollow( url ) {
 			if ( includes( parsedUrl.host, domain ) ) {
 				isDoFollow = false
 			}
-		})
+		} )
 
 		return isDoFollow
 	}
@@ -30,57 +84,27 @@ function couldBeDoFollow( url ) {
 		if ( includes( parsedUrl.host, domain ) ) {
 			isDoFollow = true
 		}
-	})
+	} )
 
 	return isDoFollow
 }
 
 /**
- * Retrieves the URL from an anchor tag.
- */
-function getFromAnchorTag( anchorTag ) {
-	var urlMatch = urlFromAnchorRegex.exec( anchorTag )
-
-	return ( null === urlMatch ) ? '' : urlMatch[ 2 ]
-}
-
-/**
- * Returns the protocol of a URL.
- */
-function getProtocol( url ) {
-	return urlMethods.parse( url ).protocol
-}
-
-/**
- * Checks whether the protocol is either HTTP: or HTTPS:.
- */
-function isHttpScheme( protocol ) {
-	if ( ! protocol ) {
-		return false
-	}
-
-	return ( 'http:' === protocol || 'https:' === protocol )
-}
-
-/**
- * Determines whether the link is a relative fragment URL.
- */
-function isRelativeFragmentURL( url ) {
-	return '#' === url[0]
-}
-
-/**
  * Determine whether a URL is internal.
+ *
+ * @param {string} url  Url to check.
+ * @param {string} host Site url.
+ *
+ * @return {boolean} Whether internal or not.
  */
 function isInternalLink( url, host ) {
-
 	// Check if the URL starts with a single slash.
-	if ( ! includes( url, '//' ) && '/' === url[0]) {
+	if ( ! includes( url, '//' ) && '/' === url[ 0 ] ) {
 		return true
 	}
 
 	// Check if the URL starts with a # indicating a fragment.
-	if ( '#' === url[0]) {
+	if ( isRelativeFragmentURL( url ) ) {
 		return false
 	}
 
@@ -96,6 +120,11 @@ function isInternalLink( url, host ) {
 
 /**
  * Determines the type of link.
+ *
+ * @param {string} text Text to get links from.
+ * @param {string} url  Base link.
+ *
+ * @return {string} Link type.
  */
 export function getLinkType( text, url ) {
 	const anchorUrl = getFromAnchorTag( text )
@@ -105,9 +134,7 @@ export function getLinkType( text, url ) {
 	 * - The protocol is neither null, nor http, nor https.
 	 * - The link is a relative fragment URL (starts with #), because it won't navigate to another page.
 	 */
-	const protocol = getProtocol( anchorUrl )
-	if ( protocol && ! isHttpScheme( protocol ) ||
-		isRelativeFragmentURL( anchorUrl ) ) {
+	if ( ! isHttpScheme( getProtocol( anchorUrl ) ) || isRelativeFragmentURL( anchorUrl ) ) {
 		return 'other'
 	}
 
@@ -120,6 +147,11 @@ export function getLinkType( text, url ) {
 
 /**
  * Checks if a link has a `rel` attribute with a `nofollow` value. If it has, returns Nofollow, otherwise Dofollow.
+ *
+ * @param {string} anchorHTML Anchor tag html.
+ * @param {string} linkType   Link type
+ *
+ * @return {string} Nofollow or Dofollow.
  */
 export function checkNofollow( anchorHTML, linkType ) {
 	anchorHTML = anchorHTML.toLowerCase()
@@ -132,9 +164,5 @@ export function checkNofollow( anchorHTML, linkType ) {
 		return 'Dofollow'
 	}
 
-	if ( includes( anchorHTML, 'nofollow' ) ) {
-		return 'Nofollow'
-	}
-
-	return 'Dofollow'
+	return includes( anchorHTML, 'nofollow' ) ? 'Nofollow' : 'Dofollow'
 }

@@ -3,9 +3,10 @@ import AnalysisResult from '../AnalysisResult'
 import { inRange } from 'lodash'
 
 class KeywordDensity extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -18,25 +19,28 @@ class KeywordDensity extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
+		/* eslint @wordpress/no-unused-vars-before-return: 0*/
 		const analysisResult = this.newResult( i18n )
-		const stripTags      = researcher.getResearch( 'stripTags' )
-		let wordCount        = researcher.getResearch( 'wordCount' )
+		let wordCount = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
-		if ( false === wordCount || 0 === wordCount.length  || paper.getKeywordCombination( researcher ) ) {
+		if ( false === wordCount || 0 === wordCount.length || paper.getKeywordCombination( researcher ) ) {
 			return analysisResult
 		}
 
-		// Keyword Density & Focus Keyword occurrences
-		const regex          = new RegExp( paper.getKeywordCombination( researcher ).join( '|' ), 'gi' )
-		const count          = ( stripTags( paper.getText() ).match( regex ) || []).length
+		// Keyword Density & Focus Keyword occurrence
+		const getWords = researcher.getResearch( 'getWords' )
+		const words = getWords( paper.getTextLower() )
+		const stripTags = researcher.getResearch( 'stripTags' )
+		const regex = new RegExp( paper.getKeywordCombination( researcher ).join( '|' ), 'gi' )
+		const count = ( stripTags( paper.getText() ).match( regex ) || [] ).length
 		const keywordDensity = ( ( count / words.length ) * 100 ).toFixed( 2 )
 
 		analysisResult
@@ -66,9 +70,9 @@ class KeywordDensity extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} keywordDensity Title has number or not.
+	 * @param {boolean} keywordDensity Title has number or not.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {number} The calculated score.
 	 */
 	calculateScore( keywordDensity ) {
 		const scores = this.getScores()
@@ -95,7 +99,7 @@ class KeywordDensity extends Analysis {
 				fail: 0,
 				fair: 2,
 				good: 3,
-				best: 6
+				best: 6,
 			}
 		)
 	}

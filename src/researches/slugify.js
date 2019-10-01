@@ -1,12 +1,12 @@
- import { deburr } from 'lodash'
+import { deburr } from 'lodash'
 
 /**
  * Sanitize and slugify text
  *
- * @param {String} text The string being slugify.
+ * @param {string} text The string being slugify.
  *
- * @return {String} The manipulated text.
+ * @return {string} The manipulated text.
  */
-export default text => deburr( text )
-		.replace( / /gi, '-' )
-		.toLowerCase()
+export default ( text ) => deburr( text )
+	.replace( / /gi, '-' )
+	.toLowerCase()

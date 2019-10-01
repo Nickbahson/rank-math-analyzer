@@ -9,5 +9,5 @@ window.rankMathAnalyzer = {
 	AnalysisResult,
 	Analyzer,
 	Paper,
-	Researcher
+	Researcher,
 }

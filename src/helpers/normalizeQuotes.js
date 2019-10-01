@@ -1,10 +1,8 @@
 /**
  * Normalizes quotes to 'regular' quotes.
  *
- * @param {String} text Text to normalize.
+ * @param {string} text Text to normalize.
  *
- * @return {String} The normalized text.
+ * @return {string} The normalized text.
  */
-export default ( text ) => {
-	return text.replace( /[‘’‛`]/g, '\'' ).replace( /[“”〝〞〟‟„]/g, '"' )
-}
+export default ( text ) => text.replace( /[‘’‛`]/g, '\'' ).replace( /[“”〝〞〟‟„]/g, '"' )

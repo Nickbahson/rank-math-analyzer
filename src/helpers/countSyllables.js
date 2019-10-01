@@ -1,16 +1,13 @@
-import {
-	map,
-	sum
-} from 'lodash'
+import { map, sum } from 'lodash'
 
 /**
  * Count syllables
  *
- * @link https://medium.com/@andrewhartnett/to-parse-a-haiku-using-only-javascript-was-interesting-5ea64ce31948
+ * @see {@link https://medium.com/@andrewhartnett/to-parse-a-haiku-using-only-javascript-was-interesting-5ea64ce31948}
  *
- * @param {String} word Word to look for syllables.
+ * @param {string} word Word to look for syllables.
  *
- * @return {Integer}
+ * @return {number} Number of syllables in word.
  */
 function countSyllablesInWord( word ) {
 	word = word.toLowerCase()
@@ -26,9 +23,7 @@ function countSyllablesInWord( word ) {
 }
 
 export default ( words ) => {
-	var syllableCounts = map( words, ( word ) => {
-		return countSyllablesInWord( word )
-	})
+	const syllableCounts = map( words, ( word ) => countSyllablesInWord( word ) )
 
 	return sum( syllableCounts )
 }

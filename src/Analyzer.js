@@ -29,53 +29,57 @@ import TitleStartWithKeyword from './analysis/titleStartWithKeyword'
  * Creates the Analyzer.
  */
 class Analyzer {
-
 	/**
 	 * Constructor
 	 *
 	 * @param {Object} options Options for analyzer.
 	 */
 	constructor( options ) {
-		this.options    = options
+		this.options = options
 		this.researcher = has( options, 'researcher' ) ? options.researcher : new Researcher
 		this.setI18n( has( options, 'i18n' ) ? options.i18n : undefined )
 		this.setAnalyses()
 	}
 
 	/**
-	  * Runs the analyses defined in the tasklist or the default analyses.
-	  *
-	  * @param {Paper} paper The paper to run analyses on.
-	  */
+	 * Runs the analyses defined in the tasklist or the default analyses.
+	 *
+	 * @param {Paper} paper The paper to run analyses on.
+	 *
+	 * @return {Promise} Promise object.
+	 */
 	analyze( paper ) {
-		return new Promise( ( resolve, reject ) => {
+		return new Promise( ( resolve ) => {
 			this.researcher.setPaper( paper )
-			this.results = mapValues( this.analyses, analysis => {
-				return analysis.isApplicable( paper, this.researcher ) ?
+			this.results = mapValues(
+				this.analyses,
+				( analysis ) => analysis.isApplicable( paper, this.researcher ) ?
 					analysis.getResult( paper, this.researcher, this.i18n ) :
 					analysis.newResult( this.i18n )
-			})
+			)
 			resolve( this.results )
-		})
+		} )
 	}
 
 	/**
-	  * Runs the analyses defined.
-	  *
-	  * @param {Array} analyses List of analyses to run.
-	  * @param {Paper} paper    The paper to run analyses on.
-	  */
+	 * Runs the analyses defined.
+	 *
+	 * @param {Array} analyses List of analyses to run.
+	 * @param {Paper} paper    The paper to run analyses on.
+	 *
+	 * @return {Promise} Promise object.
+	 */
 	analyzeSome( analyses, paper ) {
-
-		return new Promise( ( resolve, reject ) => {
+		return new Promise( ( resolve ) => {
 			this.researcher.setPaper( paper )
-			this.results = mapValues( pick( this.defaultAnalyses, analyses ), analysis => {
-				return analysis.isApplicable( paper, this.researcher ) ?
+			this.results = mapValues(
+				pick( this.defaultAnalyses, analyses ),
+				( analysis ) => analysis.isApplicable( paper, this.researcher ) ?
 					analysis.getResult( paper, this.researcher, this.i18n ) :
 					analysis.newResult( this.i18n )
-			})
+			)
 			resolve( this.results )
-		})
+		} )
 	}
 
 	/**
@@ -119,7 +123,7 @@ class Analyzer {
 			titleHasNumber: new TitleHasNumber,
 			titleHasPowerWords: new TitleHasPowerWords,
 			titleSentiment: new TitleSentiment,
-			titleStartWithKeyword: new TitleStartWithKeyword
+			titleStartWithKeyword: new TitleStartWithKeyword,
 		}
 
 		this.analyses = this.defaultAnalyses

@@ -2,9 +2,10 @@ import Analysis from '../Analysis'
 import AnalysisResult from '../AnalysisResult'
 
 class LinksHasExternals extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -17,16 +18,17 @@ class LinksHasExternals extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
+		/* eslint @wordpress/no-unused-vars-before-return: 0*/
 		const analysisResult = this.newResult( i18n )
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
-		const statistics     = linkStatistics( paper.getText() )
+		const statistics = linkStatistics( paper.getText() )
 
 		if ( null === statistics.anchors ) {
 			return analysisResult
@@ -58,9 +60,9 @@ class LinksHasExternals extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Boolean} hasExternalDofollow Title has number or not.
+	 * @param {boolean} hasExternalDofollow Title has number or not.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
 		return hasExternalDofollow ? wp.hooks.applyFilters( 'rankMath/analysis/linksHasExternals/score', 4 ) : null
@@ -70,9 +72,9 @@ class LinksHasExternals extends Analysis {
 	 * Translates the score to a message the user can understand.
 	 *
 	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
+	 * @param {Jed}            i18n           The i18n-object used for parsing translations.
 	 *
-	 * @return {String} The translated string.
+	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?

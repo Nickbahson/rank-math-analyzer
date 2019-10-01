@@ -1,27 +1,23 @@
-import {
-	uniq,
-	includes,
-	isUndefined
-} from 'lodash'
+import { uniq, includes, isUndefined } from 'lodash'
 
 export default ( plurals ) => {
-	var words = Array.from( plurals.keys() ),
+	const words = Array.from( plurals.keys() ),
 		length = words.length,
 		output = []
 
 	output.push( words.join( ' ' ) )
 
-	function recursive( words ) {
+	function recursive( recursiveWords ) {
 		plurals.forEach( ( plural, word ) => {
-			if ( plural === word || includes( words, plural ) ) {
+			if ( plural === word || includes( recursiveWords, plural ) ) {
 				return
 			}
-			output.push( words.join( ' ' ).replace( word, plural ) )
-		})
+			output.push( recursiveWords.join( ' ' ).replace( word, plural ) )
+		} )
 	}
 
-	for ( var i = 0; i < ( length * length ); i++ ) {
-		if ( ! isUndefined( output[ i ]) ) {
+	for ( let i = 0; i < ( length * length ); i++ ) {
+		if ( ! isUndefined( output[ i ] ) ) {
 			recursive( output[ i ].split( ' ' ) )
 		}
 	}

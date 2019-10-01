@@ -1,7 +1,7 @@
 import { getLinkType, checkNofollow } from '../helpers/url.js'
 
 export default ( text ) => {
-	let anchors = text.match( /<a(?:[^>]+)?>/gi ),
+	const anchors = text.match( /<a(?:[^>]+)?>/gi ),
 		linkCount = {
 			total: null === anchors ? 0 : anchors.length,
 			internalTotal: 0,
@@ -13,7 +13,7 @@ export default ( text ) => {
 			otherTotal: 0,
 			otherDofollow: 0,
 			otherNofollow: 0,
-			anchors: anchors
+			anchors,
 		}
 
 	if ( null === anchors ) {
@@ -21,12 +21,12 @@ export default ( text ) => {
 	}
 
 	anchors.forEach( ( anchor ) => {
-		let linkType = getLinkType( anchor, rankMath.parentDomain )
-		let linkFollow = checkNofollow( anchor, linkType )
+		const linkType = getLinkType( anchor, rankMath.parentDomain )
+		const linkFollow = checkNofollow( anchor, linkType )
 
 		linkCount[ linkType + 'Total' ]++
 		linkCount[ linkType + linkFollow ]++
-	})
+	} )
 
 	return linkCount
 }

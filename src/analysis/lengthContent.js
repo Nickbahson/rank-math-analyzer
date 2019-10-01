@@ -4,9 +4,10 @@ import { inRange } from 'lodash'
 import links from '../config/links'
 
 class LengthContent extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -24,15 +25,16 @@ class LengthContent extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
+		/* eslint @wordpress/no-unused-vars-before-return: 0*/
 		const analysisResult = this.newResult( i18n )
-		let wordCount        = researcher.getResearch( 'wordCount' )
+		let wordCount = researcher.getResearch( 'wordCount' )
 
 		wordCount = wordCount( paper.getTextLower() )
 		if ( false === wordCount || 0 === wordCount.length ) {
@@ -65,12 +67,12 @@ class LengthContent extends Analysis {
 	/**
 	 * Calculates the score based on the word count.
 	 *
-	 * @param {Integer} wordCount Word count.
+	 * @param {number} wordCount Word count.
 	 *
-	 * @return {Integer} The calculated score.
+	 * @return {number} The calculated score.
 	 */
 	calculateScore( wordCount ) {
-		const scores     = this.getScores()
+		const scores = this.getScores()
 		const boundaries = this.getBoundaries()
 
 		if ( boundaries.recommended <= wordCount ) {
@@ -100,9 +102,9 @@ class LengthContent extends Analysis {
 	 * Translates the score to a message the user can understand.
 	 *
 	 * @param {AnalysisResult} analysisResult AnalysisResult with the score and the formatted text.
-	 * @param {Jed}            i18n           The object used for translations.
+	 * @param {Jed}            i18n           The i18n-object used for parsing translations.
 	 *
-	 * @return {String} The translated string.
+	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
@@ -118,7 +120,7 @@ class LengthContent extends Analysis {
 				belowRecommended: 2000,
 				medium: 1500,
 				belowMedium: 1000,
-				low: 600
+				low: 600,
 			}
 		)
 	}
@@ -131,7 +133,7 @@ class LengthContent extends Analysis {
 				belowRecommended: 5,
 				medium: 4,
 				belowMedium: 3,
-				low: 2
+				low: 2,
 			}
 		)
 	}

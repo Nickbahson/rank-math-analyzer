@@ -1,9 +1,9 @@
 /**
  * Removes all words comprised only of numbers.
  *
- * @param {String} text The string to remove from.
+ * @param {string} text The string to remove from.
  *
- * @return {String} The manipulated text.
+ * @return {string} The manipulated text.
  */
 export default ( text ) => {
 	text = text.replace( /\b[0-9]+\b/g, '' )

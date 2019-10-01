@@ -1,8 +1,4 @@
-import {
-	has,
-	isEmpty,
-	isUndefined
-} from 'lodash'
+import { has, isEmpty, isUndefined } from 'lodash'
 
 import combinations from './researches/combinations'
 import fleschReading from './researches/fleschReading'
@@ -19,9 +15,10 @@ import wordCount from './researches/wordCount'
  * Researcher class
  */
 class Researcher {
-
 	/**
 	 * Class constructor.
+	 *
+	 * @param {Paper} paper The paper to use for the assessment.
 	 */
 	constructor( paper ) {
 		this.setPaper( paper )
@@ -35,7 +32,7 @@ class Researcher {
 			removePunctuation,
 			slugify,
 			stripTags,
-			wordCount
+			wordCount,
 		}
 	}
 
@@ -51,7 +48,7 @@ class Researcher {
 	/**
 	 * Get all researches.
 	 *
-	 * @returns {Object} An object containing all available researches.
+	 * @return {Object} An object containing all available researches.
 	 */
 	getResearches() {
 		return this.researches
@@ -60,9 +57,9 @@ class Researcher {
 	/**
 	 * Return the Research by name.
 	 *
-	 * @param {String} name The name to reference the research by.
+	 * @param {string} name The name to reference the research by.
 	 *
-	 * @returns {*} Returns the result of the research or false if research does not exist.
+	 * @return {*} Returns the result of the research or false if research does not exist.
 	 */
 	getResearch( name ) {
 		if ( isUndefined( name ) || isEmpty( name ) ) {
@@ -79,9 +76,9 @@ class Researcher {
 	/**
 	 * Check whether or not the research is known by the Researcher.
 	 *
-	 * @param {String} name The name to reference the research by.
+	 * @param {string} name The name to reference the research by.
 	 *
-	 * @returns {boolean} Whether or not the research is known by the Researcher
+	 * @return {boolean} Whether or not the research is known by the Researcher
 	 */
 	hasResearch( name ) {
 		return has( this.getResearches(), name )

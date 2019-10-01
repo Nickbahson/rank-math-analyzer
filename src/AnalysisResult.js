@@ -4,7 +4,9 @@ import { isUndefined, isNumber } from 'lodash'
  * Analysis result.
  */
 class AnalysisResult {
-
+	/**
+	 * Class constructor.
+	 */
 	constructor() {
 		this.has = false
 		this.score = 0
@@ -18,7 +20,7 @@ class AnalysisResult {
 	/**
 	 * Check if a score is available.
 	 *
-	 * @return {Boolean}
+	 * @return {boolean} Has score or not.
 	 */
 	hasScore() {
 		return this.has
@@ -27,7 +29,7 @@ class AnalysisResult {
 	/**
 	 * Get the available score.
 	 *
-	 * @return {Number}
+	 * @return {number} Result score.
 	 */
 	getScore() {
 		return this.score
@@ -36,7 +38,9 @@ class AnalysisResult {
 	/**
 	 * Set the score for the assessment.
 	 *
-	 * @param {Number} score The score to set for analysis
+	 * @param {number} score The score to set for analysis
+	 *
+	 * @return {AnalysisResult} Class instance for chaining.
 	 */
 	setScore( score ) {
 		if ( isNumber( score ) ) {
@@ -50,7 +54,7 @@ class AnalysisResult {
 	/**
 	 * Check if a text is available.
 	 *
-	 * @return {Boolean} Whether or not a text is available.
+	 * @return {boolean} Whether or not a text is available.
 	 */
 	hasText() {
 		return '' !== this.text
@@ -59,7 +63,7 @@ class AnalysisResult {
 	/**
 	 * Get the available text.
 	 *
-	 * @return {String}
+	 * @return {string} Return text message.
 	 */
 	getText() {
 		return this.hasText() ? this.text : this.empty
@@ -68,7 +72,9 @@ class AnalysisResult {
 	/**
 	 * Set the text for the analysis.
 	 *
-	 * @param {String} text The text to be used for the text property
+	 * @param {string} text The text to be used for the text property
+	 *
+	 * @return {AnalysisResult} Class instance for chaining.
 	 */
 	setText( text ) {
 		this.text = isUndefined( text ) ? '' : text
@@ -78,7 +84,9 @@ class AnalysisResult {
 	/**
 	 * Set the empty for the analysis.
 	 *
-	 * @param {String} empty The empty to be used for the empty property
+	 * @param {string} empty The empty to be used for the empty property
+	 *
+	 * @return {AnalysisResult} Class instance for chaining.
 	 */
 	setEmpty( empty ) {
 		this.empty = isUndefined( empty ) ? '' : empty
@@ -88,7 +96,7 @@ class AnalysisResult {
 	/**
 	 * Check if a tooltip is available.
 	 *
-	 * @return {Boolean} Whether or not a tooltip is available.
+	 * @return {boolean} Whether or not a tooltip is available.
 	 */
 	hasTooltip() {
 		return '' !== this.tooltip
@@ -97,7 +105,7 @@ class AnalysisResult {
 	/**
 	 * Get the available tooltip.
 	 *
-	 * @return {String}
+	 * @return {string} Result tooltip.
 	 */
 	getTooltip() {
 		return this.tooltip
@@ -106,7 +114,9 @@ class AnalysisResult {
 	/**
 	 * Set the tooltip for the analysis.
 	 *
-	 * @param {String} tooltip The tooltip to be used for the tooltip property
+	 * @param {string} tooltip The tooltip to be used for the tooltip property
+	 *
+	 * @return {AnalysisResult} Class instance for chaining.
 	 */
 	setTooltip( tooltip ) {
 		this.tooltip = isUndefined( tooltip ) ? '' : tooltip

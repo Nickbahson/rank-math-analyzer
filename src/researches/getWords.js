@@ -1,8 +1,4 @@
-import {
-	filter,
-	flow,
-	map
-} from 'lodash'
+import { filter, flow, map } from 'lodash'
 
 import stripTags from './stripTags'
 import stripHTMLComments from '../helpers/stripHTMLComments'
@@ -16,45 +12,43 @@ import removePunctuation from './removePunctuation'
 /**
  * Returns an array with words used in the text.
  *
- * @param {String} text The text to be counted.
+ * @param {string} text The text to be counted.
  *
- * @returns {Array} The array with all words.
+ * @return {Array} The array with all words.
  */
 const getWords = ( text ) => {
-	text = flow([
-		stripTags,
-		stripHTMLComments,
-		stripShortcodes,
-		stripSpaces,
-		stripHTMLEntities,
-		stripConnectors,
-		stripRemovables
-	])( text )
+	text = flow(
+		[
+			stripTags,
+			stripHTMLComments,
+			stripShortcodes,
+			stripSpaces,
+			stripHTMLEntities,
+			stripConnectors,
+			stripRemovables,
+		]
+	)( text )
 
 	if ( '' === text ) {
 		return []
 	}
 
-	var words = text.split( /\s/g )
-	words = map( words, ( word ) => {
-		return removePunctuation( word )
-	})
+	let words = text.split( /\s/g )
+	words = map( words, ( word ) => removePunctuation( word ) )
 
-	return filter( words, ( word ) => {
-		return '' !== word.trim()
-	})
+	return filter( words, ( word ) => '' !== word.trim() )
 }
 
 /**
  * Returns an array with words used in the text.
  *
- * @param {String}  text  The text to be counted.
- * @param {integer} limit THe number of words required.
+ * @param {string} text  The text to be counted.
+ * @param {number} limit The number of words required.
  *
- * @returns {Array} The array with all words.
+ * @return {Array} The array with all words.
  */
 export default ( text, limit ) => {
-	let words = getWords( text )
+	const words = getWords( text )
 	limit = limit || false
 
 	if ( 0 === words.length ) {

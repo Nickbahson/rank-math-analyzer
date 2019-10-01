@@ -1,4 +1,3 @@
-import { has } from 'lodash'
 import getWords from './getWords'
 import countSentences from '../helpers/countSentences'
 import countSyllables from '../helpers/countSyllables'
@@ -11,9 +10,9 @@ function fleschEase( sentences, words, syllables ) {
 /**
  * Calculate how readable the text is, based on the Flesch reading ease test.
  *
- * @param {String} text Text to check.
+ * @param {string} text Text to check.
  *
- * @return {Integer} Flesch ease score
+ * @return {number} Flesch ease score
  */
 export default ( text ) => {
 	if ( '' === text ) {
@@ -22,7 +21,7 @@ export default ( text ) => {
 
 	text = stripNumbers( text )
 
-	let words = getWords( text ),
+	const words = getWords( text ),
 		numberOfSentences = countSentences( text ),
 		numberOfWords = words.length
 
@@ -31,7 +30,7 @@ export default ( text ) => {
 		return false
 	}
 
-	let numberOfSyllables = countSyllables( words )
+	const numberOfSyllables = countSyllables( words )
 
 	return fleschEase( numberOfSentences, numberOfWords, numberOfSyllables ).toFixed( 2 )
 }

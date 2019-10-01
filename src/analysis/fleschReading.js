@@ -3,9 +3,10 @@ import AnalysisResult from '../AnalysisResult'
 import { inRange } from 'lodash'
 
 class FleschReading extends Analysis {
-
 	/**
 	 * Create new analysis result instance.
+	 *
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
@@ -18,16 +19,16 @@ class FleschReading extends Analysis {
 	/**
 	 * Executes the assessment and return its result
 	 *
-	 * @param  {Paper}      paper      The paper to run this assessment on.
-	 * @param  {Researcher} researcher The researcher used for the assessment.
-	 * @param  {Object}     i18n       The i18n-object used for parsing translations.
+	 * @param {Paper}      paper      The paper to run this assessment on.
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 * @param {Jed}        i18n       The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const fleschReading   = researcher.getResearch( 'fleschReading' )
-		const fleschScore     = fleschReading( paper.getText() ).ease
+		const fleschReading = researcher.getResearch( 'fleschReading' )
+		const fleschScore = fleschReading( paper.getText() ).ease
 		const calculatedScore = this.calculateScore( fleschScore )
 
 		analysisResult.setScore( calculatedScore.score )
@@ -56,12 +57,12 @@ class FleschReading extends Analysis {
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {Integer} score Ease score.
+	 * @param {number} score Ease score.
 	 *
 	 * @return {Object} The calculated score.
 	 */
 	calculateScore( score ) {
-		const scores     = this.getScores()
+		const scores = this.getScores()
 		const boundaries = this.getBoundaries()
 
 		if ( boundaries.veryEasy < score ) {
@@ -101,7 +102,7 @@ class FleschReading extends Analysis {
 				okay: 60,
 				fairlyDifficult: 50,
 				difficult: 30,
-				veryDifficult: 0
+				veryDifficult: 0,
 			}
 		)
 	}
@@ -116,7 +117,7 @@ class FleschReading extends Analysis {
 				okay: 4,
 				fairlyDifficult: 3,
 				difficult: 2,
-				veryDifficult: 1
+				veryDifficult: 1,
 			}
 		)
 	}
