@@ -4,6 +4,11 @@
 import { includes } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -63,7 +68,7 @@ class KeywordInContent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInContent/score', 3 ) : null
+		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInContent/score', 3 ) : null
 	}
 
 	/**

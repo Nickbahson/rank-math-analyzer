@@ -4,6 +4,11 @@
 import { includes } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -64,7 +69,7 @@ class KeywordInTitle extends Analysis {
 	 */
 	calculateScore( hasKeyword, paper ) {
 		const score = 'en' === paper.getLocale().substring( 0, 2 ) ? 30 : 32
-		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInTitle/score', score ) : null
+		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInTitle/score', score ) : null
 	}
 
 	/**

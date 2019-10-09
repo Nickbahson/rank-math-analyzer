@@ -4,6 +4,11 @@
 import { includes } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -65,7 +70,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
+		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
 	}
 
 	/**

@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -68,7 +73,7 @@ class LinksHasExternals extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? wp.hooks.applyFilters( 'rankMath/analysis/linksHasExternals/score', 4 ) : null
+		return hasExternalDofollow ? applyFilters( 'rankMath/analysis/linksHasExternals/score', 4 ) : null
 	}
 
 	/**

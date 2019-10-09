@@ -4,6 +4,11 @@
 import { inRange } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import links from '@config/links'
@@ -120,7 +125,7 @@ class LengthContent extends Analysis {
 	}
 
 	getBoundaries() {
-		return wp.hooks.applyFilters(
+		return applyFilters(
 			'rankMath/analysis/contentLength/boundaries',
 			{
 				recommended: 2500,
@@ -133,7 +138,7 @@ class LengthContent extends Analysis {
 	}
 
 	getScores() {
-		return wp.hooks.applyFilters(
+		return applyFilters(
 			'rankMath/analysis/contentLength/score',
 			{
 				recommended: 8,

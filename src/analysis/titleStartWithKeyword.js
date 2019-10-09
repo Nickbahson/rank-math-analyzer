@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -60,7 +65,7 @@ class TitleStartWithKeyword extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( startWithKeyword ) {
-		return startWithKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/titleStartWithKeyword/score', 3 ) : null
+		return startWithKeyword ? applyFilters( 'rankMath/analysis/titleStartWithKeyword/score', 3 ) : null
 	}
 
 	/**

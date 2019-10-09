@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -57,7 +62,7 @@ class TitleHasNumber extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasNumber/score', 1 ) : null
+		return hasNumber ? applyFilters( 'rankMath/analysis/titleHasNumber/score', 1 ) : null
 	}
 
 	/**

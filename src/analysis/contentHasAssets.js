@@ -4,6 +4,11 @@
 import { has } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -84,7 +89,7 @@ class ContentHasAssets extends Analysis {
 		score += this.calculateImagesScore( images )
 		score += this.calculateVideosScore( videos )
 
-		return Math.min( wp.hooks.applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
+		return Math.min( applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
 	}
 
 	/**

@@ -4,6 +4,11 @@
 import Sentiment from 'sentiment'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -64,7 +69,7 @@ class TitleSentiment extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( sentimentScore ) {
-		return 0 !== sentimentScore ? wp.hooks.applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
+		return 0 !== sentimentScore ? applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
 	}
 
 	/**

@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -75,7 +80,7 @@ class KeywordInImageAlt extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? wp.hooks.applyFilters( 'rankMath/analysis/keywordInImageAlt/score', 2 ) : null
+		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInImageAlt/score', 2 ) : null
 	}
 
 	/**

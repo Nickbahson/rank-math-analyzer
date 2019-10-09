@@ -4,6 +4,11 @@
 import { inRange } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -100,7 +105,7 @@ class KeywordDensity extends Analysis {
 	}
 
 	getScores() {
-		return wp.hooks.applyFilters(
+		return applyFilters(
 			'rankMath/analysis/keywordDensity/score',
 			{
 				fail: 0,

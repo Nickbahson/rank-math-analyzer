@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import links from '@config/links'
@@ -58,7 +63,7 @@ class ContentHasTOC extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasTOCPlugin ) {
-		return hasTOCPlugin ? wp.hooks.applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
+		return hasTOCPlugin ? applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
 	}
 
 	/**

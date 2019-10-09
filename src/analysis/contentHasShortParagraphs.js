@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -59,7 +64,7 @@ class ContentHasShortParagraphs extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasBigParagraphs ) {
-		return hasBigParagraphs ? null : wp.hooks.applyFilters( 'rankMath/analysis/contentHasShortParagraphs/score', 3 )
+		return hasBigParagraphs ? null : applyFilters( 'rankMath/analysis/contentHasShortParagraphs/score', 3 )
 	}
 
 	/**

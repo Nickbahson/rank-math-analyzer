@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -68,7 +73,7 @@ class LinksHasInternal extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasInternal ) {
-		return hasInternal ? wp.hooks.applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
+		return hasInternal ? applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
 	}
 
 	/**

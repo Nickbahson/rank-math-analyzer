@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -62,7 +67,7 @@ class LengthPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( permalink ) {
-		return 75 < permalink.length ? null : wp.hooks.applyFilters( 'rankMath/analysis/permalinkLength/score', 4 )
+		return 75 < permalink.length ? null : applyFilters( 'rankMath/analysis/permalinkLength/score', 4 )
 	}
 
 	/**

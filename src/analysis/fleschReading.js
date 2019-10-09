@@ -4,6 +4,11 @@
 import { inRange } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -100,7 +105,7 @@ class FleschReading extends Analysis {
 	}
 
 	getBoundaries() {
-		return wp.hooks.applyFilters(
+		return applyFilters(
 			'rankMath/analysis/fleschReading/boundaries',
 			{
 				veryEasy: 90,
@@ -115,7 +120,7 @@ class FleschReading extends Analysis {
 	}
 
 	getScores() {
-		return wp.hooks.applyFilters(
+		return applyFilters(
 			'rankMath/analysis/fleschReading/score',
 			{
 				veryEasy: 6,

@@ -4,6 +4,11 @@
 import { includes } from 'lodash'
 
 /**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
  * Internal dependencies
  */
 import Analysis from '@root/Analysis'
@@ -74,7 +79,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasPowerWords ) {
-		return hasPowerWords ? wp.hooks.applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
+		return hasPowerWords ? applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
 	}
 
 	/**

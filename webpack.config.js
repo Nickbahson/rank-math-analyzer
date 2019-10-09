@@ -7,6 +7,7 @@ const externals = {
 	lodash: 'lodash',
 	'@wordpress/autop': 'wp.autop',
 	'@wordpress/wordcount': 'wp.wordcount',
+	'@wordpress/hooks': 'wp.hooks',
 }
 
 const alias = {
