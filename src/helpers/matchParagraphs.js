@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { map } from 'lodash'
+import { flow, map } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -13,6 +13,7 @@ import { autop } from '@wordpress/autop'
  */
 import stripHTML from '@researches/stripTags'
 import stripShortcodes from '@helpers/stripShortcodes'
+import stripHTMLComments from '@helpers/stripHTMLComments'
 
 /**
  * Matches the paragraphs in <p>-tags and returns the text in them.
@@ -47,7 +48,14 @@ const getParagraphsInTags = ( text, stripTags ) => {
  * @return {Array} The array containing all paragraphs from the text.
  */
 export default ( text, stripTags ) => {
-	const paragraphs = getParagraphsInTags( autop( stripShortcodes( text ) ), stripTags )
+	text = flow(
+		[
+			stripShortcodes,
+			stripHTMLComments,
+			autop,
+		]
+	)( text )
+	const paragraphs = getParagraphsInTags( text, stripTags )
 
 	if ( 0 < paragraphs.length ) {
 		return paragraphs
