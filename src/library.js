@@ -6,6 +6,7 @@ import AnalysisResult from '@root/AnalysisResult'
 import Analyzer from '@root/Analyzer'
 import Paper from '@root/Paper'
 import Researcher from '@root/Researcher'
+import ResultManager from '@root/ResultManager'
 
 /**
  * Helpers
@@ -22,7 +23,8 @@ window.rankMathAnalyzer = {
 	Analysis,
 	AnalysisResult,
 	Analyzer,
+	Helpers,
 	Paper,
 	Researcher,
-	Helpers,
+	ResultManager,
 }
