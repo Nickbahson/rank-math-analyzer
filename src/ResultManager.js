@@ -21,13 +21,14 @@ class ResultManager {
 	 * @param {AnalysisResult} results   Analysis results.
 	 * @param {boolean}        isPrimary Is primary keyword.
 	 */
-	update( keyword, results, isPrimary ) {
+	update( keyword, results, isPrimary = false ) {
 		if ( this.results.has( keyword ) ) {
 			const oldResults = this.results.get( keyword )
 			results = {
 				...oldResults.results,
 				...results,
 			}
+			isPrimary = oldResults.isPrimary
 		}
 
 		this.results.set(
