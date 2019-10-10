@@ -68,6 +68,26 @@ class ResultManager {
 	}
 
 	/**
+	 * Get all results.
+	 *
+	 * @return {Object} Results.
+	 */
+	getResults() {
+		return Object.fromEntries( this.results )
+	}
+
+	/**
+	 * Get result for keyword.
+	 *
+	 * @param {string} keyword Keyword for which you want score.
+	 *
+	 * @return {AnalysisResult} Analysis results for keyword.
+	 */
+	getResult( keyword ) {
+		return this.results.get( keyword )
+	}
+
+	/**
 	 * Check if keyword is primary.
 	 *
 	 * @param {string} keyword Keyword for which you want score.
