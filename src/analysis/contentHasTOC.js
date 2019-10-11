@@ -45,14 +45,12 @@ class ContentHasTOC extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether the system has TOC or not.
 	 *
-	 * @param {Paper} paper The paper to use for the assessment.
-	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
-	isApplicable( paper ) {
-		return paper.hasTitle()
+	isApplicable() {
+		return rankMath.assessor.hasTOCPlugin
 	}
 
 	/**

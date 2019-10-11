@@ -40,9 +40,7 @@ class ContentHasAssets extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
 
-		// Has no content.
 		if ( ! paper.hasText() ) {
-			// But has thumbnail.
 			if ( paper.hasThumbnail() ) {
 				analysisResult
 					.setScore( 1 )
@@ -54,10 +52,7 @@ class ContentHasAssets extends Analysis {
 
 		analysisResult
 			.setScore(
-				this.calculateScore(
-					this.getImages( paper ).length,
-					this.getVideos( paper ).length
-				)
+				this.calculateScore( paper )
 			)
 			.setText( this.translateScore( analysisResult, i18n ) )
 
@@ -65,11 +60,11 @@ class ContentHasAssets extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether the paper has text or thumbnail.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasText() || paper.hasThumbnail()
@@ -78,16 +73,15 @@ class ContentHasAssets extends Analysis {
 	/**
 	 * Calculates the score.
 	 *
-	 * @param {number} images Total number of images.
-	 * @param {number} videos Total number of videos.
+	 * @param {Paper} paper The paper to run this assessment on.
 	 *
 	 * @return {number} The calculated score.
 	 */
-	calculateScore( images, videos ) {
+	calculateScore( paper ) {
 		let score = 0
 
-		score += this.calculateImagesScore( images )
-		score += this.calculateVideosScore( videos )
+		score += this.calculateImagesScore( this.getImages( paper ) )
+		score += this.calculateVideosScore( this.getVideos( paper.getText() ) )
 
 		return Math.min( applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
 	}
@@ -151,43 +145,51 @@ class ContentHasAssets extends Analysis {
 	/**
 	 * Get all the images.
 	 *
-	 * @param {Paper} paper The paper to use for the assessment.
+	 * @param {Paper} paper The paper to run this assessment on.
 	 *
-	 * @return {Array} The matched set.
+	 * @return {number} Count of found images.
 	 */
 	getImages( paper ) {
-		const images = this.match( paper, '<img(?:[^>]+)?>' ),
-			gallery = this.match( paper, '\\[gallery( [^\\]]+?)?\\]' )
+		const images = [].concat(
+			this.match( paper.getText(), '<img(?:[^>]+)?>' ),
+			this.match( paper.getText(), '\\[gallery( [^\\]]+?)?\\]' )
+		)
 
-		return [].concat( images, gallery )
+		if ( paper.hasThumbnail() ) {
+			images.push( paper.getThumbnail() )
+		}
+
+		return images.length
 	}
 
 	/**
 	 * Get all the videos.
 	 *
-	 * @param {Paper} paper The paper to use for the assessment.
+	 * @param {string} text The text to use for the assessment.
 	 *
-	 * @return {Array} The matched set.
+	 * @return {number} Count of found videos.
 	 */
-	getVideos( paper ) {
-		const videos = this.match( paper, '<iframe(?:[^>]+)?>' ),
-			embeds = this.match( paper, '\\[video( [^\\]]+?)?\\]' ),
-			embeds2 = this.match( paper, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ )
+	getVideos( text ) {
+		const videos = [].concat(
+			this.match( text, '<iframe(?:[^>]+)?>' ),
+			this.match( text, '\\[video( [^\\]]+?)?\\]' ),
+			this.match( text, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ )
+		)
 
-		return [].concat( videos, embeds, embeds2 )
+		return videos.length
 	}
 
 	/**
 	 * Match the assets.
 	 *
-	 * @param {Paper}  paper       The paper to use for the assessment.
+	 * @param {string} text        The text to use for the assessment.
 	 * @param {string} regexString The regex to test the text against.
 	 *
 	 * @return {Array} The matched set.
 	 */
-	match( paper, regexString ) {
+	match( text, regexString ) {
 		const regex = new RegExp( regexString, 'ig' )
-		const matches = paper.getText().match( regex )
+		const matches = text.match( regex )
 
 		return null === matches ? [] : matches
 	}

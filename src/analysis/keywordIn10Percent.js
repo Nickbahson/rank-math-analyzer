@@ -38,11 +38,13 @@ class KeywordIn10Percent extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
+		/* eslint @wordpress/no-unused-vars-before-return: 0*/
+		const analysisResult = this.newResult( i18n )
 		const getWords = researcher.getResearch( 'getWords' )
 		let words = getWords( paper.getTextLower() )
 
-		if ( false === words || 0 === words.length ) {
-			return null
+		if ( false === words ) {
+			return analysisResult
 		}
 
 		if ( 400 < words.length ) {
@@ -50,7 +52,6 @@ class KeywordIn10Percent extends Analysis {
 		}
 		words = words.join( ' ' )
 
-		const analysisResult = this.newResult( i18n )
 		const hasKeyword = includes( words, paper.getLower( 'keyword' ) )
 
 		analysisResult
@@ -61,11 +62,11 @@ class KeywordIn10Percent extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks that paper has text and keyword.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasKeyword() && paper.hasText()

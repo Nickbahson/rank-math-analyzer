@@ -39,7 +39,8 @@ class KeywordInContent extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const paperText = paper.getTextLower()
+		const stripTags = researcher.getResearch( 'stripTags' )
+		const paperText = stripTags( paper.getTextLower() )
 		const hasKeyword = paper.getKeywordCombination( researcher ).some( ( keyword ) => includes( paperText, keyword ) )
 
 		analysisResult
@@ -50,11 +51,11 @@ class KeywordInContent extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks that paper has text and keyword.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasKeyword() && paper.hasText()

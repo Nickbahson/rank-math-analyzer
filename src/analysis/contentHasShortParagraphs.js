@@ -35,8 +35,8 @@ class ContentHasShortParagraphs extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
 		const getParagraphs = researcher.getResearch( 'getParagraphs' )
-		const paragraphs = getParagraphs( paper.getText() )
-		const hasBigParagraphs = paragraphs.some( ( paragraph ) => 120 < paragraph.wordCount )
+		const hasBigParagraphs = getParagraphs( paper.getText() )
+			.some( ( paragraph ) => 120 < paragraph.wordCount )
 
 		analysisResult
 			.setScore( this.calculateScore( hasBigParagraphs ) )
@@ -46,11 +46,11 @@ class ContentHasShortParagraphs extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether the paper has text.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasText()

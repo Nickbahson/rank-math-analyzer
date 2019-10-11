@@ -62,11 +62,11 @@ class KeywordInImageAlt extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasKeyword() && ( paper.hasText() || paper.hasThumbnailAltText() )

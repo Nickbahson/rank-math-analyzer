@@ -40,20 +40,19 @@ class KeywordDensity extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		/* eslint @wordpress/no-unused-vars-before-return: 0*/
 		const analysisResult = this.newResult( i18n )
-		let wordCount = researcher.getResearch( 'wordCount' )
+		const keywordCombination = paper.getKeywordCombination( researcher )
+		const getWordCount = researcher.getResearch( 'wordCount' )
+		const wordCount = getWordCount( paper.getTextLower() )
 
-		wordCount = wordCount( paper.getTextLower() )
-		if ( false === wordCount || 0 === wordCount.length || paper.getKeywordCombination( researcher ) ) {
+		if ( false === wordCount || 0 === wordCount.length || 0 === keywordCombination.length ) {
 			return analysisResult
 		}
 
 		// Keyword Density & Focus Keyword occurrence
-		const getWords = researcher.getResearch( 'getWords' )
-		const words = getWords( paper.getTextLower() )
 		const stripTags = researcher.getResearch( 'stripTags' )
-		const regex = new RegExp( paper.getKeywordCombination( researcher ).join( '|' ), 'gi' )
+		const regex = new RegExp( keywordCombination.join( '|' ), 'gi' )
 		const count = ( stripTags( paper.getText() ).match( regex ) || [] ).length
-		const keywordDensity = ( ( count / words.length ) * 100 ).toFixed( 2 )
+		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
 
 		analysisResult
 			.setScore( this.calculateScore( keywordDensity ) )
@@ -69,11 +68,11 @@ class KeywordDensity extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether the paper has text.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasText()

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { inRange } from 'lodash'
+import { forEach, inRange } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -40,7 +40,7 @@ class FleschReading extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
 		const fleschReading = researcher.getResearch( 'fleschReading' )
-		const fleschScore = fleschReading( paper.getText() ).ease
+		const fleschScore = fleschReading( paper.getText() )
 		const calculatedScore = this.calculateScore( fleschScore )
 
 		analysisResult.setScore( calculatedScore.score )
@@ -56,11 +56,11 @@ class FleschReading extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether the paper has text.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *
-	 * @return {boolean} True when there is text.
+	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
 		return paper.hasText()
@@ -74,62 +74,60 @@ class FleschReading extends Analysis {
 	 * @return {Object} The calculated score.
 	 */
 	calculateScore( score ) {
-		const scores = this.getScores()
 		const boundaries = this.getBoundaries()
+		let current = 101
+		let located = false
 
-		if ( boundaries.veryEasy < score ) {
-			return { score: scores.veryEasy, note: 'very easy' }
-		}
+		forEach( boundaries, ( boundary ) => {
+			if ( inRange( score, boundary.boundary, current ) ) {
+				located = boundary
+			}
 
-		if ( inRange( score, boundaries.easy, 91 ) ) {
-			return { score: scores.easy, note: 'easy' }
-		}
+			current = boundary.boundary + 1
+		} )
 
-		if ( inRange( score, boundaries.fairlyEasy, boundaries.easy ) ) {
-			return { score: scores.fairlyEasy, note: 'fairly easy' }
-		}
-
-		if ( inRange( score, boundaries.okay, boundaries.fairlyEasy ) ) {
-			return { score: scores.okay, note: 'okay' }
-		}
-
-		if ( inRange( score, boundaries.fairlyDifficult, boundaries.okay ) ) {
-			return { score: scores.fairlyDifficult, note: 'fairly difficult' }
-		}
-
-		if ( inRange( score, boundaries.difficult, boundaries.fairlyDifficult ) ) {
-			return { score: scores.difficult, note: 'difficult' }
-		}
-
-		return { score: scores.veryDifficult, note: 'very difficult' }
+		return false !== located ? located : boundaries.veryDifficult
 	}
 
 	getBoundaries() {
 		return applyFilters(
 			'rankMath/analysis/fleschReading/boundaries',
 			{
-				veryEasy: 90,
-				easy: 80,
-				fairlyEasy: 70,
-				okay: 60,
-				fairlyDifficult: 50,
-				difficult: 30,
-				veryDifficult: 0,
-			}
-		)
-	}
-
-	getScores() {
-		return applyFilters(
-			'rankMath/analysis/fleschReading/score',
-			{
-				veryEasy: 6,
-				easy: 5,
-				fairlyEasy: 5,
-				okay: 4,
-				fairlyDifficult: 3,
-				difficult: 2,
-				veryDifficult: 1,
+				veryEasy: {
+					boundary: 90,
+					score: 6,
+					note: 'very easy',
+				},
+				easy: {
+					boundary: 80,
+					score: 5,
+					note: 'easy',
+				},
+				fairlyEasy: {
+					boundary: 70,
+					score: 5,
+					note: 'fairly easy',
+				},
+				okay: {
+					boundary: 60,
+					score: 4,
+					note: 'okay',
+				},
+				fairlyDifficult: {
+					boundary: 50,
+					score: 3,
+					note: 'fairly difficult',
+				},
+				difficult: {
+					boundary: 30,
+					score: 2,
+					note: 'difficult',
+				},
+				veryDifficult: {
+					boundary: 0,
+					score: 1,
+					note: 'very difficult',
+				},
 			}
 		)
 	}

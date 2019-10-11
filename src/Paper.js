@@ -1,12 +1,17 @@
 /**
  * External dependencies
  */
-import { defaults, has, isUndefined } from 'lodash'
+import { defaults, flow, has, isUndefined } from 'lodash'
 
 /**
  * Internal dependencies
  */
+import stripSpaces from '@helpers/stripSpaces'
+import stripStyle from '@helpers/stripStyles'
+import stripScript from '@helpers/stripScripts'
 import normalizeQuotes from '@helpers/normalizeQuotes'
+import stripHTMLComments from '@helpers/stripHTMLComments'
+import stripHTMLEntities from '@helpers/stripHTMLEntities'
 
 class Paper {
 	/**
@@ -240,12 +245,17 @@ class Paper {
 			return
 		}
 
-		this.text = text
-			.replace( /<script[^>]*>.*?<\/script>/gi, '' )
-			.replace( /<style[^>]*>.*?<\/style>/gi, '' )
-			.replace( /&\S+?;/g, '&' )
-			.replace( /<!--[\s\S]*?(?:-->)/g, '' )
-		this.text = normalizeQuotes( this.text )
+		this.text = flow(
+			[
+				stripStyle,
+				stripScript,
+				stripHTMLComments,
+				stripHTMLEntities,
+				stripSpaces,
+				normalizeQuotes,
+			]
+		)( text )
+
 		this.textLower = this.text.toLowerCase()
 	}
 
