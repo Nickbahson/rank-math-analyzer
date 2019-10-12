@@ -169,3 +169,14 @@ export function checkNofollow( anchorHTML, linkType ) {
 
 	return includes( anchorHTML, 'nofollow' ) ? 'Nofollow' : 'Dofollow'
 }
+
+/**
+ * Get anchor tags from text.
+ *
+ * @param {string} text Text to parse for anchor tags.
+ *
+ * @return {Array} Found anchor tags.
+ */
+export function getLinks( text ) {
+	return text.match( /<a(?:[^>]+)?>/gi )
+}

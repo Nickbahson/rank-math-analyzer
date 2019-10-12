@@ -68,7 +68,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return rankMath.isUserRegistered && 'en' === paper.getLocale()
+		return rankMath.isUserRegistered && includes( paper.getLocale(), 'en' ) && paper.hasTitle()
 	}
 
 	/**

@@ -37,7 +37,7 @@ class LinksNotAllExternals extends Analysis {
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics = linkStatistics( paper.getText() )
 
-		if ( null === statistics.anchors ) {
+		if ( 0 === statistics.total ) {
 			analysisResult.setText( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
 			return analysisResult
 		}

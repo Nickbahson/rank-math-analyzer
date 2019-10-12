@@ -26,6 +26,8 @@
 	</script>
 	<script>
 
+		rankMath.assessor.hasTOCPlugin = true
+
 		var paper = new window.rankMathAnalyzer.Paper( '', {
 			locale: 'en_US'
 		})
@@ -33,10 +35,11 @@
 			i18n: wp.i18n
 		})
 
-		this.paper.setTitle( '10 Shakeeb Ahmed Follow Test SEO-Press' )
-		this.paper.setPermalink( 'shakeeb-ahmed' )
-		this.paper.setDescription( 'This is description.' )
-		this.paper.setUrl( 'http://mts.test/shakeeb-ahmed/' )
+		this.paper.setTitle( '10 Best SEO Audit Tools' )
+		this.paper.setPermalink( 'seo-audit-tools' )
+		this.paper.setDescription( 'Use Rank Math for seo audit.' )
+		this.paper.setKeyword( 'seo audit' )
+		this.paper.setUrl( 'http://mts.test/seo-audit-tools/' )
 		this.paper.setText( `<!-- wp:paragraph -->
 <p>Shakeeb seo audit You might be surprised to learn that <strong>English speakers make up just 53% of all people on the web</strong>. Which means if you're not optimizing your multilingual website, there's a whole 47% of potential customers your business is currently unable to target.</p>
 <!-- /wp:paragraph -->
@@ -50,11 +53,11 @@
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
-<p>To ensure you don't miss out on such growth opportunities, website translation is one of the quickest ways to reach potential customers in new markets - even faster if you use translation plugin <a rel="noreferrer noopener" aria-label=" (opens in a new tab)" href="https://weglot.com/" target="_blank">Weglot</a> on your WordPress site.&nbsp;</p>
+<p>To ensure seo audit you don't miss out on such growth opportunities, website translation is one of the quickest ways to reach potential customers in new markets - even faster if you use translation plugin <a rel="noreferrer noopener" aria-label=" (opens in a new tab)" href="https://weglot.com/" target="_blank">Weglot</a> on your WordPress site.&nbsp;</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>And, the best part? The Weglot WordPress plugin works seamlessly with Rank Math SEO - making it even easier to optimize the content of your multilingual WordPress site.&nbsp;</p>
+<p>And, the best part? The seo audit WordPress plugin works seamlessly with Rank Math SEO - making it even easier to optimize the content of your multilingual WordPress site.&nbsp;</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
@@ -62,14 +65,14 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Let's take a look at how you can utilize both Rank Math SEO and Weglot, for the ultimate combination of translation and a higher ranking on search engines.&nbsp;</p>
+<p>Let's take a look at how you can seo audit utilize both Rank Math SEO and Weglot, for the ultimate combination of translation and a higher ranking on search engines.&nbsp;</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:html -->
 <div id="toc">
 <h2>Table Of Contents</h2>
 <ul>
-<li><a href="#start">Getting Started</a></li>
+<li><a href="#start">Getting Started SEO Audit</a></li>
 <li><a href="#general-seo">Translating Post Metadata</a></li>
 <li><a href="#image-alt-text">Translating Image Alt Text</a></li>
 <li><a href="#translating-urls">Creating Unique URLs For Alternate Languages</a>
@@ -84,7 +87,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>To begin, you'll need to make sure you've downloaded the latest versions of both <a href="https://mythemeshop.com/blog/wordpress-seo-plugins/">Rank Math SEO</a> and Weglot.&nbsp;</p>
+<p>To begin, you'll need to make seo audit sure you've downloaded the latest versions of both <a href="http://mts.test/blog/wordpress-seo-plugins/">Rank Math SEO</a> and Weglot.&nbsp;</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
@@ -264,10 +267,17 @@ https://wordpress.org/plugins/weglot/
 <!-- wp:image {"id":1074,"sizeSlug":"large"} -->
 <figure class="wp-block-image size-large"><img src="http://mts.test/wp-content/uploads/2019/10/email_campaign_preview-1024x705.jpg" alt="SEO Audit report" class="wp-image-1074"/></figure>
 <!-- /wp:image -->` )
-		this.paper.setKeyword( 'seo audit' )
 
+		let total = 0
 		this.analyzer.analyze( this.paper ).then( function( results ) {
 			console.log( results )
+			lodash.forEach( results, function( result, id ) {
+				if ( ! result.hasScore() ) {
+					console.log( id )
+				}
+				total += result.hasScore() ? result.getScore() : 0
+			})
+			console.log( 'Total: ' + total );
 		})
 
 	</script>

@@ -1,7 +1,12 @@
 /**
  * External dependencies
  */
-import $ from 'jquery'
+import { isUndefined } from 'lodash'
+
+/**
+ * External dependencies
+ */
+import jQuery from 'jquery'
 
 /**
  * Internal dependencies
@@ -42,13 +47,13 @@ class KeywordNotUsed extends Analysis {
 		const analysisResult = this.newResult( i18n )
 		const keyword = paper.getLower( 'keyword' ).trim()
 
-		if ( 'undefined' !== typeof this.keywordsChecked[ keyword ] ) {
+		if ( ! isUndefined( this.keywordsChecked[ keyword ] ) ) {
 			analysisResult.setText( this.translateScore( this.keywordsChecked[ keyword ], i18n ) )
 			return analysisResult
 		}
 
 		this.keywordsChecked[ keyword ] = true
-		$.ajax(
+		jQuery.ajax(
 			{
 				url: rankMath.ajaxurl,
 				type: 'GET',
@@ -63,9 +68,10 @@ class KeywordNotUsed extends Analysis {
 		).done( ( data ) => {
 			this.keywordsChecked[ keyword ] = data.isNew
 			analysisResult.setText( this.translateScore( data.isNew, i18n ) )
-			const li = $( '.seo-check-KeywordNotUsed' )
+			const li = jQuery( '.seo-check-KeywordNotUsed' )
 
 			li.removeClass( 'test-ok test-fail test-empty test-looking' )
+			li.addClass( data.isNew ? 'test-ok' : 'test-fail' )
 			this.changeKeywordInLink( keyword )
 		} )
 
@@ -103,7 +109,7 @@ class KeywordNotUsed extends Analysis {
 	}
 
 	changeKeywordInLink( keyword ) {
-		const fkLinkElement = $( '.focus-keyword-link' )
+		const fkLinkElement = jQuery( '.focus-keyword-link' )
 		if ( fkLinkElement.length ) {
 			fkLinkElement.attr( 'href', fkLinkElement.attr( 'href' )
 				.replace( '%focus_keyword%', keyword )

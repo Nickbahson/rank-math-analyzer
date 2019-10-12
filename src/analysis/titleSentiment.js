@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { includes } from 'lodash'
 import Sentiment from 'sentiment'
 
 /**
@@ -58,7 +59,7 @@ class TitleSentiment extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return rankMath.isUserRegistered && paper.hasTitle() && 'en' === paper.getLocale()
+		return rankMath.isUserRegistered && includes( paper.getLocale(), 'en' ) && paper.hasTitle()
 	}
 
 	/**

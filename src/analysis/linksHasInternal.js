@@ -38,7 +38,7 @@ class LinksHasInternal extends Analysis {
 		const linkStatistics = researcher.getResearch( 'getLinkStats' )
 		const statistics = linkStatistics( paper.getText() )
 
-		if ( null === statistics.anchors ) {
+		if ( 0 === statistics.total ) {
 			return analysisResult
 		}
 
