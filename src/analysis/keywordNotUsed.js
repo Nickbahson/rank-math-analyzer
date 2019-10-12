@@ -69,6 +69,9 @@ class KeywordNotUsed extends Analysis {
 		).done( ( data ) => {
 			this.keywordsChecked[ keyword ] = data.isNew
 			analysisResult.setText( this.translateScore( keyword, data.isNew, i18n ) )
+			if ( data.isNew ) {
+				analysisResult.has = true
+			}
 			doAction( 'rankMath_analysis_keywordUsage_updated', keyword, analysisResult )
 		} )
 
