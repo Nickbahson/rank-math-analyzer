@@ -83,7 +83,7 @@ class KeywordInImageAlt extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInImageAlt/score', 2 ) : null
+		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInImageAlt_score', 2 ) : null
 	}
 
 	/**

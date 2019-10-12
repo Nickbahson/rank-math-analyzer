@@ -73,7 +73,7 @@ class LinksHasExternals extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? applyFilters( 'rankMath/analysis/linksHasExternals/score', 4 ) : null
+		return hasExternalDofollow ? applyFilters( 'rankMath_analysis_linksHasExternals_score', 4 ) : null
 	}
 
 	/**

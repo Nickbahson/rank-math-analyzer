@@ -70,7 +70,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInPermalink/score', 5 ) : null
+		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 ) : null
 	}
 
 	/**

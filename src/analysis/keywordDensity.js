@@ -105,7 +105,7 @@ class KeywordDensity extends Analysis {
 
 	getScores() {
 		return applyFilters(
-			'rankMath/analysis/keywordDensity/score',
+			'rankMath_analysis_keywordDensity_score',
 			{
 				fail: 0,
 				fair: 2,

@@ -80,7 +80,7 @@ class KeywordIn10Percent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordIn10Percent/score', 3 ) : null
+		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordIn10Percent_score', 3 ) : null
 	}
 
 	/**

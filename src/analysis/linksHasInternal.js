@@ -73,7 +73,7 @@ class LinksHasInternal extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasInternal ) {
-		return hasInternal ? applyFilters( 'rankMath/analysis/linksHasInternal/score', 5 ) : null
+		return hasInternal ? applyFilters( 'rankMath_analysis_linksHasInternal_score', 5 ) : null
 	}
 
 	/**

@@ -69,7 +69,7 @@ class KeywordInContent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInContent/score', 3 ) : null
+		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInContent_score', 3 ) : null
 	}
 
 	/**

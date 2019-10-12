@@ -64,7 +64,7 @@ class ContentHasShortParagraphs extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasBigParagraphs ) {
-		return hasBigParagraphs ? null : applyFilters( 'rankMath/analysis/contentHasShortParagraphs/score', 3 )
+		return hasBigParagraphs ? null : applyFilters( 'rankMath_analysis_contentHasShortParagraphs_score', 3 )
 	}
 
 	/**

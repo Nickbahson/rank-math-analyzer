@@ -65,7 +65,7 @@ class TitleStartWithKeyword extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( startWithKeyword ) {
-		return startWithKeyword ? applyFilters( 'rankMath/analysis/titleStartWithKeyword/score', 3 ) : null
+		return startWithKeyword ? applyFilters( 'rankMath_analysis_titleStartWithKeyword_score', 3 ) : null
 	}
 
 	/**

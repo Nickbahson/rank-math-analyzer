@@ -70,7 +70,7 @@ class TitleSentiment extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( sentimentScore ) {
-		return 0 !== sentimentScore ? applyFilters( 'rankMath/analysis/titleSentiment/score', 1 ) : null
+		return 0 !== sentimentScore ? applyFilters( 'rankMath_analysis_titleSentiment_score', 1 ) : null
 	}
 
 	/**

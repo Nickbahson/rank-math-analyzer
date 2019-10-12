@@ -61,7 +61,7 @@ class ContentHasTOC extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasTOCPlugin ) {
-		return hasTOCPlugin ? applyFilters( 'rankMath/analysis/contentHasTOC/score', 2 ) : null
+		return hasTOCPlugin ? applyFilters( 'rankMath_analysis_contentHasTOC_score', 2 ) : null
 	}
 
 	/**

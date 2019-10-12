@@ -62,7 +62,7 @@ class TitleHasNumber extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? applyFilters( 'rankMath/analysis/titleHasNumber/score', 1 ) : null
+		return hasNumber ? applyFilters( 'rankMath_analysis_titleHasNumber_score', 1 ) : null
 	}
 
 	/**

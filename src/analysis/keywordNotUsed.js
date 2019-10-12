@@ -1,12 +1,13 @@
 /**
  * External dependencies
  */
+import jQuery from 'jquery'
 import { isUndefined } from 'lodash'
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import jQuery from 'jquery'
+import { doAction } from '@wordpress/hooks'
 
 /**
  * Internal dependencies
@@ -48,7 +49,7 @@ class KeywordNotUsed extends Analysis {
 		const keyword = paper.getLower( 'keyword' ).trim()
 
 		if ( ! isUndefined( this.keywordsChecked[ keyword ] ) ) {
-			analysisResult.setText( this.translateScore( this.keywordsChecked[ keyword ], i18n ) )
+			analysisResult.setText( this.translateScore( keyword, this.keywordsChecked[ keyword ], i18n ) )
 			return analysisResult
 		}
 
@@ -67,12 +68,8 @@ class KeywordNotUsed extends Analysis {
 			}
 		).done( ( data ) => {
 			this.keywordsChecked[ keyword ] = data.isNew
-			analysisResult.setText( this.translateScore( data.isNew, i18n ) )
-			const li = jQuery( '.seo-check-KeywordNotUsed' )
-
-			li.removeClass( 'test-ok test-fail test-empty test-looking' )
-			li.addClass( data.isNew ? 'test-ok' : 'test-fail' )
-			this.changeKeywordInLink( keyword )
+			analysisResult.setText( this.translateScore( keyword, data.isNew, i18n ) )
+			doAction( 'rankMath_analysis_keywordUsage_updated', keyword, analysisResult )
 		} )
 
 		analysisResult.setText( i18n.__( 'We are searching in database.', 'rank-math-analyzer' ) )
@@ -94,28 +91,33 @@ class KeywordNotUsed extends Analysis {
 	/**
 	 * Translates the score to a message the user can understand.
 	 *
+	 * @param {string}  keyword      The keyword.
 	 * @param {boolean} isNewKeyword Is the selected keyword new or not.
 	 * @param {Jed}     i18n         The i18n-object used for parsing translations.
 	 *
 	 * @return {string} The translated string.
 	 */
-	translateScore( isNewKeyword, i18n ) {
+	translateScore( keyword, isNewKeyword, i18n ) {
 		return isNewKeyword ?
 			i18n.__( 'You haven\'t used this Focus Keyword before.', 'rank-math-analyzer' ) :
 			i18n.sprintf(
 				i18n.__( 'You have %1$s this Focus Keyword.', 'rank-math-analyzer' ),
-				'<a target="_blank" class="focus-keyword-link" href="' + rankMath.assessor.focusKeywordLink + '">' + i18n.__( 'already used', 'rank-math-analyzer' ) + '</a>'
+				'<a target="_blank" href="' + this.changeKeywordInLink( keyword ) + '">' + i18n.__( 'already used', 'rank-math-analyzer' ) + '</a>'
 			)
 	}
 
+	/**
+	 * Change keyword in link for post list.
+	 *
+	 * @param {string} keyword The keyword.
+	 *
+	 * @return {string} Generated url.
+	 */
 	changeKeywordInLink( keyword ) {
-		const fkLinkElement = jQuery( '.focus-keyword-link' )
-		if ( fkLinkElement.length ) {
-			fkLinkElement.attr( 'href', fkLinkElement.attr( 'href' )
-				.replace( '%focus_keyword%', keyword )
-				.replace( '%post_type%', rankMath.objectType )
-				.replace( '%yaxonomy%', rankMath.objectType ) )
-		}
+		return rankMath.assessor.focusKeywordLink
+			.replace( '%focus_keyword%', keyword )
+			.replace( '%post_type%', rankMath.objectType )
+			.replace( '%yaxonomy%', rankMath.objectType )
 	}
 }
 

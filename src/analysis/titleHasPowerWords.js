@@ -79,7 +79,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasPowerWords ) {
-		return hasPowerWords ? applyFilters( 'rankMath/analysis/titleHasPowerWords/score', 1 ) : null
+		return hasPowerWords ? applyFilters( 'rankMath_analysis_titleHasPowerWords_score', 1 ) : null
 	}
 
 	/**

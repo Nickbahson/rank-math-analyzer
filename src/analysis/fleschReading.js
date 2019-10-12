@@ -91,7 +91,7 @@ class FleschReading extends Analysis {
 
 	getBoundaries() {
 		return applyFilters(
-			'rankMath/analysis/fleschReading/boundaries',
+			'rankMath_analysis_fleschReading_boundaries',
 			{
 				veryEasy: {
 					boundary: 90,

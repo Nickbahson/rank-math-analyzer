@@ -67,7 +67,7 @@ class KeywordInMetaDescription extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath/analysis/keywordInMetaDescription/score', 2 ) : null
+		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInMetaDescription_score', 2 ) : null
 	}
 
 	/**

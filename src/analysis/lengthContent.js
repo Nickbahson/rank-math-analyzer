@@ -114,7 +114,7 @@ class LengthContent extends Analysis {
 
 	getBoundaries() {
 		return applyFilters(
-			'rankMath/analysis/contentLength/boundaries',
+			'rankMath_analysis_contentLength_boundaries',
 			{
 				recommended: {
 					boundary: 2500,

@@ -67,7 +67,7 @@ class LengthPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( permalinkLength ) {
-		return 75 < permalinkLength ? null : applyFilters( 'rankMath/analysis/permalinkLength/score', 4 )
+		return 75 < permalinkLength ? null : applyFilters( 'rankMath_analysis_permalinkLength_score', 4 )
 	}
 
 	/**

@@ -83,7 +83,7 @@ class ContentHasAssets extends Analysis {
 		score += this.calculateImagesScore( this.getImages( paper ) )
 		score += this.calculateVideosScore( this.getVideos( paper.getText() ) )
 
-		return Math.min( applyFilters( 'rankMath/analysis/contentHasAssets/score', 6 ), score )
+		return Math.min( applyFilters( 'rankMath_analysis_contentHasAssets_score', 6 ), score )
 	}
 
 	/**
