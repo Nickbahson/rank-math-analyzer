@@ -66,7 +66,7 @@ class LengthContent extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a text.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *

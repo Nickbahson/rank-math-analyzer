@@ -56,7 +56,7 @@ class FleschReading extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has text.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *

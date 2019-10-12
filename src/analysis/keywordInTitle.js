@@ -49,7 +49,7 @@ class KeywordInTitle extends Analysis {
 	}
 
 	/**
-	 * Checks whether the paper has a url.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *

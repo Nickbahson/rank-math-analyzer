@@ -51,7 +51,7 @@ class KeywordInContent extends Analysis {
 	}
 
 	/**
-	 * Checks that paper has text and keyword.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.
 	 *

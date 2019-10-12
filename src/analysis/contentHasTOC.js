@@ -45,7 +45,7 @@ class ContentHasTOC extends Analysis {
 	}
 
 	/**
-	 * Checks whether the system has TOC or not.
+	 * Checks whether paper meet analysis requirements.
 	 *
 	 * @return {boolean} True when requirements meet.
 	 */
