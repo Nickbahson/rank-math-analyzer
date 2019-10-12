@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { inRange } from 'lodash'
+import { forEach, inRange } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -46,19 +46,18 @@ class LengthContent extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		/* eslint @wordpress/no-unused-vars-before-return: 0*/
 		const analysisResult = this.newResult( i18n )
-		let wordCount = researcher.getResearch( 'wordCount' )
-
-		wordCount = wordCount( paper.getTextLower() )
-		if ( false === wordCount || 0 === wordCount.length ) {
-			return null
+		const getWordCount = researcher.getResearch( 'wordCount' )
+		const wordCount = getWordCount( paper.getTextLower() )
+		if ( false === wordCount || 0 === wordCount ) {
+			return analysisResult
 		}
 
 		analysisResult
-			.setScore( this.calculateScore( wordCount.length ) )
+			.setScore( this.calculateScore( wordCount ) )
 			.setText(
 				i18n.sprintf(
 					this.translateScore( analysisResult, i18n ),
-					wordCount.length
+					wordCount
 				)
 			)
 
@@ -84,30 +83,19 @@ class LengthContent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( wordCount ) {
-		const scores = this.getScores()
 		const boundaries = this.getBoundaries()
+		let current = 100000
+		let located = false
 
-		if ( boundaries.recommended <= wordCount ) {
-			return scores.recommended
-		}
+		forEach( boundaries, ( boundary ) => {
+			if ( inRange( wordCount, boundary.boundary, current ) ) {
+				located = boundary
+			}
 
-		if ( inRange( wordCount, boundaries.belowRecommended, boundaries.recommended ) ) {
-			return scores.belowRecommended
-		}
+			current = boundary.boundary + 1
+		} )
 
-		if ( inRange( wordCount, boundaries.medium, boundaries.belowRecommended ) ) {
-			return scores.medium
-		}
-
-		if ( inRange( wordCount, boundaries.belowMedium, boundaries.medium ) ) {
-			return scores.belowMedium
-		}
-
-		if ( inRange( wordCount, boundaries.low, boundaries.belowMedium ) ) {
-			return scores.low
-		}
-
-		return 0
+		return false !== located ? located.score : 0
 	}
 
 	/**
@@ -128,24 +116,26 @@ class LengthContent extends Analysis {
 		return applyFilters(
 			'rankMath/analysis/contentLength/boundaries',
 			{
-				recommended: 2500,
-				belowRecommended: 2000,
-				medium: 1500,
-				belowMedium: 1000,
-				low: 600,
-			}
-		)
-	}
-
-	getScores() {
-		return applyFilters(
-			'rankMath/analysis/contentLength/score',
-			{
-				recommended: 8,
-				belowRecommended: 5,
-				medium: 4,
-				belowMedium: 3,
-				low: 2,
+				recommended: {
+					boundary: 2500,
+					score: 8,
+				},
+				belowRecommended: {
+					boundary: 2000,
+					score: 5,
+				},
+				medium: {
+					boundary: 1500,
+					score: 4,
+				},
+				belowMedium: {
+					boundary: 1000,
+					score: 3,
+				},
+				low: {
+					boundary: 600,
+					score: 2,
+				},
 			}
 		)
 	}

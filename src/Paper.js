@@ -201,7 +201,7 @@ class Paper {
 	 * @param {string} description The description.
 	 */
 	setDescription( description ) {
-		this.args.description = normalizeQuotes( description )
+		this.args.description = normalizeQuotes( stripSpaces( description ) )
 		this.args.descriptionLower = this.args.description.toLowerCase()
 	}
 

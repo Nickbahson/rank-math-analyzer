@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { includes, uniq } from 'lodash'
+
+/**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
@@ -34,14 +39,12 @@ class KeywordInImageAlt extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		let keyword = paper.getLower( 'keyword' )
-
 		// Remove duplicate words from keyword.
-		keyword = [ ...new Set( keyword.split( ' ' ) ) ]
-		keyword = keyword.join( ' ' )
+		const keyword = uniq( paper.getLower( 'keyword' ).split( ' ' ) ).join( ' ' )
+		const keywordPattern = keyword.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ).replace( / /g, '.*' )
 
-		let regex = new RegExp( '<img[^>]*alt=[\'"][^\'"]*' + keyword.replace( / /g, '.*' ) + '[^\'"]*[\'"]', 'gi' )
-		if ( null !== paper.getTextLower().match( regex ) || keyword === paper.getLower( 'thumbnailAlt' ) ) {
+		let regex = new RegExp( '<img[^>]*alt=[\'"][^\'"]*' + keywordPattern + '[^\'"]*[\'"]', 'gi' )
+		if ( null !== paper.getTextLower().match( regex ) || includes( paper.getLower( 'thumbnailAlt' ), keyword ) ) {
 			analysisResult
 				.setScore( this.calculateScore( true ) )
 				.setText( this.translateScore( analysisResult, i18n ) )

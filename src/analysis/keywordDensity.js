@@ -44,7 +44,7 @@ class KeywordDensity extends Analysis {
 		const getWordCount = researcher.getResearch( 'wordCount' )
 		const wordCount = getWordCount( paper.getTextLower() )
 
-		if ( false === wordCount || 0 === wordCount.length || 0 === keywordCombination.length ) {
+		if ( false === wordCount || 0 === wordCount || 0 === keywordCombination.length ) {
 			return analysisResult
 		}
 
