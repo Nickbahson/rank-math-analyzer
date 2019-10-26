@@ -108,8 +108,8 @@ class LengthContent extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Your content is %1$s words long. Good job!', 'rank-math-analyzer' ) :
-			i18n.__( 'Your content is %1$s words long. Consider using at least 600 words.', 'rank-math-analyzer' )
+			i18n.__( 'Content is %1$s words long. Good job!', 'rank-math-analyzer' ) :
+			i18n.__( 'Content is %1$s words long. Consider using at least 600 words.', 'rank-math-analyzer' )
 	}
 
 	getBoundaries() {

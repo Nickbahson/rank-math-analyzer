@@ -52,6 +52,8 @@ class FleschReading extends Analysis {
 			)
 		)
 
+		analysisResult.note = calculatedScore.note
+
 		return analysisResult
 	}
 

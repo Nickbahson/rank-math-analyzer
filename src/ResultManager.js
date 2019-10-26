@@ -15,6 +15,41 @@ class ResultManager {
 	}
 
 	/**
+	 * Get all results.
+	 *
+	 * @return {Object} Results.
+	 */
+	getResults() {
+		return Object.fromEntries( this.results )
+	}
+
+	/**
+	 * Get result for keyword.
+	 *
+	 * @param {string} keyword Keyword for which you want score.
+	 *
+	 * @return {AnalysisResult} Analysis results for keyword.
+	 */
+	getResult( keyword ) {
+		return this.results.get( keyword )
+	}
+
+	/**
+	 * Get the available score.
+	 *
+	 * @param {string} keyword Keyword for which you want score.
+	 *
+	 * @return {number} Result score.
+	 */
+	getScore( keyword ) {
+		if ( this.results.has( keyword ) ) {
+			return this.results.get( keyword ).score
+		}
+
+		return 0
+	}
+
+	/**
 	 * Add result.
 	 *
 	 * @param {string}         keyword   Keyword of which results are.
@@ -53,38 +88,12 @@ class ResultManager {
 	}
 
 	/**
-	 * Get the available score.
+	 * Delete result for keyword.
 	 *
 	 * @param {string} keyword Keyword for which you want score.
-	 *
-	 * @return {number} Result score.
 	 */
-	getScore( keyword ) {
-		if ( this.results.has( keyword ) ) {
-			return this.results.get( keyword ).score
-		}
-
-		return 0
-	}
-
-	/**
-	 * Get all results.
-	 *
-	 * @return {Object} Results.
-	 */
-	getResults() {
-		return Object.fromEntries( this.results )
-	}
-
-	/**
-	 * Get result for keyword.
-	 *
-	 * @param {string} keyword Keyword for which you want score.
-	 *
-	 * @return {AnalysisResult} Analysis results for keyword.
-	 */
-	getResult( keyword ) {
-		return this.results.get( keyword )
+	deleteResult( keyword ) {
+		this.results.delete( keyword )
 	}
 
 	/**
