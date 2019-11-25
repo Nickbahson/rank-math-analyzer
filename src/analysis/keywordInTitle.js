@@ -68,7 +68,7 @@ class KeywordInTitle extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword, paper ) {
-		const score = 'en' === paper.getLocale().substring( 0, 2 ) ? 30 : 32
+		const score = 'en' === paper.getLocale().substring( 0, 2 ) ? 36 : 38
 		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInTitle_score', score ) : null
 	}
 

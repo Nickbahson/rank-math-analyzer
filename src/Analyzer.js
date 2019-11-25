@@ -10,7 +10,6 @@ import Researcher from '@root/Researcher'
 import ContentHasAssets from '@analysis/contentHasAssets'
 import ContentHasShortParagraphs from '@analysis/contentHasShortParagraphs'
 import ContentHasTOC from '@analysis/contentHasTOC'
-import FleschReading from '@analysis/fleschReading'
 import KeywordDensity from '@analysis/keywordDensity'
 import KeywordIn10Percent from '@analysis/keywordIn10Percent'
 import KeywordInContent from '@analysis/keywordInContent'
@@ -110,7 +109,6 @@ class Analyzer {
 			contentHasAssets: new ContentHasAssets,
 			contentHasShortParagraphs: new ContentHasShortParagraphs,
 			contentHasTOC: new ContentHasTOC,
-			fleschReading: new FleschReading,
 			keywordDensity: new KeywordDensity,
 			keywordIn10Percent: new KeywordIn10Percent,
 			keywordInContent: new KeywordInContent,
