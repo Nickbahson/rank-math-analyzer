@@ -59,7 +59,7 @@ class TitleSentiment extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return rankMath.isUserRegistered && includes( paper.getLocale(), 'en' ) && paper.hasTitle()
+		return includes( paper.getLocale(), 'en' ) && paper.hasTitle()
 	}
 
 	/**
@@ -82,13 +82,6 @@ class TitleSentiment extends Analysis {
 	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
-		if ( false === rankMath.isUserRegistered ) {
-			return i18n.sprintf(
-				i18n.__( 'Please connect your %s to calculate the Sentiments of the content.', 'rank-math-analyzer' ),
-				'<a href="' + rankMath.assessor.registrationUrl + '" target="_blank">Rank Math account</a>'
-			)
-		}
-
 		return analysisResult.hasScore() ?
 			i18n.__( 'Your title has a positive or a negative sentiment.', 'rank-math-analyzer' ) :
 			i18n.sprintf(
