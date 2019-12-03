@@ -11,10 +11,12 @@ import ResultManager from '@root/ResultManager'
 /**
  * Helpers
  */
+import cleanText from '@helpers/cleanText'
 import wordCount from '@researches/wordCount'
 import matchParagraphs from '@helpers/matchParagraphs'
 
 const Helpers = {
+	cleanText,
 	matchParagraphs,
 	wordCount,
 }

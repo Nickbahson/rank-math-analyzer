@@ -1,17 +1,13 @@
 /**
  * External dependencies
  */
-import { defaults, flow, has, isUndefined } from 'lodash'
+import { defaults, has, isUndefined } from 'lodash'
 
 /**
  * Internal dependencies
  */
-import stripSpaces from '@helpers/stripSpaces'
-import stripStyle from '@helpers/stripStyles'
-import stripScript from '@helpers/stripScripts'
+import cleanText from '@helpers/cleanText'
 import normalizeQuotes from '@helpers/normalizeQuotes'
-import stripHTMLComments from '@helpers/stripHTMLComments'
-import stripHTMLEntities from '@helpers/stripHTMLEntities'
 
 class Paper {
 	/**
@@ -201,7 +197,7 @@ class Paper {
 	 * @param {string} description The description.
 	 */
 	setDescription( description ) {
-		this.args.description = normalizeQuotes( stripSpaces( description ) )
+		this.args.description = cleanText( description )
 		this.args.descriptionLower = this.args.description.toLowerCase()
 	}
 
@@ -245,16 +241,7 @@ class Paper {
 			return
 		}
 
-		this.text = flow(
-			[
-				stripStyle,
-				stripScript,
-				stripHTMLComments,
-				stripHTMLEntities,
-				stripSpaces,
-				normalizeQuotes,
-			]
-		)( text )
+		this.text = cleanText( text )
 
 		this.textLower = this.text.toLowerCase()
 	}
