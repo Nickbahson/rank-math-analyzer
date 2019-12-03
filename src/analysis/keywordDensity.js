@@ -53,12 +53,13 @@ class KeywordDensity extends Analysis {
 		const regex = new RegExp( keywordCombination.join( '|' ), 'gi' )
 		const count = ( stripTags( paper.getText() ).match( regex ) || [] ).length
 		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
+		const calculatedScore = this.calculateScore( keywordDensity )
 
 		analysisResult
-			.setScore( this.calculateScore( keywordDensity ) )
+			.setScore( calculatedScore.score )
 			.setText(
 				i18n.sprintf(
-					i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' ),
+					this.translateScore( calculatedScore.type, i18n ),
 					keywordDensity,
 					count
 				)
@@ -79,6 +80,26 @@ class KeywordDensity extends Analysis {
 	}
 
 	/**
+	 * Translates the score to a message the user can understand.
+	 *
+	 * @param {string} type Type of score.
+	 * @param {Jed}    i18n The i18n-object used for parsing translations.
+	 *
+	 * @return {string} The translated string.
+	 */
+	translateScore( type, i18n ) {
+		if ( 'low' === type ) {
+			return i18n.__( 'Keyword Density is %1$s which is low, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+		}
+
+		if ( 'high' === type ) {
+			return i18n.__( 'Keyword Density is %1$s which is high, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+		}
+
+		return i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+	}
+
+	/**
 	 * Calculates the score based on the url length.
 	 *
 	 * @param {boolean} keywordDensity Title has number or not.
@@ -88,19 +109,38 @@ class KeywordDensity extends Analysis {
 	calculateScore( keywordDensity ) {
 		const scores = this.getScores()
 
-		if ( 0.5 > keywordDensity || 2.5 < keywordDensity ) {
-			return scores.fail
+		if ( 0.5 > keywordDensity ) {
+			return {
+				type: 'low',
+				score: scores.fail,
+			}
+		}
+
+		if ( 2.5 < keywordDensity ) {
+			return {
+				type: 'high',
+				score: scores.fail,
+			}
 		}
 
 		if ( inRange( keywordDensity, 0.5, 0.75 ) ) {
-			return scores.fair
+			return {
+				type: 'fair',
+				score: scores.fair,
+			}
 		}
 
 		if ( inRange( keywordDensity, 0.76, 1.0 ) ) {
-			return scores.good
+			return {
+				type: 'good',
+				score: scores.good,
+			}
 		}
 
-		return scores.best
+		return {
+			type: 'best',
+			score: scores.best,
+		}
 	}
 
 	getScores() {
