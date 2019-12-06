@@ -49,7 +49,7 @@ class KeywordNotUsed extends Analysis {
 		const keyword = paper.getLower( 'keyword' ).trim()
 
 		if ( ! isUndefined( this.keywordsChecked[ keyword ] ) ) {
-			analysisResult.has = true
+			analysisResult.has = this.keywordsChecked[ keyword ]
 			analysisResult.setText( this.translateScore( keyword, this.keywordsChecked[ keyword ], i18n ) )
 			doAction( 'rankMath_analysis_keywordUsage_updated', keyword, analysisResult )
 			return analysisResult
@@ -71,9 +71,7 @@ class KeywordNotUsed extends Analysis {
 		).done( ( data ) => {
 			this.keywordsChecked[ keyword ] = data.isNew
 			analysisResult.setText( this.translateScore( keyword, data.isNew, i18n ) )
-			if ( data.isNew ) {
-				analysisResult.has = true
-			}
+			analysisResult.has = data.isNew
 			doAction( 'rankMath_analysis_keywordUsage_updated', keyword, analysisResult )
 		} )
 
