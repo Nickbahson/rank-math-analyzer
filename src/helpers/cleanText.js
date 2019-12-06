@@ -15,20 +15,42 @@ import stripHTMLComments from '@helpers/stripHTMLComments'
 import stripHTMLEntities from '@helpers/stripHTMLEntities'
 
 /**
- * Count Sentences
+ * Clean HTML strip all html entities and comments.
  *
- * @param {string} text Text to count sentences.
+ * @param {string} text Text to clean.
  *
- * @return {number} Count of sentences.
+ * @return {string} The clean text.
  */
-export default ( text ) => flow(
-	[
-		stripStyle,
-		stripScript,
-		stripTags,
-		stripHTMLComments,
-		stripHTMLEntities,
-		stripSpaces,
-		normalizeQuotes,
-	]
-)( text )
+export function cleanHTML( text ) {
+	return flow(
+		[
+			stripStyle,
+			stripScript,
+			stripHTMLComments,
+			stripHTMLEntities,
+			stripSpaces,
+			normalizeQuotes,
+		]
+	)( text )
+}
+
+/**
+ * Clean text strip out all html tags, entities and comments.
+ *
+ * @param {string} text Text to clean.
+ *
+ * @return {string} The clean text.
+ */
+export function cleanText( text ) {
+	return flow(
+		[
+			stripStyle,
+			stripScript,
+			stripTags,
+			stripHTMLComments,
+			stripHTMLEntities,
+			stripSpaces,
+			normalizeQuotes,
+		]
+	)( text )
+}

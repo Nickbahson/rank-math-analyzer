@@ -6,7 +6,7 @@ import { defaults, has, isUndefined } from 'lodash'
 /**
  * Internal dependencies
  */
-import cleanText from '@helpers/cleanText'
+import { cleanHTML, cleanText } from '@helpers/cleanText'
 import normalizeQuotes from '@helpers/normalizeQuotes'
 
 class Paper {
@@ -241,7 +241,7 @@ class Paper {
 			return
 		}
 
-		this.text = cleanText( text )
+		this.text = cleanHTML( text )
 
 		this.textLower = this.text.toLowerCase()
 	}
