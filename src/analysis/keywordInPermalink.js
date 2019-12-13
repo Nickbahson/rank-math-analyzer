@@ -41,7 +41,7 @@ class KeywordInPermalink extends Analysis {
 		const analysisResult = this.newResult( i18n )
 		const hasKeyword = includes(
 			paper.getLower( 'permalink' ).replace( /[-_]/ig, '-' ),
-			paper.get( 'keywordPermalink' )
+			paper.getKeywordPermalink( researcher )
 		)
 
 		analysisResult

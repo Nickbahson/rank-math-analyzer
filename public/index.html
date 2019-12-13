@@ -35,12 +35,12 @@
 			i18n: wp.i18n
 		})
 
-		this.paper.setTitle( '10 Best SEO Audit Tools' )
-		this.paper.setPermalink( 'seo-audit-tools' )
-		this.paper.setDescription( 'Use Rank Math for seo audit.' )
-		this.paper.setKeyword( 'seo audit' )
-		this.paper.setUrl( 'http://mts.test/seo-audit-tools/' )
-		this.paper.setText( `<!-- wp:paragraph -->
+		paper.setTitle( '10 Best SEO Audit Tools' )
+		paper.setPermalink( 'seo-audit-tools' )
+		paper.setDescription( 'Use Rank Math for seo audit.' )
+		paper.setKeyword( 'blog seo audit' )
+		paper.setUrl( 'http://mts.test/seo-audit-tools/' )
+		paper.setText( `<!-- wp:paragraph -->
 <p>Shakeeb seo audit You might be surprised to learn that <strong>English speakers make up just 53% of all people on the web</strong>. Which means if you're not optimizing your multilingual website, there's a whole 47% of potential customers your business is currently unable to target.</p>
 <!-- /wp:paragraph -->
 
@@ -269,15 +269,16 @@ https://wordpress.org/plugins/weglot/
 <!-- /wp:image -->` )
 
 		let total = 0
-		this.analyzer.analyze( this.paper ).then( function( results ) {
-			console.log( results )
+		analyzer.analyze( paper ).then( function( results ) {
+			console.log( paper.getKeywordCombination() )
+			// console.log( results )
 			lodash.forEach( results, function( result, id ) {
 				if ( ! result.hasScore() ) {
-					console.log( id )
+					// console.log( id )
 				}
 				total += result.hasScore() ? result.getScore() : 0
 			})
-			console.log( 'Total: ' + total );
+			// console.log( 'Total: ' + total );
 		})
 
 	</script>

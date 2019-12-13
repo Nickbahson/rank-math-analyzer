@@ -347,6 +347,25 @@ class Paper {
 	}
 
 	/**
+	 * Get keyword as permalink.
+	 *
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 *
+	 * @return {string} Formatted keyword.
+	 */
+	getKeywordPermalink( researcher ) {
+		if ( false === this.keywordPermalink ) {
+			const keywordLower = this.getLower( 'keyword' )
+			const slugify = researcher.getResearch( 'slugify' )
+			const removePunctuation = researcher.getResearch( 'removePunctuation' )
+
+			this.keywordPermalink = slugify( removePunctuation( keywordLower.split( '.' ).join( '' ).replace( /[-_]/ig, '-' ) ) )
+		}
+
+		return this.keywordPermalink
+	}
+
+	/**
 	 * Get keyword combinations.
 	 *
 	 * @param {Researcher} researcher The researcher used for the assessment.
@@ -375,11 +394,9 @@ class Paper {
 		const keywordLower = this.getLower( 'keyword' )
 
 		// Researches.
-		const slugify = researcher.getResearch( 'slugify' )
 		const getWords = researcher.getResearch( 'getWords' )
 		const pluralize = researcher.getResearch( 'pluralize' )
 		const combinations = researcher.getResearch( 'combinations' )
-		const removePunctuation = researcher.getResearch( 'removePunctuation' )
 
 		// Plurals.
 		this.keywordPlurals = new Map()
@@ -388,11 +405,10 @@ class Paper {
 		}, this )
 
 		// Permalink.
-		this.keywordPermalink = slugify( removePunctuation( keywordLower.split( '.' ).join( '' ).replace( /[-_]/ig, '-' ) ) )
+		this.keywordPermalink = this.getKeywordPermalink( researcher )
 
 		// Combinations.
 		this.keywordCombinations = combinations( this.keywordPlurals )
-		this.keywordCombinations.push( keywordLower )
 	}
 }
 
