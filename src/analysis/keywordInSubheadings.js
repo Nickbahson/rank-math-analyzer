@@ -8,6 +8,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
+import escapeRegex from '@helpers/escapeRegex'
 
 class KeywordInSubheadings extends Analysis {
 	/**
@@ -34,7 +35,7 @@ class KeywordInSubheadings extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const subheadingRegex = new RegExp( '<h[2-6][^>]*>.*' + paper.getLower( 'keyword' ) + '.*</h[2-6]>', 'gi' )
+		const subheadingRegex = new RegExp( '<h[2-6][^>]*>.*' + escapeRegex( paper.getLower( 'keyword' ) ) + '.*</h[2-6]>', 'gi' )
 		const hasKeyword = null !== paper.getTextLower().match( subheadingRegex ) ? true : false
 
 		analysisResult
