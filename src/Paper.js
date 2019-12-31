@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { defaults, has, isUndefined } from 'lodash'
+import { defaults, has, isUndefined, includes } from 'lodash'
 
 /**
  * Internal dependencies
@@ -365,11 +365,19 @@ class Paper {
 	 */
 	getKeywordPermalink( researcher ) {
 		if ( false === this.keywordPermalink ) {
-			const keywordLower = this.getLower( 'keyword' )
 			const slugify = researcher.getResearch( 'slugify' )
 			const removePunctuation = researcher.getResearch( 'removePunctuation' )
+			const keywordLower = this.getLower( 'keyword' )
+				.split( '.' ).join( '' )
+				.replace( "'", '' )
+				.replace( /[-_]/ig, '-' )
 
-			this.keywordPermalink = slugify( removePunctuation( keywordLower.split( '.' ).join( '' ).replace( /[-_]/ig, '-' ) ) )
+			this.keywordPermalink = slugify( removePunctuation( keywordLower ) )
+
+			// Remove stopwords from the keywordPermalink.
+			if ( ! isUndefined( rankMath.assessor.stopwords ) && 'post' === rankMath.objectType ) {
+				this.keywordPermalink = this.keywordPermalink.split( '-' ).filter( ( word ) => ! includes( rankMath.assessor.stopwords, word ) ).join( '-' )
+			}
 		}
 
 		return this.keywordPermalink
