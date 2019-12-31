@@ -14,6 +14,7 @@ import { applyFilters } from '@wordpress/hooks'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 import escapeRegex from '@helpers/escapeRegex'
+import { cleanTagsOnly } from '@helpers/cleanText'
 
 class KeywordDensity extends Analysis {
 	/**
@@ -50,9 +51,8 @@ class KeywordDensity extends Analysis {
 		}
 
 		// Keyword Density & Focus Keyword occurrence
-		const stripTags = researcher.getResearch( 'stripTags' )
 		const regex = new RegExp( escapeRegex( keywordCombination.join( '|' ) ), 'gi' )
-		const count = ( stripTags( paper.getText() ).match( regex ) || [] ).length
+		const count = ( cleanTagsOnly( paper.getText() ).match( regex ) || [] ).length
 		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
 		const calculatedScore = this.calculateScore( keywordDensity )
 

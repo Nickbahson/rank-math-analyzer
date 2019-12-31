@@ -13,6 +13,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
+import { cleanTagsOnly } from '@helpers/cleanText'
 
 class KeywordInContent extends Analysis {
 	/**
@@ -39,8 +40,7 @@ class KeywordInContent extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const stripTags = researcher.getResearch( 'stripTags' )
-		const paperText = stripTags( paper.getTextLower() )
+		const paperText = cleanTagsOnly( paper.getTextLower() )
 		const hasKeyword = paper.getKeywordCombination( researcher ).some( ( keyword ) => includes( paperText, keyword ) )
 
 		analysisResult
