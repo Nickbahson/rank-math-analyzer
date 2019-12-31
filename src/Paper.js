@@ -8,6 +8,7 @@ import { defaults, has, isUndefined } from 'lodash'
  */
 import { cleanHTML, cleanText } from '@helpers/cleanText'
 import normalizeQuotes from '@helpers/normalizeQuotes'
+import removeDiacritics from '@helpers/removeDiacritics'
 
 class Paper {
 	/**
@@ -44,6 +45,7 @@ class Paper {
 			locale: 'en_US',
 		} )
 		this.setText( isUndefined( text ) ? '' : text )
+		this.args.shortLocale = this.args.locale.split( '_' )[ 0 ]
 	}
 
 	/**
@@ -92,7 +94,7 @@ class Paper {
 	 * @param {string} keyword [description]
 	 */
 	setKeyword( keyword ) {
-		this.args.keyword = keyword
+		this.args.keyword = removeDiacritics( keyword )
 		this.args.keywordLower = keyword.toLowerCase()
 		this.keywordPlurals = false
 		this.keywordPermalink = false
@@ -123,7 +125,7 @@ class Paper {
 	 * @param {string} title The title
 	 */
 	setTitle( title ) {
-		this.args.title = normalizeQuotes( title )
+		this.args.title = removeDiacritics( normalizeQuotes( title ) )
 		this.args.titleLower = this.args.title.toLowerCase()
 	}
 
@@ -197,7 +199,7 @@ class Paper {
 	 * @param {string} description The description.
 	 */
 	setDescription( description ) {
-		this.args.description = cleanText( description )
+		this.args.description = removeDiacritics( cleanText( description ) )
 		this.args.descriptionLower = this.args.description.toLowerCase()
 	}
 
@@ -241,8 +243,7 @@ class Paper {
 			return
 		}
 
-		this.text = cleanHTML( text )
-
+		this.text = removeDiacritics( cleanHTML( text ) )
 		this.textLower = this.text.toLowerCase()
 	}
 
@@ -289,6 +290,15 @@ class Paper {
 	 */
 	getLocale() {
 		return this.args.locale
+	}
+
+	/**
+	 * Return the language code from locale
+	 *
+	 * @return {string} Returns the locale
+	 */
+	getShortLocale() {
+		return this.args.shortLocale
 	}
 
 	/**
@@ -342,7 +352,7 @@ class Paper {
 	 * @param {string} thumbnailAlt The thumbnailAlt.
 	 */
 	setThumbnailAltText( thumbnailAlt ) {
-		this.args.thumbnailAlt = thumbnailAlt
+		this.args.thumbnailAlt = removeDiacritics( thumbnailAlt )
 		this.args.thumbnailAltLower = thumbnailAlt.toLowerCase()
 	}
 

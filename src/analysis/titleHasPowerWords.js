@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { includes, indexOf } from 'lodash'
+import { indexOf } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -68,7 +68,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return includes( paper.getLocale(), 'en' ) && paper.hasTitle()
+		return 'en' === paper.getShortLocale() && paper.hasTitle()
 	}
 
 	/**
