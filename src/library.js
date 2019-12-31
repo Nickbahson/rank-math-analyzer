@@ -14,11 +14,13 @@ import ResultManager from '@root/ResultManager'
 import { cleanText, cleanHTML } from '@helpers/cleanText'
 import wordCount from '@researches/wordCount'
 import matchParagraphs from '@helpers/matchParagraphs'
+import removeDiacritics from '@helpers/removeDiacritics'
 
 const Helpers = {
 	cleanHTML,
 	cleanText,
 	matchParagraphs,
+	removeDiacritics,
 	wordCount,
 }
 
