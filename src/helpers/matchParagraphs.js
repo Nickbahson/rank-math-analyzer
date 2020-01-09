@@ -11,7 +11,7 @@ import { autop } from '@wordpress/autop'
 /**
  * Internal dependencies
  */
-import stripHTML from '@researches/stripTags'
+import { cleanText } from '@helpers/cleanText'
 import stripShortcodes from '@helpers/stripShortcodes'
 import stripHTMLComments from '@helpers/stripHTMLComments'
 
@@ -36,7 +36,7 @@ const getParagraphsInTags = ( text, stripTags ) => {
 	}
 
 	// Returns only the text from within the paragraph tags.
-	return map( paragraphs, ( paragraph ) => stripTags ? stripHTML( paragraph[ 1 ] ) : paragraph[ 1 ] )
+	return map( paragraphs, ( paragraph ) => stripTags ? cleanText( paragraph[ 1 ] ) : paragraph[ 1 ] )
 }
 
 /**

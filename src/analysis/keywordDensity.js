@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { inRange } from 'lodash'
+import { map, inRange } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -51,7 +51,7 @@ class KeywordDensity extends Analysis {
 		}
 
 		// Keyword Density & Focus Keyword occurrence
-		const regex = new RegExp( escapeRegex( keywordCombination.join( '|' ) ), 'gi' )
+		const regex = new RegExp( map( keywordCombination, escapeRegex ).join( '|' ), 'gi' )
 		const count = ( cleanTagsOnly( paper.getText() ).match( regex ) || [] ).length
 		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
 		const calculatedScore = this.calculateScore( keywordDensity )
