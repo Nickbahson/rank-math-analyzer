@@ -24,8 +24,8 @@ class KeywordInTitle extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add Focus Keyword to the SEO title.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO post title too.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add Focus Keyword to the SEO title.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO post title too.', 'rank-math' ) )
 	}
 
 	/**
@@ -82,8 +82,8 @@ class KeywordInTitle extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Hurray! You\'re using Focus Keyword in the SEO Title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword does not appear in the SEO title.', 'rank-math-analyzer' )
+			i18n.__( 'Hurray! You\'re using Focus Keyword in the SEO Title.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword does not appear in the SEO title.', 'rank-math' )
 	}
 }
 

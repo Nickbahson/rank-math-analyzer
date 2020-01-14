@@ -24,8 +24,8 @@ class KeywordInMetaDescription extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add Focus Keyword to your SEO Meta Description.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO description too.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add Focus Keyword to your SEO Meta Description.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO description too.', 'rank-math' ) )
 	}
 
 	/**
@@ -80,8 +80,8 @@ class KeywordInMetaDescription extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used inside SEO Meta Description.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword not found in your SEO Meta Description.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword used inside SEO Meta Description.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword not found in your SEO Meta Description.', 'rank-math' )
 	}
 }
 

@@ -19,8 +19,8 @@ class TitleStartWithKeyword extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use the Focus Keyword near the beginning of SEO title.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'The SEO page title should contain the Focus Keyword preferably at the beginning.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use the Focus Keyword near the beginning of SEO title.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'The SEO page title should contain the Focus Keyword preferably at the beginning.', 'rank-math' ) )
 	}
 
 	/**
@@ -78,8 +78,8 @@ class TitleStartWithKeyword extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used at the beginning of SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword doesn\'t appear at the beginning of SEO title.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword used at the beginning of SEO title.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword doesn\'t appear at the beginning of SEO title.', 'rank-math' )
 	}
 }
 

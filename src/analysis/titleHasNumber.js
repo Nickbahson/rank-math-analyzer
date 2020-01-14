@@ -19,8 +19,8 @@ class TitleHasNumber extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add a number to your title to improve CTR.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Headlines with numbers are 36% more likely to generate clicks, according to research by Conductor.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add a number to your title to improve CTR.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Headlines with numbers are 36% more likely to generate clicks, according to research by Conductor.', 'rank-math' ) )
 	}
 
 	/**
@@ -75,8 +75,8 @@ class TitleHasNumber extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using a number in your SEO title.', 'rank-math-analyzer' ) :
-			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math-analyzer' )
+			i18n.__( 'You are using a number in your SEO title.', 'rank-math' ) :
+			i18n.__( 'Your SEO title doesn\'t contain a number.', 'rank-math' )
 	}
 }
 

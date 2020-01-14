@@ -19,8 +19,8 @@ class LinksNotAllExternals extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'PageRank Sculpting no longer works. Your posts should have a mix of nofollow and DoFollow links.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'PageRank Sculpting no longer works. Your posts should have a mix of nofollow and DoFollow links.', 'rank-math' ) )
 	}
 
 	/**
@@ -38,7 +38,7 @@ class LinksNotAllExternals extends Analysis {
 		const statistics = linkStatistics( paper.getText() )
 
 		if ( 0 === statistics.total ) {
-			analysisResult.setText( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math-analyzer' ) )
+			analysisResult.setText( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math' ) )
 			return analysisResult
 		}
 
@@ -86,8 +86,8 @@ class LinksNotAllExternals extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'At least one external link with DoFollow found in your content.', 'rank-math-analyzer' ) :
-			i18n.__( 'We found %1$s outbound links in your content and all of them are nofollow.', 'rank-math-analyzer' )
+			i18n.__( 'At least one external link with DoFollow found in your content.', 'rank-math' ) :
+			i18n.__( 'We found %1$s outbound links in your content and all of them are nofollow.', 'rank-math' )
 	}
 }
 

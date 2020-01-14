@@ -32,7 +32,7 @@ class KeywordNotUsed extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Set a Focus Keyword for this content.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Set a Focus Keyword for this content.', 'rank-math' ) )
 	}
 
 	/**
@@ -75,7 +75,7 @@ class KeywordNotUsed extends Analysis {
 			doAction( 'rankMath_analysis_keywordUsage_updated', keyword, analysisResult )
 		} )
 
-		analysisResult.setText( i18n.__( 'We are searching in database.', 'rank-math-analyzer' ) )
+		analysisResult.setText( i18n.__( 'We are searching in database.', 'rank-math' ) )
 
 		return analysisResult
 	}
@@ -102,10 +102,10 @@ class KeywordNotUsed extends Analysis {
 	 */
 	translateScore( keyword, isNewKeyword, i18n ) {
 		return isNewKeyword ?
-			i18n.__( 'You haven\'t used this Focus Keyword before.', 'rank-math-analyzer' ) :
+			i18n.__( 'You haven\'t used this Focus Keyword before.', 'rank-math' ) :
 			i18n.sprintf(
-				i18n.__( 'You have %1$s this Focus Keyword.', 'rank-math-analyzer' ),
-				'<a target="_blank" href="' + this.changeKeywordInLink( keyword ) + '">' + i18n.__( 'already used', 'rank-math-analyzer' ) + '</a>'
+				i18n.__( 'You have %1$s this Focus Keyword.', 'rank-math' ),
+				'<a target="_blank" href="' + this.changeKeywordInLink( keyword ) + '">' + i18n.__( 'already used', 'rank-math' ) + '</a>'
 			)
 	}
 

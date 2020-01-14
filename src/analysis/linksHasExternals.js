@@ -19,8 +19,8 @@ class LinksHasExternals extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Link out to external resources.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'It helps visitors read more about a topic and prevents pogosticking.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Link out to external resources.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'It helps visitors read more about a topic and prevents pogosticking.', 'rank-math' ) )
 	}
 
 	/**
@@ -86,8 +86,8 @@ class LinksHasExternals extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Great! You are linking to external resources.', 'rank-math-analyzer' ) :
-			i18n.__( 'No outbound links were found. Link out to external resources.', 'rank-math-analyzer' )
+			i18n.__( 'Great! You are linking to external resources.', 'rank-math' ) :
+			i18n.__( 'No outbound links were found. Link out to external resources.', 'rank-math' )
 	}
 }
 

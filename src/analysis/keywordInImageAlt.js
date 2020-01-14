@@ -24,8 +24,8 @@ class KeywordInImageAlt extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add an image with your Focus Keyword as alt text.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'It is recommended to add the focus keyword in the alt attribute of one or more images.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add an image with your Focus Keyword as alt text.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'It is recommended to add the focus keyword in the alt attribute of one or more images.', 'rank-math' ) )
 	}
 
 	/**
@@ -58,7 +58,7 @@ class KeywordInImageAlt extends Analysis {
 		if ( hasGallery ) {
 			analysisResult
 				.setScore( this.calculateScore( true ) )
-				.setText( i18n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math-analyzer' ) )
+				.setText( i18n.__( 'We detected a gallery in your content & assuming that you added Focus Keyword in alt in at least one of the gallery images.', 'rank-math' ) )
 		}
 
 		return analysisResult
@@ -96,8 +96,8 @@ class KeywordInImageAlt extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword found in image alt attribute(s).', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword not found in image alt attribute(s).', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword found in image alt attribute(s).', 'rank-math' ) :
+			i18n.__( 'Focus Keyword not found in image alt attribute(s).', 'rank-math' )
 	}
 }
 

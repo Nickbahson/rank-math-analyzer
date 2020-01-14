@@ -19,8 +19,8 @@ class ContentHasShortParagraphs extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add short and concise paragraphs for better readability and UX.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Short paragraphs are easier to read and more pleasing to the eye. Long paragraphs scare the visitor, and they might result to SERPs looking for better readable content.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add short and concise paragraphs for better readability and UX.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Short paragraphs are easier to read and more pleasing to the eye. Long paragraphs scare the visitor, and they might result to SERPs looking for better readable content.', 'rank-math' ) )
 	}
 
 	/**
@@ -77,8 +77,8 @@ class ContentHasShortParagraphs extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are using short paragraphs.', 'rank-math-analyzer' ) :
-			i18n.__( 'At least one paragraph is long. Consider using short paragraphs.', 'rank-math-analyzer' )
+			i18n.__( 'You are using short paragraphs.', 'rank-math' ) :
+			i18n.__( 'At least one paragraph is long. Consider using short paragraphs.', 'rank-math' )
 	}
 }
 

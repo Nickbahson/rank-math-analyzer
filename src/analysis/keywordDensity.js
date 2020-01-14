@@ -26,8 +26,8 @@ class KeywordDensity extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Keyword Density is 0. Aim for around 1% Keyword Density.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'There is no ideal keyword density percentage, but it should not be too high. The most important thing is to keep the copy natural.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Keyword Density is 0. Aim for around 1% Keyword Density.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'There is no ideal keyword density percentage, but it should not be too high. The most important thing is to keep the copy natural.', 'rank-math' ) )
 	}
 
 	/**
@@ -90,14 +90,14 @@ class KeywordDensity extends Analysis {
 	 */
 	translateScore( type, i18n ) {
 		if ( 'low' === type ) {
-			return i18n.__( 'Keyword Density is %1$s which is low, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+			return i18n.__( 'Keyword Density is %1$s which is low, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 		}
 
 		if ( 'high' === type ) {
-			return i18n.__( 'Keyword Density is %1$s which is high, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+			return i18n.__( 'Keyword Density is %1$s which is high, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 		}
 
-		return i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math-analyzer' )
+		return i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 	}
 
 	/**

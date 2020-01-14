@@ -20,8 +20,8 @@ class KeywordInSubheadings extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use Focus Keyword in subheading(s) like H2, H3, H4, etc..', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'It is recommended to add the focus keyword as part of one or more subheadings in the content.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use Focus Keyword in subheading(s) like H2, H3, H4, etc..', 'rank-math' ) )
+			.setTooltip( i18n.__( 'It is recommended to add the focus keyword as part of one or more subheadings in the content.', 'rank-math' ) )
 	}
 
 	/**
@@ -77,8 +77,8 @@ class KeywordInSubheadings extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword found in the subheading(s).', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword not found in subheading(s) like H2, H3, H4, etc..', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword found in the subheading(s).', 'rank-math' ) :
+			i18n.__( 'Focus Keyword not found in subheading(s) like H2, H3, H4, etc..', 'rank-math' )
 	}
 }
 

@@ -25,8 +25,8 @@ class TitleSentiment extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Titles with positive or negative sentiment work best for higher CTR.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Headlines with a strong emotional sentiment (positive or negative) tend to receive more clicks.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Titles with positive or negative sentiment work best for higher CTR.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Headlines with a strong emotional sentiment (positive or negative) tend to receive more clicks.', 'rank-math' ) )
 	}
 
 	/**
@@ -82,9 +82,9 @@ class TitleSentiment extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Your title has a positive or a negative sentiment.', 'rank-math-analyzer' ) :
+			i18n.__( 'Your title has a positive or a negative sentiment.', 'rank-math' ) :
 			i18n.sprintf(
-				i18n.__( 'Your title doesn\'t contain a %1$s word.', 'rank-math-analyzer' ),
+				i18n.__( 'Your title doesn\'t contain a %1$s word.', 'rank-math' ),
 				'<a href="' + rankMath.assessor.registrationUrl + '" target="_blank">positive or a negative sentiment</a>'
 			)
 	}

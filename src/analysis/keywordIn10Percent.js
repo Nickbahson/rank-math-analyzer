@@ -24,8 +24,8 @@ class KeywordIn10Percent extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use Focus Keyword at the beginning of your content.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'The first 10% of the content should contain the Focus Keyword preferably at the beginning.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use Focus Keyword at the beginning of your content.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'The first 10% of the content should contain the Focus Keyword preferably at the beginning.', 'rank-math' ) )
 	}
 
 	/**
@@ -93,8 +93,8 @@ class KeywordIn10Percent extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword appears in the first 10% of the content.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword doesn\'t appear at the beginning of your content.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword appears in the first 10% of the content.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword doesn\'t appear at the beginning of your content.', 'rank-math' )
 	}
 }
 

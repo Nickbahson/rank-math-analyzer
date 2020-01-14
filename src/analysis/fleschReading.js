@@ -24,8 +24,8 @@ class FleschReading extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add some content to calculate Flesch Readability score.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Try to make shorter sentences, using less difficult words to improve readability.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add some content to calculate Flesch Readability score.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Try to make shorter sentences, using less difficult words to improve readability.', 'rank-math' ) )
 	}
 
 	/**
@@ -46,7 +46,7 @@ class FleschReading extends Analysis {
 		analysisResult.setScore( calculatedScore.score )
 		analysisResult.setText(
 			i18n.sprintf(
-				i18n.__( 'Your Flesch Readability score is %1$s and is regarded as %2$s', 'rank-math-analyzer' ),
+				i18n.__( 'Your Flesch Readability score is %1$s and is regarded as %2$s', 'rank-math' ),
 				fleschScore,
 				calculatedScore.note
 			)

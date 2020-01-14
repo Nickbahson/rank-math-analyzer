@@ -27,11 +27,11 @@ class LengthContent extends Analysis {
 		return new AnalysisResult()
 			.setEmpty(
 				i18n.sprintf(
-					i18n.__( 'Content should be %1$s long.', 'rank-math-analyzer' ),
+					i18n.__( 'Content should be %1$s long.', 'rank-math' ),
 					'<a href="' + links.contentLength + '" target="_blank">600-2500 words</a>'
 				)
 			)
-			.setTooltip( i18n.__( 'Minimum recommended content length should be 600 words.', 'rank-math-analyzer' ) )
+			.setTooltip( i18n.__( 'Minimum recommended content length should be 600 words.', 'rank-math' ) )
 	}
 
 	/**
@@ -108,8 +108,8 @@ class LengthContent extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Content is %1$s words long. Good job!', 'rank-math-analyzer' ) :
-			i18n.__( 'Content is %1$s words long. Consider using at least 600 words.', 'rank-math-analyzer' )
+			i18n.__( 'Content is %1$s words long. Good job!', 'rank-math' ) :
+			i18n.__( 'Content is %1$s words long. Consider using at least 600 words.', 'rank-math' )
 	}
 
 	getBoundaries() {

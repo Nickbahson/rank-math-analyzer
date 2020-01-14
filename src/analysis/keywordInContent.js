@@ -25,8 +25,8 @@ class KeywordInContent extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use Focus Keyword in the content.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'It is recommended to make the focus keyword appear in the post content too.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use Focus Keyword in the content.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'It is recommended to make the focus keyword appear in the post content too.', 'rank-math' ) )
 	}
 
 	/**
@@ -82,8 +82,8 @@ class KeywordInContent extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword found in the content.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword doesn\'t appear in the content.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword found in the content.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword doesn\'t appear in the content.', 'rank-math' )
 	}
 }
 

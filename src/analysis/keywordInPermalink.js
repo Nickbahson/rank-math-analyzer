@@ -24,8 +24,8 @@ class KeywordInPermalink extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math' ) )
 	}
 
 	/**
@@ -83,8 +83,8 @@ class KeywordInPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used in the URL.', 'rank-math-analyzer' ) :
-			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math-analyzer' )
+			i18n.__( 'Focus Keyword used in the URL.', 'rank-math' ) :
+			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math' )
 	}
 }
 

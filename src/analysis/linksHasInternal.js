@@ -19,8 +19,8 @@ class LinksHasInternal extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add internal links in your content.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Internal links decrease your bounce rate and improve SEO.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add internal links in your content.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Internal links decrease your bounce rate and improve SEO.', 'rank-math' ) )
 	}
 
 	/**
@@ -86,8 +86,8 @@ class LinksHasInternal extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You are linking to other resources on your website which is great.', 'rank-math-analyzer' ) :
-			i18n.__( 'We couldn\'t find any internal links in your content.', 'rank-math-analyzer' )
+			i18n.__( 'You are linking to other resources on your website which is great.', 'rank-math' ) :
+			i18n.__( 'We couldn\'t find any internal links in your content.', 'rank-math' )
 	}
 }
 

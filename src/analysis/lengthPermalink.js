@@ -19,8 +19,8 @@ class LengthPermalink extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'URL unavailable. Add a short URL.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Permalink should be at most 75 characters long.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'URL unavailable. Add a short URL.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Permalink should be at most 75 characters long.', 'rank-math' ) )
 	}
 
 	/**
@@ -80,8 +80,8 @@ class LengthPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'URL is %1$s characters long. Kudos!', 'rank-math-analyzer' ) :
-			i18n.__( 'URL is %1$s characters long. Considering shortening it.', 'rank-math-analyzer' )
+			i18n.__( 'URL is %1$s characters long. Kudos!', 'rank-math' ) :
+			i18n.__( 'URL is %1$s characters long. Considering shortening it.', 'rank-math' )
 	}
 }
 

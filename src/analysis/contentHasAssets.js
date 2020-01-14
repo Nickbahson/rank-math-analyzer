@@ -24,8 +24,8 @@ class ContentHasAssets extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Content with images and/or video feels more inviting to users. It also helps supplement your textual content.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Content with images and/or video feels more inviting to users. It also helps supplement your textual content.', 'rank-math' ) )
 	}
 
 	/**
@@ -138,8 +138,8 @@ class ContentHasAssets extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Your content contains images and/or video(s).', 'rank-math-analyzer' ) :
-			i18n.__( 'You are not using rich media like images or videos.', 'rank-math-analyzer' )
+			i18n.__( 'Your content contains images and/or video(s).', 'rank-math' ) :
+			i18n.__( 'You are not using rich media like images or videos.', 'rank-math' )
 	}
 
 	/**

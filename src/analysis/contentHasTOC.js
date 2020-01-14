@@ -20,8 +20,8 @@ class ContentHasTOC extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
-			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math-analyzer' ) )
-			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math-analyzer' ) )
+			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math' ) )
+			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math' ) )
 	}
 
 	/**
@@ -75,11 +75,11 @@ class ContentHasTOC extends Analysis {
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
 			i18n.sprintf(
-				i18n.__( 'You seem to be using a %1$s to break-down your text.', 'rank-math-analyzer' ),
+				i18n.__( 'You seem to be using a %1$s to break-down your text.', 'rank-math' ),
 				'<a href="' + links.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
 			) :
 			i18n.sprintf(
-				i18n.__( 'You don\'t seem to be using a %1$s.', 'rank-math-analyzer' ),
+				i18n.__( 'You don\'t seem to be using a %1$s.', 'rank-math' ),
 				'<a href="' + links.tocKbLink + '" target="_blank">Table of Contents plugin</a>'
 			)
 	}
