@@ -98,6 +98,7 @@ class Paper {
 		this.args.keywordLower = keyword.toLowerCase()
 		this.keywordPlurals = false
 		this.keywordPermalink = false
+		this.keywordPermalinkRaw = false
 		this.keywordCombinations = false
 	}
 
@@ -361,7 +362,7 @@ class Paper {
 	 *
 	 * @param {Researcher} researcher The researcher used for the assessment.
 	 *
-	 * @return {string} Formatted keyword.
+	 * @return {string} Formatted permalink.
 	 */
 	getKeywordPermalink( researcher ) {
 		if ( false === this.keywordPermalink ) {
@@ -373,6 +374,7 @@ class Paper {
 				.replace( /[-_]/ig, '-' )
 
 			this.keywordPermalink = slugify( removePunctuation( keywordLower ) )
+			this.keywordPermalinkRaw = this.keywordPermalink
 
 			// Remove stopwords from the keywordPermalink.
 			if ( ! isUndefined( rankMath.assessor.stopwords ) && 'post' === rankMath.objectType ) {
@@ -381,6 +383,20 @@ class Paper {
 		}
 
 		return this.keywordPermalink
+	}
+
+	/**
+	 * Get keyword as permalink with stop words
+	 *
+	 * @param {Researcher} researcher The researcher used for the assessment.
+	 *
+	 * @return {string} Formatted permalink.
+	 */
+	getPermalinkWithStopwords( researcher ) {
+		if ( false === this.keywordPermalink ) {
+			this.getKeywordPermalink( researcher )
+		}
+		return this.keywordPermalinkRaw
 	}
 
 	/**
