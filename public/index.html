@@ -29,7 +29,7 @@
 		rankMath.assessor.hasTOCPlugin = true
 
 		var paper = new window.rankMathAnalyzer.Paper( '', {
-			locale: 'en_US'
+			locale: 'fr_FR'
 		})
 		var analyzer = new window.rankMathAnalyzer.Analyzer({
 			i18n: wp.i18n
@@ -44,15 +44,14 @@
 
 		let total = 0
 		analyzer.analyze( paper ).then( function( results ) {
-			console.log( paper.getKeywordCombination() )
-			// console.log( results )
+			console.log( results )
 			lodash.forEach( results, function( result, id ) {
 				if ( ! result.hasScore() ) {
-					// console.log( id )
+					console.log( id )
 				}
 				total += result.hasScore() ? result.getScore() : 0
 			})
-			// console.log( 'Total: ' + total );
+			console.log( 'Total: ' + total );
 		})
 
 	</script>

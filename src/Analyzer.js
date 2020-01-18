@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { has, isUndefined, mapValues, pick } from 'lodash'
+import { has, forEach, isUndefined, mapValues, pick } from 'lodash'
 
 /**
  * Internal dependencies
@@ -53,16 +53,7 @@ class Analyzer {
 	 * @return {Promise} Promise object.
 	 */
 	analyze( paper ) {
-		return new Promise( ( resolve ) => {
-			this.researcher.setPaper( paper )
-			this.results = mapValues(
-				this.analyses,
-				( analysis ) => analysis.isApplicable( paper, this.researcher ) ?
-					analysis.getResult( paper, this.researcher, this.i18n ) :
-					analysis.newResult( this.i18n )
-			)
-			resolve( this.results )
-		} )
+		return this.generateResults( this.analyses, paper )
 	}
 
 	/**
@@ -74,14 +65,31 @@ class Analyzer {
 	 * @return {Promise} Promise object.
 	 */
 	analyzeSome( analyses, paper ) {
+		return this.generateResults( pick( this.defaultAnalyses, analyses ), paper )
+	}
+
+	/**
+	 * Generate results.
+	 *
+	 * @param {Array} analyses List of analyses to run.
+	 * @param {Paper} paper    The paper to run analyses on.
+	 *
+	 * @return {Promise} Promise object.
+	 */
+	generateResults( analyses, paper ) {
 		return new Promise( ( resolve ) => {
+			this.results = {}
 			this.researcher.setPaper( paper )
-			this.results = mapValues(
-				pick( this.defaultAnalyses, analyses ),
-				( analysis ) => analysis.isApplicable( paper, this.researcher ) ?
+			forEach( analyses, ( analysis, analysisId ) => {
+				const result = analysis.isApplicable( paper, this.researcher ) ?
 					analysis.getResult( paper, this.researcher, this.i18n ) :
-					analysis.newResult( this.i18n )
-			)
+					analysis.newResult( this.i18n, paper )
+
+				if ( null !== result ) {
+					this.results[ analysisId ] = result
+				}
+			} )
+
 			resolve( this.results )
 		} )
 	}

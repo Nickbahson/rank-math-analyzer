@@ -19,12 +19,13 @@ class TitleSentiment extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
-	 * @param {Jed} i18n The i18n-object used for parsing translations.
+	 * @param {Jed}   i18n  The i18n-object used for parsing translations.
+	 * @param {Paper} paper The paper to run this assessment on.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
-	newResult( i18n ) {
-		return new AnalysisResult()
+	newResult( i18n, paper ) {
+		return 'en' !== paper.getShortLocale() ? null : new AnalysisResult()
 			.setEmpty( i18n.__( 'Titles with positive or negative sentiment work best for higher CTR.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Headlines with a strong emotional sentiment (positive or negative) tend to receive more clicks.', 'rank-math' ) )
 	}
@@ -39,7 +40,7 @@ class TitleSentiment extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = this.newResult( i18n )
+		const analysisResult = this.newResult( i18n, paper )
 		const sentiment = new Sentiment
 		const sentimentScore = sentiment.analyze( paper.getLower( 'title' ), sentimentWords ).score
 
