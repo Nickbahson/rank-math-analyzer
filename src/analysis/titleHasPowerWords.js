@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { indexOf } from 'lodash'
+import { indexOf, isEmpty } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -18,13 +18,12 @@ class TitleHasPowerWords extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
-	 * @param {Jed}   i18n  The i18n-object used for parsing translations.
-	 * @param {Paper} paper The paper to run this assessment on.
+	 * @param {Jed} i18n The i18n-object used for parsing translations.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
-	newResult( i18n, paper ) {
-		return 'en' !== paper.getShortLocale() ? null : new AnalysisResult()
+	newResult( i18n ) {
+		return ! this.hasPowerWords() ? null : new AnalysisResult()
 			.setEmpty(
 				i18n.sprintf(
 					i18n.__( 'Add %s to your title to increase CTR.', 'rank-math' ),
@@ -69,7 +68,16 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return 'en' === paper.getShortLocale() && paper.hasTitle()
+		return this.hasPowerWords() && paper.hasTitle()
+	}
+
+	/**
+	 * Is power words availablel for current site language.
+	 *
+	 * @return {boolean} True if available.
+	 */
+	hasPowerWords() {
+		return ! isEmpty( rankMath.assessor.powerWords )
 	}
 
 	/**
