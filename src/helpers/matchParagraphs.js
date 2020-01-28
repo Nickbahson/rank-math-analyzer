@@ -44,10 +44,11 @@ const getParagraphsInTags = ( text, stripTags ) => {
  *
  * @param {string} text The text to match paragraph in.
  * @param {boolean} stripTags Should strip html within paragraphs.
+ * @param {Boolean} strict    Should return only paragraphs.
  *
  * @return {Array} The array containing all paragraphs from the text.
  */
-export default ( text, stripTags ) => {
+export default ( text, stripTags, strict ) => {
 	text = flow(
 		[
 			stripShortcodes,
@@ -62,5 +63,5 @@ export default ( text, stripTags ) => {
 	}
 
 	// If no paragraphs are found, return an array containing the entire text.
-	return [ text ]
+	return strict ? [] : [ text ]
 }
