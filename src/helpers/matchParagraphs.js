@@ -24,8 +24,6 @@ import stripHTMLComments from '@helpers/stripHTMLComments'
  * @return {Array} An array containing all paragraphs texts.
  */
 const getParagraphsInTags = ( text, stripTags ) => {
-	stripTags = stripTags || false
-
 	// Matches everything between the <p> and </p> tags.
 	const regex = /<p(?:[^>]+)?>(.*?)<\/p>/ig
 	const paragraphs = []
@@ -44,11 +42,10 @@ const getParagraphsInTags = ( text, stripTags ) => {
  *
  * @param {string} text The text to match paragraph in.
  * @param {boolean} stripTags Should strip html within paragraphs.
- * @param {Boolean} strict    Should return only paragraphs.
  *
  * @return {Array} The array containing all paragraphs from the text.
  */
-export default ( text, stripTags, strict ) => {
+export default ( text, stripTags ) => {
 	text = flow(
 		[
 			stripShortcodes,
@@ -56,6 +53,8 @@ export default ( text, stripTags, strict ) => {
 			autop,
 		]
 	)( text )
+	stripTags = stripTags || false
+
 	const paragraphs = getParagraphsInTags( text, stripTags )
 
 	if ( 0 < paragraphs.length ) {
@@ -63,5 +62,5 @@ export default ( text, stripTags, strict ) => {
 	}
 
 	// If no paragraphs are found, return an array containing the entire text.
-	return strict ? [] : [ text ]
+	return [ stripTags ? cleanText( text ) : text ]
 }
