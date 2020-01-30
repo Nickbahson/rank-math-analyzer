@@ -70,3 +70,21 @@ export function cleanTagsOnly( text ) {
 		]
 	)( text )
 }
+
+/**
+ * Clean text strip out all html tags, entities and comments.
+ *
+ * @param {string} text Text to clean.
+ *
+ * @return {string} The clean text.
+ */
+export function sanitizeText( text ) {
+	return flow(
+		[
+			stripStyle,
+			stripScript,
+			stripTags,
+			stripHTMLComments,
+		]
+	)( text )
+}

@@ -11,7 +11,7 @@ import ResultManager from '@root/ResultManager'
 /**
  * Helpers
  */
-import { cleanText, cleanHTML, cleanTagsOnly } from '@helpers/cleanText'
+import { cleanText, cleanHTML, cleanTagsOnly, sanitizeText } from '@helpers/cleanText'
 import wordCount from '@researches/wordCount'
 import matchParagraphs from '@helpers/matchParagraphs'
 import removeDiacritics from '@helpers/removeDiacritics'
@@ -22,6 +22,7 @@ const Helpers = {
 	cleanTagsOnly,
 	matchParagraphs,
 	removeDiacritics,
+	sanitizeText,
 	wordCount,
 }
 
