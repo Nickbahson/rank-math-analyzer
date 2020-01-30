@@ -24,8 +24,6 @@ import stripHTMLComments from '@helpers/stripHTMLComments'
  * @return {Array} An array containing all paragraphs texts.
  */
 const getParagraphsInTags = ( text, stripTags ) => {
-	stripTags = stripTags || false
-
 	// Matches everything between the <p> and </p> tags.
 	const regex = /<p(?:[^>]+)?>(.*?)<\/p>/ig
 	const paragraphs = []
@@ -55,6 +53,8 @@ export default ( text, stripTags ) => {
 			autop,
 		]
 	)( text )
+	stripTags = stripTags || false
+
 	const paragraphs = getParagraphsInTags( text, stripTags )
 
 	if ( 0 < paragraphs.length ) {
@@ -62,5 +62,5 @@ export default ( text, stripTags ) => {
 	}
 
 	// If no paragraphs are found, return an array containing the entire text.
-	return [ text ]
+	return [ stripTags ? cleanText( text ) : text ]
 }
