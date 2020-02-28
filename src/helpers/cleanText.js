@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { flow } from 'lodash'
+import { flow, isUndefined } from 'lodash'
 
 /**
  * Internal dependencies
@@ -22,7 +22,7 @@ import stripHTMLEntities from '@helpers/stripHTMLEntities'
  * @return {string} The clean text.
  */
 export function cleanHTML( text ) {
-	return flow(
+	return isUndefined( text ) ? '' : flow(
 		[
 			stripStyle,
 			stripScript,
@@ -42,7 +42,7 @@ export function cleanHTML( text ) {
  * @return {string} The clean text.
  */
 export function cleanText( text ) {
-	return flow(
+	return isUndefined( text ) ? '' : flow(
 		[
 			stripStyle,
 			stripScript,
@@ -63,12 +63,27 @@ export function cleanText( text ) {
  * @return {string} The clean text.
  */
 export function cleanTagsOnly( text ) {
-	return flow(
+	return isUndefined( text ) ? '' : flow(
 		[
 			stripTags,
 			stripSpaces,
 		]
 	)( text )
+}
+
+/**
+ * Strip double spaces from text
+ *
+ * @param {string} text The text to strip spaces from.
+ *
+ * @return {string} The text without double spaces
+ */
+function stripSpaces2( text ) {
+	return text
+		.replace( /&nbsp;|&#160;/gi, ' ' )
+		.replace( /\s{2,}/g, ' ' ) // Replace multiple spaces with single space
+		.replace( /\s\./g, '.' ) // Replace spaces followed by periods with only the period.
+		.replace( /(\r\n|\n|\r)/gm, '' )
 }
 
 /**
@@ -79,12 +94,13 @@ export function cleanTagsOnly( text ) {
  * @return {string} The clean text.
  */
 export function sanitizeText( text ) {
-	return flow(
+	return isUndefined( text ) ? '' : flow(
 		[
 			stripStyle,
 			stripScript,
 			stripTags,
 			stripHTMLComments,
+			stripSpaces2,
 		]
 	)( text )
 }
