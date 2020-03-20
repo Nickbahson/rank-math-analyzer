@@ -19,6 +19,7 @@ class LinksNotAllExternals extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add DoFollow links pointing to external resources.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'PageRank Sculpting no longer works. Your posts should have a mix of nofollow and DoFollow links.', 'rank-math' ) )
 	}
@@ -73,7 +74,16 @@ class LinksNotAllExternals extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? applyFilters( 'rankMath_analysis_linksNotAllExternals_score', 2 ) : null
+		return hasExternalDofollow ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_linksNotAllExternals_score', 2 )
 	}
 
 	/**

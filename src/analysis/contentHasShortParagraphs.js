@@ -19,6 +19,7 @@ class ContentHasShortParagraphs extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add short and concise paragraphs for better readability and UX.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Short paragraphs are easier to read and more pleasing to the eye. Long paragraphs scare the visitor, and they might result to SERPs looking for better readable content.', 'rank-math' ) )
 	}
@@ -64,7 +65,16 @@ class ContentHasShortParagraphs extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasBigParagraphs ) {
-		return hasBigParagraphs ? null : applyFilters( 'rankMath_analysis_contentHasShortParagraphs_score', 3 )
+		return hasBigParagraphs ? null : this.getScore()
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_contentHasShortParagraphs_score', 3 )
 	}
 
 	/**

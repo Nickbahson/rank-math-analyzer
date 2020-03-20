@@ -19,6 +19,7 @@ class LinksHasInternal extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add internal links in your content.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Internal links decrease your bounce rate and improve SEO.', 'rank-math' ) )
 	}
@@ -73,7 +74,16 @@ class LinksHasInternal extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasInternal ) {
-		return hasInternal ? applyFilters( 'rankMath_analysis_linksHasInternal_score', 5 ) : null
+		return hasInternal ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_linksHasInternal_score', 5 )
 	}
 
 	/**

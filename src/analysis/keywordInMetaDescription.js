@@ -24,6 +24,7 @@ class KeywordInMetaDescription extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add Focus Keyword to your SEO Meta Description.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO description too.', 'rank-math' ) )
 	}
@@ -67,7 +68,16 @@ class KeywordInMetaDescription extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInMetaDescription_score', 2 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordInMetaDescription_score', 2 )
 	}
 
 	/**

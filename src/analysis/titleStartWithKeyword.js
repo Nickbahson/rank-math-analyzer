@@ -19,6 +19,7 @@ class TitleStartWithKeyword extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use the Focus Keyword near the beginning of SEO title.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'The SEO page title should contain the Focus Keyword preferably at the beginning.', 'rank-math' ) )
 	}
@@ -65,7 +66,16 @@ class TitleStartWithKeyword extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( startWithKeyword ) {
-		return startWithKeyword ? applyFilters( 'rankMath_analysis_titleStartWithKeyword_score', 3 ) : null
+		return startWithKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_titleStartWithKeyword_score', 3 )
 	}
 
 	/**

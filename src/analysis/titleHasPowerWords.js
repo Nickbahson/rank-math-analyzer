@@ -24,6 +24,7 @@ class TitleHasPowerWords extends Analysis {
 	 */
 	newResult( i18n ) {
 		return ! this.hasPowerWords() ? null : new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty(
 				i18n.sprintf(
 					i18n.__( 'Add %s to your title to increase CTR.', 'rank-math' ),
@@ -88,7 +89,16 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasPowerWords ) {
-		return hasPowerWords ? applyFilters( 'rankMath_analysis_titleHasPowerWords_score', 1 ) : null
+		return hasPowerWords ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_titleHasPowerWords_score', 1 )
 	}
 
 	/**

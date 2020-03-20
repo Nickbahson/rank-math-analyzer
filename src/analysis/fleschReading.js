@@ -24,6 +24,7 @@ class FleschReading extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add some content to calculate Flesch Readability score.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Try to make shorter sentences, using less difficult words to improve readability.', 'rank-math' ) )
 	}
@@ -89,6 +90,15 @@ class FleschReading extends Analysis {
 		} )
 
 		return false !== located ? located : boundaries.veryDifficult
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return this.getBoundaries().veryEasy.score
 	}
 
 	getBoundaries() {

@@ -25,6 +25,7 @@ class KeywordInContent extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use Focus Keyword in the content.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'It is recommended to make the focus keyword appear in the post content too.', 'rank-math' ) )
 	}
@@ -69,7 +70,16 @@ class KeywordInContent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInContent_score', 3 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordInContent_score', 3 )
 	}
 
 	/**

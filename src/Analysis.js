@@ -19,6 +19,15 @@ class Analysis {
 	}
 
 	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return 0
+	}
+
+	/**
 	 * Check whether thr assessment is applicable
 	 *
 	 * @param {Paper} paper The paper to use for the assessment.

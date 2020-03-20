@@ -24,6 +24,7 @@ class ContentHasAssets extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add a few images and/or videos to make your content appealing.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Content with images and/or video feels more inviting to users. It also helps supplement your textual content.', 'rank-math' ) )
 	}
@@ -83,7 +84,16 @@ class ContentHasAssets extends Analysis {
 		score += this.calculateImagesScore( this.getImages( paper ) )
 		score += this.calculateVideosScore( this.getVideos( paper.getText() ) )
 
-		return Math.min( applyFilters( 'rankMath_analysis_contentHasAssets_score', 6 ), score )
+		return Math.min( this.getScore(), score )
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_contentHasAssets_score', 6 )
 	}
 
 	/**

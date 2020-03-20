@@ -25,6 +25,7 @@ class LengthContent extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty(
 				i18n.sprintf(
 					i18n.__( 'Content should be %1$s long.', 'rank-math' ),
@@ -110,6 +111,15 @@ class LengthContent extends Analysis {
 		return analysisResult.hasScore() ?
 			i18n.__( 'Content is %1$s words long. Good job!', 'rank-math' ) :
 			i18n.__( 'Content is %1$s words long. Consider using at least 600 words.', 'rank-math' )
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return this.getBoundaries().recommended.score
 	}
 
 	getBoundaries() {

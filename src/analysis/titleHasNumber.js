@@ -19,6 +19,7 @@ class TitleHasNumber extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add a number to your title to improve CTR.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Headlines with numbers are 36% more likely to generate clicks, according to research by Conductor.', 'rank-math' ) )
 	}
@@ -62,7 +63,16 @@ class TitleHasNumber extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasNumber ) {
-		return hasNumber ? applyFilters( 'rankMath_analysis_titleHasNumber_score', 1 ) : null
+		return hasNumber ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_titleHasNumber_score', 1 )
 	}
 
 	/**

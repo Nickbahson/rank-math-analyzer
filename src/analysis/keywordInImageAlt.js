@@ -24,6 +24,7 @@ class KeywordInImageAlt extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add an image with your Focus Keyword as alt text.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'It is recommended to add the focus keyword in the alt attribute of one or more images.', 'rank-math' ) )
 	}
@@ -83,7 +84,16 @@ class KeywordInImageAlt extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInImageAlt_score', 2 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordInImageAlt_score', 2 )
 	}
 
 	/**

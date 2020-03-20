@@ -19,6 +19,7 @@ class LinksHasExternals extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Link out to external resources.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'It helps visitors read more about a topic and prevents pogosticking.', 'rank-math' ) )
 	}
@@ -73,7 +74,16 @@ class LinksHasExternals extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasExternalDofollow ) {
-		return hasExternalDofollow ? applyFilters( 'rankMath_analysis_linksHasExternals_score', 4 ) : null
+		return hasExternalDofollow ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_linksHasExternals_score', 4 )
 	}
 
 	/**

@@ -20,6 +20,7 @@ class KeywordInSubheadings extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use Focus Keyword in subheading(s) like H2, H3, H4, etc..', 'rank-math' ) )
 			.setTooltip( i18n.__( 'It is recommended to add the focus keyword as part of one or more subheadings in the content.', 'rank-math' ) )
 	}
@@ -64,7 +65,16 @@ class KeywordInSubheadings extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInSubheadings_score', 3 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordInSubheadings_score', 3 )
 	}
 
 	/**

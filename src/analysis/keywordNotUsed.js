@@ -32,6 +32,7 @@ class KeywordNotUsed extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Set a Focus Keyword for this content.', 'rank-math' ) )
 	}
 

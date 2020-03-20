@@ -20,6 +20,7 @@ class ContentHasTOC extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math' ) )
 	}
@@ -61,7 +62,16 @@ class ContentHasTOC extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasTOCPlugin ) {
-		return hasTOCPlugin ? applyFilters( 'rankMath_analysis_contentHasTOC_score', 2 ) : null
+		return hasTOCPlugin ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_contentHasTOC_score', 2 )
 	}
 
 	/**

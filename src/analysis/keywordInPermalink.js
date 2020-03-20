@@ -24,6 +24,7 @@ class KeywordInPermalink extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math' ) )
 	}
@@ -69,7 +70,16 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 )
 	}
 
 	/**

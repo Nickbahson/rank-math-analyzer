@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { reduce } from 'lodash'
+import { forEach, round } from 'lodash'
 
 /**
  * Analysis result manager.
@@ -84,7 +84,17 @@ class ResultManager {
 	 * @return {number} Analysis total score.
 	 */
 	refreshScore( results ) {
-		return reduce( results, ( seed, result ) => result.getScore() + seed, 0 )
+		let score = 0
+		let total = 0
+
+		forEach( results, ( result ) => {
+			score += result.getScore()
+			total += result.getMaxScore()
+		} )
+
+		total = Math.min( total, 100 )
+
+		return round( ( score / total ) * 100 )
 	}
 
 	/**

@@ -26,6 +26,7 @@ class TitleSentiment extends Analysis {
 	 */
 	newResult( i18n, paper ) {
 		return 'en' !== paper.getShortLocale() ? null : new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Titles with positive or negative sentiment work best for higher CTR.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Headlines with a strong emotional sentiment (positive or negative) tend to receive more clicks.', 'rank-math' ) )
 	}
@@ -70,7 +71,16 @@ class TitleSentiment extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( sentimentScore ) {
-		return 0 !== sentimentScore ? applyFilters( 'rankMath_analysis_titleSentiment_score', 1 ) : null
+		return 0 !== sentimentScore ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_titleSentiment_score', 1 )
 	}
 
 	/**

@@ -24,6 +24,7 @@ class KeywordInTitle extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Add Focus Keyword to the SEO title.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO post title too.', 'rank-math' ) )
 	}
@@ -68,8 +69,19 @@ class KeywordInTitle extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword, paper ) {
-		const score = 'en' === paper.getShortLocale() ? 36 : 38
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordInTitle_score', score ) : null
+		return hasKeyword ? this.getScore( paper.getShortLocale() ) : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @param {string} locale The paper locale.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore( locale ) {
+		const score = 'en' === locale ? 36 : 38
+		return applyFilters( 'rankMath_analysis_keywordInTitle_score', score )
 	}
 
 	/**

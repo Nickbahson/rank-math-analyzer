@@ -19,6 +19,7 @@ class LengthPermalink extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'URL unavailable. Add a short URL.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Permalink should be at most 75 characters long.', 'rank-math' ) )
 	}
@@ -67,7 +68,16 @@ class LengthPermalink extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( permalinkLength ) {
-		return 75 < permalinkLength ? null : applyFilters( 'rankMath_analysis_permalinkLength_score', 4 )
+		return 75 < permalinkLength ? null : this.getScore()
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_permalinkLength_score', 4 )
 	}
 
 	/**

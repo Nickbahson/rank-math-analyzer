@@ -26,6 +26,7 @@ class KeywordDensity extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Keyword Density is 0. Aim for around 1% Keyword Density.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'There is no ideal keyword density percentage, but it should not be too high. The most important thing is to keep the copy natural.', 'rank-math' ) )
 	}
@@ -108,7 +109,7 @@ class KeywordDensity extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( keywordDensity ) {
-		const scores = this.getScores()
+		const scores = this.getBoundaries()
 
 		if ( 0.5 > keywordDensity ) {
 			return {
@@ -144,7 +145,16 @@ class KeywordDensity extends Analysis {
 		}
 	}
 
-	getScores() {
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return this.getBoundaries().best
+	}
+
+	getBoundaries() {
 		return applyFilters(
 			'rankMath_analysis_keywordDensity_score',
 			{

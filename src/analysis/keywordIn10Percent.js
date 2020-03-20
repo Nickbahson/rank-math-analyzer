@@ -24,6 +24,7 @@ class KeywordIn10Percent extends Analysis {
 	 */
 	newResult( i18n ) {
 		return new AnalysisResult()
+			.setMaxScore( this.getScore() )
 			.setEmpty( i18n.__( 'Use Focus Keyword at the beginning of your content.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'The first 10% of the content should contain the Focus Keyword preferably at the beginning.', 'rank-math' ) )
 	}
@@ -80,7 +81,16 @@ class KeywordIn10Percent extends Analysis {
 	 * @return {number} The calculated score.
 	 */
 	calculateScore( hasKeyword ) {
-		return hasKeyword ? applyFilters( 'rankMath_analysis_keywordIn10Percent_score', 3 ) : null
+		return hasKeyword ? this.getScore() : null
+	}
+
+	/**
+	 * Get analysis max score.
+	 *
+	 * @return {number} Max score an analysis has
+	 */
+	getScore() {
+		return applyFilters( 'rankMath_analysis_keywordIn10Percent_score', 3 )
 	}
 
 	/**

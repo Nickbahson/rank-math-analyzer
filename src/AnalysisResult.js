@@ -13,6 +13,7 @@ class AnalysisResult {
 	constructor() {
 		this.has = false
 		this.score = 0
+		this.maxScore = 0
 		this.text = ''
 		this.empty = ''
 		this.tooltip = ''
@@ -52,6 +53,30 @@ class AnalysisResult {
 		}
 
 		return this
+	}
+
+	/**
+	 * Set the maximum score for the assessment.
+	 *
+	 * @param {number} score The maximum score to set for analysis
+	 *
+	 * @return {AnalysisResult} Class instance for chaining.
+	 */
+	setMaxScore( score ) {
+		if ( isNumber( score ) ) {
+			this.maxScore = score
+		}
+
+		return this
+	}
+
+	/**
+	 * Get the maximum score.
+	 *
+	 * @return {number} Result maximum score.
+	 */
+	getMaxScore() {
+		return this.maxScore
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { has, forEach, isUndefined, mapValues, pick } from 'lodash'
+import { has, forEach, isUndefined, pick } from 'lodash'
 
 /**
  * Internal dependencies
