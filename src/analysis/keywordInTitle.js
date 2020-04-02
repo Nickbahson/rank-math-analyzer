@@ -18,13 +18,14 @@ class KeywordInTitle extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
-	 * @param {Jed} i18n The i18n-object used for parsing translations.
+	 * @param {Jed}   i18n  The i18n-object used for parsing translations.
+	 * @param {Paper} paper The paper to run this assessment on.
 	 *
 	 * @return {AnalysisResult} New instance.
 	 */
-	newResult( i18n ) {
+	newResult( i18n, paper ) {
 		return new AnalysisResult()
-			.setMaxScore( this.getScore() )
+			.setMaxScore( this.getScore( paper.getShortLocale() ) )
 			.setEmpty( i18n.__( 'Add Focus Keyword to the SEO title.', 'rank-math' ) )
 			.setTooltip( i18n.__( 'Make sure the focus keyword appears in the SEO post title too.', 'rank-math' ) )
 	}
@@ -39,7 +40,7 @@ class KeywordInTitle extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = this.newResult( i18n )
+		const analysisResult = this.newResult( i18n, paper )
 		const containKeyword = includes( paper.getLower( 'title' ), paper.getLower( 'keyword' ) )
 
 		analysisResult

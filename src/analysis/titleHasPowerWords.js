@@ -44,7 +44,7 @@ class TitleHasPowerWords extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = this.newResult( i18n, paper )
+		const analysisResult = this.newResult( i18n )
 		const title = paper.getLower( 'title' ).split( ' ' )
 		const powerWordsInText = rankMath.assessor.powerWords.filter( ( word ) => indexOf( title, word ) >= 0 )
 		const hasPowerWords = 0 < powerWordsInText.length

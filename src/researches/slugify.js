@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { deburr } from 'lodash'
+import { deburr, toLower, trim } from 'lodash'
 
 /**
  * Sanitize and slugify text
@@ -10,6 +10,12 @@ import { deburr } from 'lodash'
  *
  * @return {string} The manipulated text.
  */
-export default ( text ) => deburr( text )
-	.replace( / /gi, '-' )
-	.toLowerCase()
+export default ( text ) => {
+	if ( ! text ) {
+		return ''
+	}
+
+	return toLower(
+		deburr( trim( text.replace( /[\s\./_]+/g, '-' ), '-' ) )
+	)
+}

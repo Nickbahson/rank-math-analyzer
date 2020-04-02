@@ -86,10 +86,11 @@ class ResultManager {
 	refreshScore( results ) {
 		let score = 0
 		let total = 0
+		const shortLocale = rankMath.localeFull.split( '_' )[ 0 ]
 
 		forEach( results, ( result ) => {
 			score += result.getScore()
-			total += result.getMaxScore()
+			total += result.getMaxScore( shortLocale )
 		} )
 
 		total = Math.min( total, 100 )
