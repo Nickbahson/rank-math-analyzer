@@ -4,18 +4,24 @@
 import { uniq, includes, isUndefined } from 'lodash'
 
 export default ( plurals ) => {
-	const words = Array.from( plurals.keys() ),
-		length = words.length,
+	const words = [],
+		values = []
+	plurals.forEach( ( data ) => {
+		words.push( data.word )
+		values.push( data.plural )
+	} )
+
+	const length = words.length,
 		output = []
 
 	output.push( words.join( ' ' ) )
 
 	function recursive( recursiveWords ) {
-		plurals.forEach( ( plural, word ) => {
-			if ( plural === word || includes( recursiveWords, plural ) ) {
+		plurals.forEach( ( data ) => {
+			if ( data.plural === data.word || includes( recursiveWords, data.plural ) ) {
 				return
 			}
-			output.push( recursiveWords.join( ' ' ).replace( word, plural ) )
+			output.push( recursiveWords.join( ' ' ).replace( data.word, data.plural ) )
 		} )
 	}
 
@@ -24,7 +30,7 @@ export default ( plurals ) => {
 			recursive( output[ i ].split( ' ' ) )
 		}
 	}
-	output.push( Array.from( plurals.values() ).join( ' ' ) )
+	output.push( values.join( ' ' ) )
 
 	return uniq( output )
 }
