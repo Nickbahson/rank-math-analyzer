@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { defaults, has, isUndefined, includes } from 'lodash'
+import { defaults, has, isUndefined } from 'lodash'
 
 /**
  * Internal dependencies
@@ -375,11 +375,6 @@ class Paper {
 
 			this.keywordPermalink = slugify( removePunctuation( keywordLower ) )
 			this.keywordPermalinkRaw = this.keywordPermalink
-
-			// Remove stopwords from the keywordPermalink.
-			if ( ! isUndefined( rankMath.assessor.stopwords ) && 'post' === rankMath.objectType ) {
-				this.keywordPermalink = this.keywordPermalink.split( '-' ).filter( ( word ) => ! includes( rankMath.assessor.stopwords, word ) ).join( '-' )
-			}
 		}
 
 		return this.keywordPermalink
