@@ -183,6 +183,7 @@ class ContentHasAssets extends Analysis {
 		const videos = [].concat(
 			this.match( text, '<iframe(?:[^>]+)?>' ),
 			this.match( text, '\\[video( [^\\]]+?)?\\]' ),
+			this.match( text, '<video(?:[^>]+)?>' ),
 			this.match( text, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ )
 		)
 
