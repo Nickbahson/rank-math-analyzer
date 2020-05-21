@@ -429,8 +429,8 @@ class Paper {
 
 		// Plurals.
 		this.keywordPlurals = new Map()
-		getWords( keywordLower ).forEach( function( word ) {
-			this.keywordPlurals.set( word, pluralize.get( word ) )
+		getWords( keywordLower ).forEach( function( word, index ) {
+			this.keywordPlurals.set( index, { word, plural: pluralize.get( word ) } )
 		}, this )
 
 		// Permalink.
