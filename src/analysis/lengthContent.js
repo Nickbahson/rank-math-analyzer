@@ -27,12 +27,9 @@ class LengthContent extends Analysis {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
 			.setEmpty(
-				i18n.sprintf(
-					i18n.__( 'Content should be %1$s long.', 'rank-math' ),
-					'<a href="' + links.contentLength + '" target="_blank">600-2500 words</a>'
-				)
+				this.getFilteredText( 'emptyContent', i18n )
 			)
-			.setTooltip( i18n.__( 'Minimum recommended content length should be 600 words.', 'rank-math' ) )
+			.setTooltip( this.getFilteredText( 'tooltipText', i18n ) )
 	}
 
 	/**
@@ -109,8 +106,8 @@ class LengthContent extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Content is %1$d words long. Good job!', 'rank-math' ) :
-			i18n.__( 'Content is %1$d words long. Consider using at least 600 words.', 'rank-math' )
+			this.getFilteredText( 'hasScore', i18n ) :
+			this.getFilteredText( 'failed', i18n )
 	}
 
 	/**
@@ -148,6 +145,20 @@ class LengthContent extends Analysis {
 				},
 			}
 		)
+	}
+
+	getFilteredText( what, i18n ) {
+		const texts = applyFilters( 'rankMath_analysis_contentLength', {
+			hasScore: i18n.__( 'Content is %1$d words long. Good job!', 'rank-math' ),
+			failed: i18n.__( 'Content is %1$d words long. Consider using at least 600 words.', 'rank-math' ),
+			emptyContent: i18n.sprintf(
+				i18n.__( 'Content should be %1$s long.', 'rank-math' ),
+				'<a href="' + links.contentLength + '" target="_blank">600-2500 words</a>'
+			),
+			tooltipText: i18n.__( 'Minimum recommended content length should be 600 words.', 'rank-math' ),
+		} )
+
+		return texts[ what ]
 	}
 }
 
