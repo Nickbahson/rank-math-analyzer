@@ -50,7 +50,7 @@ function getFromAnchorTag( anchorTag ) {
  */
 function isHttpScheme( protocol ) {
 	if ( ! protocol ) {
-		return false
+		return true
 	}
 
 	return ( 'http:' === protocol || 'https:' === protocol )
