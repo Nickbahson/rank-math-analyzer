@@ -149,8 +149,8 @@ class LengthContent extends Analysis {
 
 	getFilteredText( what, i18n ) {
 		const texts = applyFilters( 'rankMath_analysis_contentLength', {
-			hasScore: i18n.__( 'Content is %1$s words long. Good job!', 'rank-math' ),
-			failed: i18n.__( 'Content is %1$s words long. Consider using at least 600 words.', 'rank-math' ),
+			hasScore: i18n.__( 'Content is %1$d words long. Good job!', 'rank-math' ),
+			failed: i18n.__( 'Content is %1$d words long. Consider using at least 600 words.', 'rank-math' ),
 			emptyContent: i18n.sprintf(
 				i18n.__( 'Content should be %1$s long.', 'rank-math' ),
 				'<a href="' + links.contentLength + '" target="_blank">600-2500 words</a>'
