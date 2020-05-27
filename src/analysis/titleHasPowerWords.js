@@ -28,7 +28,7 @@ class TitleHasPowerWords extends Analysis {
 			.setEmpty(
 				i18n.sprintf(
 					i18n.__( 'Add %s to your title to increase CTR.', 'rank-math' ),
-					'<a href="https://sumo.com/stories/power-words" target="_blank">power words</a>'
+					'<a href="https://rankmath.com/blog/power-words/" target="_blank">power words</a>'
 				)
 			)
 			.setTooltip( i18n.__( 'Power Words are tried-and-true words that copywriters use to attract more clicks.', 'rank-math' ) )
@@ -114,7 +114,7 @@ class TitleHasPowerWords extends Analysis {
 			i18n.__( 'Your title contains %1$d power word(s). Booyah!', 'rank-math' ) :
 			i18n.sprintf(
 				i18n.__( 'Your title doesn\'t contain a %1$s. Add at least one.', 'rank-math' ),
-				'<a href="https://sumo.com/stories/power-words" target="_blank">power word</a>'
+				'<a href="https://rankmath.com/blog/power-words/" target="_blank">power word</a>'
 			)
 	}
 }
