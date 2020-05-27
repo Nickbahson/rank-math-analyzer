@@ -90,8 +90,8 @@ class LengthPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'URL is %1$s characters long. Kudos!', 'rank-math' ) :
-			i18n.__( 'URL is %1$s characters long. Considering shortening it.', 'rank-math' )
+			i18n.__( 'URL is %1$d characters long. Kudos!', 'rank-math' ) :
+			i18n.__( 'URL is %1$d characters long. Consider shortening it.', 'rank-math' )
 	}
 }
 
