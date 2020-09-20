@@ -4,11 +4,6 @@
 import urlMethods from 'url'
 import { includes } from 'lodash'
 
-/**
- * WordPress dependencies
- */
-import { applyFilters } from '@wordpress/hooks'
-
 const urlFromAnchorRegex = /href=(["'])([^"']+)\1/i
 
 /**
@@ -106,13 +101,6 @@ function couldBeDoFollow( url ) {
  * @return {boolean} Whether internal or not.
  */
 function isInternalLink( url, host ) {
-
-	// Short-circuit if filter returns non-null.
-	let filtered = applyFilters( 'rankMath_analysis_isInternalLink', null, url, host );
-	if ( filtered !== null ) {
-		return filtered
-	}
-
 	// Check if the URL starts with a single slash.
 	if ( ! includes( url, '//' ) && '/' === url[ 0 ] ) {
 		return true
