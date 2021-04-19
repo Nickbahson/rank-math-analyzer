@@ -90,7 +90,9 @@ class LengthPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
+			/* Translators: The placeholder is the number of characters. */
 			i18n.__( 'URL is %1$d characters long. Kudos!', 'rank-math' ) :
+			/* Translators: The placeholder is the number of characters. */
 			i18n.__( 'URL is %1$d characters long. Consider shortening it.', 'rank-math' )
 	}
 }
