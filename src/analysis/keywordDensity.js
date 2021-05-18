@@ -91,13 +91,16 @@ class KeywordDensity extends Analysis {
 	 */
 	translateScore( type, i18n ) {
 		if ( 'low' === type ) {
+			/* Translators: 1: keyword density number, 2: number of times the Focus Keyword appears in he content. */
 			return i18n.__( 'Keyword Density is %1$s which is low, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 		}
 
 		if ( 'high' === type ) {
+			/* Translators: 1: keyword density number, 2: number of times the Focus Keyword appears in he content. */
 			return i18n.__( 'Keyword Density is %1$s which is high, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 		}
 
+		/* Translators: 1: keyword density number, 2: number of times the Focus Keyword appears in he content. */
 		return i18n.__( 'Keyword Density is %1$s, the Focus Keyword and combination appears %2$s times.', 'rank-math' )
 	}
 
