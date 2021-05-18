@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { map, inRange } from 'lodash'
+import { map, inRange, isEmpty } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -45,13 +45,14 @@ class KeywordDensity extends Analysis {
 		const analysisResult = this.newResult( i18n )
 		const getWordCount = researcher.getResearch( 'wordCount' )
 		const wordCount = getWordCount( paper.getTextLower() )
+		const keywords = paper.get( 'keywords' )
 
-		if ( false === wordCount || 0 === wordCount ) {
+		if ( false === wordCount || 0 === wordCount || isEmpty( keywords ) ) {
 			return analysisResult
 		}
 
 		// Keyword Density & Focus Keyword occurrence
-		const regex = new RegExp( map( [ paper.getLower( 'keyword' ) ], escapeRegex ).join( '|' ), 'gi' )
+		const regex = new RegExp( map( keywords, escapeRegex ).join( '|' ), 'gi' )
 		const count = ( cleanTagsOnly( paper.getText() ).match( regex ) || [] ).length
 		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
 		const calculatedScore = this.calculateScore( keywordDensity )

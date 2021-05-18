@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { defaults, has, isUndefined } from 'lodash'
+import { defaults, has, map, isUndefined, filter } from 'lodash'
 
 /**
  * Internal dependencies
@@ -36,6 +36,7 @@ class Paper {
 		this.args = defaults( args, {
 			title: '',
 			keyword: '',
+			keywords: [],
 			titleWidth: 0,
 			url: '',
 			permalink: '',
@@ -100,6 +101,19 @@ class Paper {
 		this.keywordPermalink = false
 		this.keywordPermalinkRaw = false
 		this.keywordCombinations = false
+	}
+
+	/**
+	 * Set the keywords.
+	 *
+	 * @param {string} keywords Array of focus keywords.
+	 */
+	setKeywords( keywords ) {
+		this.args.keywords = filter(
+			map( keywords, ( keyword ) => {
+				return removeDiacritics( keyword ).toLowerCase()
+			} )
+		)
 	}
 
 	/**
