@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { has } from 'lodash'
+import { has, isNull } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -155,14 +155,16 @@ class ContentHasAssets extends Analysis {
 	/**
 	 * Get all the images.
 	 *
-	 * @param {Paper} paper The paper to run this assessment on.
+	 * @param {Paper}  paper The paper to run this assessment on.
+	 * @param {string} text  The text.
 	 *
 	 * @return {number} Count of found images.
 	 */
-	getImages( paper ) {
+	getImages( paper, text = null ) {
+		text = ! isNull( text ) ? text : paper.getText()
 		const images = [].concat(
-			this.match( paper.getText(), '<img(?:[^>]+)?>' ),
-			this.match( paper.getText(), '\\[gallery( [^\\]]+?)?\\]' )
+			this.match( text, '<img(?:[^>]+)?>' ),
+			this.match( text, '\\[gallery( [^\\]]+?)?\\]' )
 		)
 
 		if ( paper.hasThumbnail() ) {
