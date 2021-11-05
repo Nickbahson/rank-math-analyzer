@@ -190,5 +190,5 @@ export function checkNofollow( anchorHTML, linkType ) {
  * @return {Array} Found anchor tags.
  */
 export function getLinks( text ) {
-	return text.match( /<a[^>]*(href=)[^>]*>/gi )
+	return text.match( /<a [^>]*(href=)[^>]*>/gi )
 }
