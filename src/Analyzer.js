@@ -28,6 +28,7 @@ import TitleHasNumber from '@analysis/titleHasNumber'
 import TitleHasPowerWords from '@analysis/titleHasPowerWords'
 import TitleSentiment from '@analysis/titleSentiment'
 import TitleStartWithKeyword from '@analysis/titleStartWithKeyword'
+import ContentAI from '@analysis/contentAI'
 
 /**
  * Creates the Analyzer.
@@ -135,6 +136,7 @@ class Analyzer {
 			titleHasPowerWords: new TitleHasPowerWords,
 			titleSentiment: new TitleSentiment,
 			titleStartWithKeyword: new TitleStartWithKeyword,
+			hasContentAI: new ContentAI,
 		}
 
 		this.analyses = this.defaultAnalyses

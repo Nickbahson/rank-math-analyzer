@@ -44,6 +44,7 @@ class Paper {
 			thumbnail: '',
 			thumbnailAlt: '',
 			locale: 'en_US',
+			contentAI: false,
 		} )
 		this.setText( isUndefined( text ) ? '' : text )
 		this.args.shortLocale = this.args.locale.split( '_' )[ 0 ]
@@ -452,6 +453,24 @@ class Paper {
 
 		// Combinations.
 		this.keywordCombinations = combinations( this.keywordPlurals )
+	}
+
+	/**
+	 * Set the text.
+	 *
+	 * @param {string} value Content AI.
+	 */
+	setContentAI( value ) {
+		this.args.contentAI = value
+	}
+
+	/**
+	 * Check whether the text is available.
+	 *
+	 * @return {boolean} Returns true if the paper has a text.
+	 */
+	hasContentAI() {
+		return false !== this.args.contentAI
 	}
 }
 
