@@ -45,6 +45,7 @@ class Paper {
 			thumbnailAlt: '',
 			locale: 'en_US',
 			contentAI: false,
+			schemas: {},
 		} )
 		this.setText( isUndefined( text ) ? '' : text )
 		this.args.shortLocale = this.args.locale.split( '_' )[ 0 ]
@@ -471,6 +472,15 @@ class Paper {
 	 */
 	hasContentAI() {
 		return false !== this.args.contentAI
+	}
+
+	/**
+	 * Set the text.
+	 *
+	 * @param {string} schemas Schema Data.
+	 */
+	setSchema( schemas ) {
+		this.args.schemas = schemas
 	}
 }
 
