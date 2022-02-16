@@ -85,9 +85,9 @@ class isReviewEnabled extends Analysis {
 		return analysisResult.hasScore() ?
 			i18n.__( 'Reviews are enabled for this Product. Good Job!', 'rank-math' ) :
 			i18n.sprintf(
-				/* Translators: Placeholder expands to "Table of Contents plugin" with a link to the corresponding KB article. */
+				/* Translators: Placeholder expands to "WP Review PRO" with a link to the corresponding KB article. */
 				i18n.__( 'Reviews seem to be disabled on this Product. Use %1$s plugin to improve the review form.', 'rank-math' ),
-				'<a href="' + links.tocKbLink + '" target="_blank">WP Review PRO</a>'
+				'<a href="' + links.productReview + '" target="_blank">WP Review PRO</a>'
 			)
 	}
 }

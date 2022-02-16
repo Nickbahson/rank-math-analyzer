@@ -457,7 +457,7 @@ class Paper {
 	}
 
 	/**
-	 * Set the text.
+	 * Set the Content AI.
 	 *
 	 * @param {string} value Content AI.
 	 */
@@ -466,16 +466,7 @@ class Paper {
 	}
 
 	/**
-	 * Check whether the text is available.
-	 *
-	 * @return {boolean} Returns true if the paper has a text.
-	 */
-	hasContentAI() {
-		return false !== this.args.contentAI
-	}
-
-	/**
-	 * Set the text.
+	 * Set schema data.
 	 *
 	 * @param {string} schemas Schema Data.
 	 */

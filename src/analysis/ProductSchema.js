@@ -11,7 +11,6 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * Internal dependencies
  */
-import links from '@config/links'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 
@@ -26,8 +25,7 @@ class ProductSchema extends Analysis {
 	newResult( i18n ) {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math' ) )
-			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math' ) )
+			.setEmpty( i18n.__( 'Use Product schema.', 'rank-math' ) )
 	}
 
 	/**
@@ -61,11 +59,12 @@ class ProductSchema extends Analysis {
 	/**
 	 * Checks whether paper meet analysis requirements.
 	 *
+	 * @param {Paper} paper The paper to use for the assessment.
+	 *
 	 * @return {boolean} True when requirements meet.
 	 */
-	isApplicable() {
-		return true
-		// return rankMath.assessor.hasTOCPlugin
+	isApplicable( paper ) {
+		return ! isEmpty( paper.get( 'schemas' ) )
 	}
 
 	/**

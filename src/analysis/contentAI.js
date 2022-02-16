@@ -35,7 +35,7 @@ class ContentAI extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const hasContentAI = paper.hasContentAI()
+		const hasContentAI = false !== paper.get( 'contentAI' )
 		analysisResult
 			.setScore( this.calculateScore( hasContentAI ) )
 			.setText( this.translateScore( analysisResult, i18n ) )
@@ -46,11 +46,12 @@ class ContentAI extends Analysis {
 	/**
 	 * Checks whether paper meet analysis requirements.
 	 *
+	 * @param {Paper} paper The paper to use for the assessment.
+	 *
 	 * @return {boolean} True when requirements meet.
 	 */
-	isApplicable() {
-		return true
-		// return rankMath.assessor.hasContentAI
+	isApplicable( paper ) {
+		return false !== paper.get( 'contentAI' )
 	}
 
 	/**
@@ -70,7 +71,7 @@ class ContentAI extends Analysis {
 	 * @return {number} Max score an analysis has
 	 */
 	getScore() {
-		return applyFilters( 'rankMath_analysis_contentHasAI', 5 )
+		return applyFilters( 'rankMath_analysis_contentAI', 5 )
 	}
 
 	/**
@@ -84,14 +85,14 @@ class ContentAI extends Analysis {
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
 			i18n.sprintf(
-				/* Translators: Placeholder expands to "Table of Contents plugin" with a link to the corresponding KB article. */
+				/* Translators: Placeholder expands to "Content AI" with a link to the corresponding KB article. */
 				i18n.__( 'You are using %1$s to optimise this Post.', 'rank-math' ),
-				'<a href="' + links.tocKbLink + '" target="_blank">Content AI</a>'
+				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>'
 			) :
 			i18n.sprintf(
-				/* Translators: Placeholder expands to "Table of Contents plugin" with a link to the corresponding KB article. */
+				/* Translators: Placeholder expands to "Content AI" with a link to the corresponding KB article. */
 				i18n.__( 'You are not using %1$s to optimise this Post.', 'rank-math' ),
-				'<a href="' + links.tocKbLink + '" target="_blank">Content AI</a>'
+				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>'
 			)
 	}
 }
