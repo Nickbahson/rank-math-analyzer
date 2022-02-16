@@ -25,7 +25,7 @@ class ProductSchema extends Analysis {
 	newResult( i18n ) {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Product schema.', 'rank-math' ) )
+			.setEmpty( i18n.__( 'You are not using the Product Schema for this Product.', 'rank-math' ) )
 	}
 
 	/**
@@ -97,8 +97,8 @@ class ProductSchema extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'You seem to be using the Product Schema.', 'rank-math' ) :
-			i18n.__( 'You don\'t seem to be using the Product Schema.', 'rank-math' )
+			i18n.__( 'You are using the Product Schema for this Product', 'rank-math' ) :
+			i18n.__( 'You are not using the Product Schema for this Product.', 'rank-math' )
 	}
 }
 

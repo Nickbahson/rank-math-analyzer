@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { isUndefined, startCase } from 'lodash'
+
+/**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
@@ -19,9 +24,17 @@ class ContentAI extends Analysis {
 	 * @return {AnalysisResult} New instance.
 	 */
 	newResult( i18n ) {
+		const postType = ! isUndefined( rankMath.postType ) ? startCase( rankMath.postType ) : 'Post'
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Content AI to optimise the post.', 'rank-math' ) )
+			.setEmpty( 
+				i18n.sprintf(
+					/* Translators: 1) Placeholder expands to "Content AI" with a link to the corresponding KB article. 2) Post Type. */
+					i18n.__( 'Use %1$s to optimise the  %2$s.', 'rank-math' ),
+					'<a class="rank-math-open-contentai" href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+					postType
+				)
+			)
 	}
 
 	/**
@@ -83,16 +96,19 @@ class ContentAI extends Analysis {
 	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
+		const postType = ! isUndefined( rankMath.postType ) ? startCase( rankMath.postType ) : 'Post'
 		return analysisResult.hasScore() ?
 			i18n.sprintf(
-				/* Translators: Placeholder expands to "Content AI" with a link to the corresponding KB article. */
-				i18n.__( 'You are using %1$s to optimise this Post.', 'rank-math' ),
-				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>'
+				/* Translators: 1. Placeholder expands to "Content AI" with a link to the corresponding KB article. 2. Post Type. */
+				i18n.__( 'You are using %1$s to optimise this %2$s.', 'rank-math' ),
+				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+				postType
 			) :
 			i18n.sprintf(
-				/* Translators: Placeholder expands to "Content AI" with a link to the corresponding KB article. */
-				i18n.__( 'You are not using %1$s to optimise this Post.', 'rank-math' ),
-				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>'
+				/* Translators: 1. Placeholder expands to "Content AI" with a link to the corresponding KB article. 2. Post Type. */
+				i18n.__( 'You are not using %1$s to optimise this %2$s.', 'rank-math' ),
+				'<a class="rank-math-open-contentai" href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+				postType
 			)
 	}
 }

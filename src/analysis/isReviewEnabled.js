@@ -6,7 +6,6 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * Internal dependencies
  */
-import links from '@config/links'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 
@@ -21,8 +20,7 @@ class isReviewEnabled extends Analysis {
 	newResult( i18n ) {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Table of Content to break-down your text.', 'rank-math' ) )
-			.setTooltip( i18n.__( 'Table of Contents help break down content into smaller, digestible chunks. It makes reading easier which in turn results in better rankings.', 'rank-math' ) )
+			.setEmpty( i18n.__( 'Reviews are disabled on this Product.', 'rank-math' ) )
 	}
 
 	/**
@@ -84,11 +82,7 @@ class isReviewEnabled extends Analysis {
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
 			i18n.__( 'Reviews are enabled for this Product. Good Job!', 'rank-math' ) :
-			i18n.sprintf(
-				/* Translators: Placeholder expands to "WP Review PRO" with a link to the corresponding KB article. */
-				i18n.__( 'Reviews seem to be disabled on this Product. Use %1$s plugin to improve the review form.', 'rank-math' ),
-				'<a href="' + links.productReview + '" target="_blank">WP Review PRO</a>'
-			)
+			i18n.__( 'Reviews are disabled on this Product.', 'rank-math' )
 	}
 }
 
