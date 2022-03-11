@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { includes } from 'lodash'
+import { isEmpty, forEach, includes } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -14,7 +14,7 @@ import { applyFilters } from '@wordpress/hooks'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 
-class KeywordInPermalink extends Analysis {
+class ProductSchema extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
@@ -25,8 +25,7 @@ class KeywordInPermalink extends Analysis {
 	newResult( i18n ) {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math' ) )
-			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math' ) )
+			.setEmpty( i18n.__( 'You are not using the Product Schema for this Product.', 'rank-math' ) )
 	}
 
 	/**
@@ -39,13 +38,19 @@ class KeywordInPermalink extends Analysis {
 	 * @return {AnalysisResult} an AnalysisResult with the score and the formatted text.
 	 */
 	getResult( paper, researcher, i18n ) {
-		const analysisResult = this.newResult( i18n )
-		const permalink = paper.getUrl().replace( /[-_]/ig, '-' )
-		const hasKeyword = includes( permalink, paper.getKeywordPermalink( researcher ) ) ||
-			includes( permalink, paper.getPermalinkWithStopwords( researcher ) )
+		const schemas = paper.get( 'schemas' )
+		let hasProductSchema = false
+		if ( ! isEmpty( schemas ) ) {
+			forEach( schemas, ( schema ) => {
+				if ( includes( [ 'WooCommerceProduct', 'EDDProduct', 'Product' ], schema[ '@type' ] ) ) {
+					hasProductSchema = true
+				}
+			} )
+		}
 
+		const analysisResult = this.newResult( i18n )
 		analysisResult
-			.setScore( this.calculateScore( hasKeyword ) )
+			.setScore( this.calculateScore( hasProductSchema ) )
 			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
@@ -59,18 +64,18 @@ class KeywordInPermalink extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return paper.hasKeyword() && paper.hasPermalink()
+		return ! isEmpty( paper.get( 'schemas' ) )
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {boolean} hasKeyword Title has number or not.
+	 * @param {boolean} hasSchema Title has number or not.
 	 *
 	 * @return {number} The calculated score.
 	 */
-	calculateScore( hasKeyword ) {
-		return hasKeyword ? this.getScore() : null
+	calculateScore( hasSchema ) {
+		return hasSchema ? this.getScore() : null
 	}
 
 	/**
@@ -79,7 +84,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} Max score an analysis has
 	 */
 	getScore() {
-		return applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 )
+		return applyFilters( 'rankMath_analysis_hasProductSchema_score', 2 )
 	}
 
 	/**
@@ -92,9 +97,9 @@ class KeywordInPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used in the URL.', 'rank-math' ) :
-			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math' )
+			i18n.__( 'You are using the Product Schema for this Product', 'rank-math' ) :
+			i18n.__( 'You are not using the Product Schema for this Product.', 'rank-math' )
 	}
 }
 
-export default KeywordInPermalink
+export default ProductSchema

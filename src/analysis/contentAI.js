@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { includes } from 'lodash'
+import { isUndefined, startCase } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -11,10 +11,11 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * Internal dependencies
  */
+import links from '@config/links'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 
-class KeywordInPermalink extends Analysis {
+class ContentAI extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
@@ -23,10 +24,17 @@ class KeywordInPermalink extends Analysis {
 	 * @return {AnalysisResult} New instance.
 	 */
 	newResult( i18n ) {
+		const postType = ! isUndefined( rankMath.postType ) ? startCase( rankMath.postType ) : 'Post'
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math' ) )
-			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math' ) )
+			.setEmpty( 
+				i18n.sprintf(
+					/* Translators: 1) Placeholder expands to "Content AI" with a link to the corresponding KB article. 2) Post Type. */
+					i18n.__( 'Use %1$s to optimise the  %2$s.', 'rank-math' ),
+					'<a class="rank-math-open-contentai" href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+					postType
+				)
+			)
 	}
 
 	/**
@@ -40,12 +48,9 @@ class KeywordInPermalink extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const permalink = paper.getUrl().replace( /[-_]/ig, '-' )
-		const hasKeyword = includes( permalink, paper.getKeywordPermalink( researcher ) ) ||
-			includes( permalink, paper.getPermalinkWithStopwords( researcher ) )
-
+		const hasContentAI = false !== paper.get( 'contentAI' )
 		analysisResult
-			.setScore( this.calculateScore( hasKeyword ) )
+			.setScore( this.calculateScore( hasContentAI ) )
 			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
@@ -59,18 +64,18 @@ class KeywordInPermalink extends Analysis {
 	 * @return {boolean} True when requirements meet.
 	 */
 	isApplicable( paper ) {
-		return paper.hasKeyword() && paper.hasPermalink()
+		return false !== paper.get( 'contentAI' )
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {boolean} hasKeyword Title has number or not.
+	 * @param {boolean} hasContentAI Title has number or not.
 	 *
 	 * @return {number} The calculated score.
 	 */
-	calculateScore( hasKeyword ) {
-		return hasKeyword ? this.getScore() : null
+	calculateScore( hasContentAI ) {
+		return hasContentAI ? this.getScore() : null
 	}
 
 	/**
@@ -79,7 +84,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} Max score an analysis has
 	 */
 	getScore() {
-		return applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 )
+		return applyFilters( 'rankMath_analysis_contentAI', 5 )
 	}
 
 	/**
@@ -91,10 +96,21 @@ class KeywordInPermalink extends Analysis {
 	 * @return {string} The translated string.
 	 */
 	translateScore( analysisResult, i18n ) {
+		const postType = ! isUndefined( rankMath.postType ) ? startCase( rankMath.postType ) : 'Post'
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used in the URL.', 'rank-math' ) :
-			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math' )
+			i18n.sprintf(
+				/* Translators: 1. Placeholder expands to "Content AI" with a link to the corresponding KB article. 2. Post Type. */
+				i18n.__( 'You are using %1$s to optimise this %2$s.', 'rank-math' ),
+				'<a href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+				postType
+			) :
+			i18n.sprintf(
+				/* Translators: 1. Placeholder expands to "Content AI" with a link to the corresponding KB article. 2. Post Type. */
+				i18n.__( 'You are not using %1$s to optimise this %2$s.', 'rank-math' ),
+				'<a class="rank-math-open-contentai" href="' + links.contentAILink + '" target="_blank">Content AI</a>',
+				postType
+			)
 	}
 }
 
-export default KeywordInPermalink
+export default ContentAI

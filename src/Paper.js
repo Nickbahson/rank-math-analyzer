@@ -44,6 +44,8 @@ class Paper {
 			thumbnail: '',
 			thumbnailAlt: '',
 			locale: 'en_US',
+			contentAI: false,
+			schemas: {},
 		} )
 		this.setText( isUndefined( text ) ? '' : text )
 		this.args.shortLocale = this.args.locale.split( '_' )[ 0 ]
@@ -452,6 +454,24 @@ class Paper {
 
 		// Combinations.
 		this.keywordCombinations = combinations( this.keywordPlurals )
+	}
+
+	/**
+	 * Set the Content AI.
+	 *
+	 * @param {string} value Content AI.
+	 */
+	setContentAI( value ) {
+		this.args.contentAI = value
+	}
+
+	/**
+	 * Set schema data.
+	 *
+	 * @param {string} schemas Schema Data.
+	 */
+	setSchema( schemas ) {
+		this.args.schemas = schemas
 	}
 }
 

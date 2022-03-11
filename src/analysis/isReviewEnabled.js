@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { includes } from 'lodash'
-
-/**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
@@ -14,7 +9,7 @@ import { applyFilters } from '@wordpress/hooks'
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
 
-class KeywordInPermalink extends Analysis {
+class isReviewEnabled extends Analysis {
 	/**
 	 * Create new analysis result instance.
 	 *
@@ -25,8 +20,7 @@ class KeywordInPermalink extends Analysis {
 	newResult( i18n ) {
 		return new AnalysisResult()
 			.setMaxScore( this.getScore() )
-			.setEmpty( i18n.__( 'Use Focus Keyword in the URL.', 'rank-math' ) )
-			.setTooltip( i18n.__( 'Include the focus keyword in the slug (permalink) of this post.', 'rank-math' ) )
+			.setEmpty( i18n.__( 'Reviews are disabled on this Product.', 'rank-math' ) )
 	}
 
 	/**
@@ -40,12 +34,9 @@ class KeywordInPermalink extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const permalink = paper.getUrl().replace( /[-_]/ig, '-' )
-		const hasKeyword = includes( permalink, paper.getKeywordPermalink( researcher ) ) ||
-			includes( permalink, paper.getPermalinkWithStopwords( researcher ) )
-
+		const hasReview = rankMath.assessor.isReviewEnabled
 		analysisResult
-			.setScore( this.calculateScore( hasKeyword ) )
+			.setScore( this.calculateScore( hasReview ) )
 			.setText( this.translateScore( analysisResult, i18n ) )
 
 		return analysisResult
@@ -54,23 +45,21 @@ class KeywordInPermalink extends Analysis {
 	/**
 	 * Checks whether paper meet analysis requirements.
 	 *
-	 * @param {Paper} paper The paper to use for the assessment.
-	 *
 	 * @return {boolean} True when requirements meet.
 	 */
-	isApplicable( paper ) {
-		return paper.hasKeyword() && paper.hasPermalink()
+	isApplicable() {
+		return rankMath.assessor.isReviewEnabled
 	}
 
 	/**
 	 * Calculates the score based on the url length.
 	 *
-	 * @param {boolean} hasKeyword Title has number or not.
+	 * @param {boolean} hasReview Title has number or not.
 	 *
 	 * @return {number} The calculated score.
 	 */
-	calculateScore( hasKeyword ) {
-		return hasKeyword ? this.getScore() : null
+	calculateScore( hasReview ) {
+		return hasReview ? this.getScore() : null
 	}
 
 	/**
@@ -79,7 +68,7 @@ class KeywordInPermalink extends Analysis {
 	 * @return {number} Max score an analysis has
 	 */
 	getScore() {
-		return applyFilters( 'rankMath_analysis_keywordInPermalink_score', 5 )
+		return applyFilters( 'rankMath_analysis_isReviewEnabled_score', 2 )
 	}
 
 	/**
@@ -92,9 +81,9 @@ class KeywordInPermalink extends Analysis {
 	 */
 	translateScore( analysisResult, i18n ) {
 		return analysisResult.hasScore() ?
-			i18n.__( 'Focus Keyword used in the URL.', 'rank-math' ) :
-			i18n.__( 'Focus Keyword not found in the URL.', 'rank-math' )
+			i18n.__( 'Reviews are enabled for this Product. Good Job!', 'rank-math' ) :
+			i18n.__( 'Reviews are disabled on this Product.', 'rank-math' )
 	}
 }
 
-export default KeywordInPermalink
+export default isReviewEnabled
