@@ -182,7 +182,7 @@ class ContentHasAssets extends Analysis {
 	 * @return {Array} The video URL matches from the text.
 	 */
 	hasVideoUrl( text ) {
-		return this.match( text, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+		return this.match( text, /(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/ )
 	}
 	
 	/**
@@ -190,11 +190,11 @@ class ContentHasAssets extends Analysis {
 	 *
 	 * @param {string} text The text to use for the assessment.
 	 *
-	 * @return {object} The videos count and the updated string.
+	 * @return {Object} The videos count and the updated string.
 	 */
 	getVideosFromIframe( text ) {
-		let videos = this.match(text, "<iframe(?:[^>]+)?>").filter( content => {
-			if( this.hasVideoUrl( content ) ) {
+		const videos = this.match( text, "<iframe(?:[^>]+)?>" ).filter( content => {
+			if ( this.hasVideoUrl( content ) ) {
 				text = text.replace( content, '' )
 				return true
 			}
@@ -203,7 +203,7 @@ class ContentHasAssets extends Analysis {
 	
 		return {
 			count: videos.length,
-			text: text,
+			text,
 		}
 	}
 	
@@ -212,11 +212,11 @@ class ContentHasAssets extends Analysis {
 	 *
 	 * @param {string} text The text to use for the assessment.
 	 *
-	 * @return {object} The videos count and the updated string.
+	 * @return {Object} The videos count and the updated string.
 	 */
 	getVideosFromVideoTag( text ) {
-		let videos = this.match(text, "<video(?:[^>]+)?>").filter( videoContent => {
-			if( this.hasVideoUrl( videoContent ) ) {
+		const videos = this.match( text, "<video(?:[^>]+)?>" ).filter( videoContent => {
+			if ( this.hasVideoUrl( videoContent ) ) {
 				text = text.replace( videoContent, '' )
 				return true
 			}
@@ -225,7 +225,7 @@ class ContentHasAssets extends Analysis {
 	
 		return {
 			count: videos.length,
-			text: text,
+			text,
 		}
 	}
 
@@ -234,11 +234,11 @@ class ContentHasAssets extends Analysis {
 	 *
 	 * @param {string} text The text to use for the assessment.
 	 *
-	 * @return {object} The videos count and the updated string.
+	 * @return {Object} The videos count and the updated string.
 	 */
 	getVideosFromShortcodes( text ) {
-		let videos = this.match(text, "\\[video( [^\\]]+?)?\\]").filter( videoContent => {
-			if( this.hasVideoUrl( videoContent ) ) {
+		const videos = this.match( text, "\\[video( [^\\]]+?)?\\]" ).filter( videoContent => {
+			if ( this.hasVideoUrl( videoContent ) ) {
 				text = text.replace( videoContent, '' )
 				return true
 			}
@@ -247,7 +247,7 @@ class ContentHasAssets extends Analysis {
 	
 		return {
 			count: videos.length,
-			text: text,
+			text,
 		}
 	}
 
@@ -256,14 +256,14 @@ class ContentHasAssets extends Analysis {
 	 *
 	 * @param {string} text The text to use for the assessment.
 	 *
-	 * @return {object} The videos count and the updated string.
+	 * @return {Object} The videos count and the updated string.
 	 */
 	getVideosByURL( text ) {
-		let videos = this.hasVideoUrl( text )
+		const videos = this.hasVideoUrl( text )
 
 		return {
 			count: videos.length,
-			text: text,
+			text,
 		}
 	}
 
@@ -275,26 +275,25 @@ class ContentHasAssets extends Analysis {
 	 * @return {number} Count of found videos.
 	 */
 	getVideos( text ) {
-
 		let count = 0
 
 		// Get video count from the <iframe /> tags.
-		let iFrameVideos = this.getVideosFromIframe( text )
+		const iFrameVideos = this.getVideosFromIframe( text )
 		count += parseInt( iFrameVideos.count )
 		text = iFrameVideos.text
 	
 		// Get video count from the <video /> tags.
-		let tagVideos = this.getVideosFromVideoTag( text )
+		const tagVideos = this.getVideosFromVideoTag( text )
 		count += parseInt( tagVideos.count )
 		text = tagVideos.text
 
 		// Get video count from the [video] shortcode.
-		let shortcodeVideos = this.getVideosFromShortcodes( text )
+		const shortcodeVideos = this.getVideosFromShortcodes( text )
 		count += parseInt( shortcodeVideos.count )
 		text = shortcodeVideos.text
 
 		// Finally get video count from the URLs.
-		let videoURLs = this.getVideosByURL( text )
+		const videoURLs = this.getVideosByURL( text )
 		count += parseInt( videoURLs.count )
 		text = videoURLs.text
 
