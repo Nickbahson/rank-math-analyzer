@@ -54,7 +54,7 @@ class KeywordDensity extends Analysis {
 		// Keyword Density & Focus Keyword occurrence
 		const regex = new RegExp( map( keywords, escapeRegex ).join( '|' ), 'gi' )
 		const count = ( cleanTagsOnly( paper.getText() ).match( regex ) || [] ).length
-		const keywordDensity = ( ( count / wordCount ) * 100 ).toFixed( 2 )
+		const keywordDensity = applyFilters( 'rankMath_analysis_keywordDensity', ( ( count / wordCount ) * 100 ).toFixed( 2 ), count )
 		const calculatedScore = this.calculateScore( keywordDensity )
 
 		analysisResult
