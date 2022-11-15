@@ -13,6 +13,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
+import normalizeQuotes from '@helpers/normalizeQuotes'
 
 class KeywordInImageAlt extends Analysis {
 	/**
@@ -52,11 +53,11 @@ class KeywordInImageAlt extends Analysis {
 		}
 
 		// Remove duplicate words from keyword.
-		keyword = uniq( keyword.split( ' ' ) ).join( ' ' )
-		const keywordPattern = keyword.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ).replace( / /g, '.*' )
-
+		keyword = normalizeQuotes( uniq( keyword.split( ' ' ) ).join( ' ' ) )
+		const keywordPattern = keyword.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ).replace( / /g, '.*' ).replace( /'/g, '' )
+		const content = paper.getTextLower().replace( /'/g, '' )
 		let regex = new RegExp( '<img[^>]*alt=[\'"][^\'"]*' + keywordPattern + '[^\'"]*[\'"]', 'gi' )
-		if ( null !== paper.getTextLower().match( regex ) || includes( paper.getLower( 'thumbnailAlt' ), keyword ) ) {
+		if ( null !== content.match( regex ) || includes( paper.getLower( 'thumbnailAlt' ), keyword ) ) {
 			analysisResult
 				.setScore( this.calculateScore( true ) )
 				.setText( this.translateScore( analysisResult, i18n ) )
@@ -65,7 +66,7 @@ class KeywordInImageAlt extends Analysis {
 		}
 
 		regex = new RegExp( '\\[gallery( [^\\]]+?)?\\]', 'ig' )
-		const hasGallery = null !== paper.getTextLower().match( regex )
+		const hasGallery = null !== content.match( regex )
 
 		if ( hasGallery ) {
 			analysisResult
