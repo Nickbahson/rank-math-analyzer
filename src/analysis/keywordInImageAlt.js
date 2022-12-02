@@ -43,7 +43,7 @@ class KeywordInImageAlt extends Analysis {
 		const thumbnailAlt = paper.getLower( 'thumbnailAlt' )
 		let keyword = paper.getLower( 'keyword' )
 
-		if ( keyword === thumbnailAlt ) {
+		if ( keyword === thumbnailAlt || includes( thumbnailAlt, keyword ) ) {
 			analysisResult
 				.setScore( this.calculateScore( true ) )
 				.setText( this.translateScore( analysisResult, i18n ) )
