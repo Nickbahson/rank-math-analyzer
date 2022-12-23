@@ -41,7 +41,7 @@ class ContentHasTOC extends Analysis {
 	 */
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
-		const hasTOCPlugin = rankMath.assessor.hasTOCPlugin || includes( paper.getTextLower(), 'wp-block-rank-math-toc-bloc' )
+		const hasTOCPlugin = rankMath.assessor.hasTOCPlugin || includes( paper.getTextLower(), 'wp-block-rank-math-toc-block' )
 
 		analysisResult
 			.setScore( this.calculateScore( hasTOCPlugin ) )
