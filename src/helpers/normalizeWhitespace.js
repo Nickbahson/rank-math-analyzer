@@ -5,4 +5,6 @@
  *
  * @return {string} The normalized text.
  */
-export default ( text ) => text.replace( /&nbsp;/g, ' ' ).replace( /\s+/g, ' ' )
+export default ( text ) => {
+    return text.replace( /&nbsp;/g, ' ' ).replace( /\s+/g, ' ' )
+}
