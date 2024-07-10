@@ -13,6 +13,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import Analysis from '@root/Analysis'
 import AnalysisResult from '@root/AnalysisResult'
+import removeDiacritics from '@helpers/removeDiacritics'
 
 class TitleHasPowerWords extends Analysis {
 	/**
@@ -47,7 +48,7 @@ class TitleHasPowerWords extends Analysis {
 	getResult( paper, researcher, i18n ) {
 		const analysisResult = this.newResult( i18n )
 		const title = paper.getLower( 'title' ).split( ' ' )
-		const powerWordsInText = rankMath.assessor.powerWords.filter( ( word ) => indexOf( title, word ) >= 0 )
+		const powerWordsInText = rankMath.assessor.powerWords.filter( ( word ) => indexOf( title, removeDiacritics( word ) ) >= 0 )
 		const hasPowerWords = 0 < powerWordsInText.length
 
 		analysisResult
